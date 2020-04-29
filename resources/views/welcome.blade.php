@@ -28,11 +28,14 @@
                 <h1>Simple Acetowhite Labeling</h1>
             </div>
             <div class="d-flex justify-content-center align-items-center mt-2">
-                <p style="text-align: center">Selamat datang di aplikasi web Simple Acetowhite Labeling. <br>Silakan ini akan membantu Anda dalam memberikan label foto pemeriksaan IVA.<br>Silakan pilih menu Anda.</p>
+                <p style="text-align: center">Selamat datang di aplikasi web Simple Acetowhite Labeling. <br>Sistem ini membantu Anda dalam memberikan label dan manajemen koleksi foto pemeriksaan IVA.<br>Silakan pilih menu Anda.</p>
             </div>
             <div class="d-flex justify-content-center mt-2">
                 <a href="{{ route('file.upload') }}" class="ml-2 mr-2"><button type="button" class="btn btn-outline-dark">Upload Foto IVA</button></a>
                 <a href="{{ route('label.index') }}" class="ml-2 mr-2"><button type="button" class="btn btn-outline-dark">Label Foto IVA</button></a>
+            </div>
+            <div class="d-flex justify-content-center mt-4">
+                <span>Dikembangkan untuk <span class="font-weight-bold">CerviCam Project</span> oleh Arief Purnama Muharram</span>
             </div>
         </div>
     </div>

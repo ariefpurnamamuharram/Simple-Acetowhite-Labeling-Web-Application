@@ -24,9 +24,12 @@ class ImageUploadController extends Controller
 
         // Save to database.
         ImageUpload::create([
-            'filename' => $imageName,
-            'path' => $imageName,
-            'label' => '99'
+            'filename_pre_iva' => '',
+            'path_pre_iva' => '',
+            'filename_post_iva' => $imageName,
+            'path_post_iva' => $imageName,
+            'label' => 99,
+            'comment' => ''
         ]);
 
         return response()->json(['success'=>$imageName]);

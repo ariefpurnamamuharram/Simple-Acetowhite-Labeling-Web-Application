@@ -21,3 +21,4 @@ Route::get('/label/edit/{requestid}', 'LabelingController@edit')->name('label.ed
 Route::get('/upload', 'ImageUploadController@fileUpload')->name('file.upload');
 Route::post('/upload/store', 'ImageUploadController@fileStore')->name('file.store');
 Route::post('/label/update', 'LabelingController@update')->name('label.update');
+Route::get('/label/delete/{requestid}', 'LabelingController@delete')->name('label.delete');

@@ -15,9 +15,12 @@ class CreateImageUploadsTable extends Migration
     {
         Schema::create('image_uploads', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('filename', 100);
-            $table->string('path');
+            $table->string('filename_pre_iva', 100);
+            $table->string('path_pre_iva');
+            $table->string('filename_post_iva', 100);
+            $table->string('path_post_iva');
             $table->integer('label');
+            $table->string('comment');
             $table->timestamps();
         });
     }

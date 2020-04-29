@@ -23,6 +23,23 @@
 <body>
 <div class="container-fluid">
     <h3 class="jumbotron">Label Foto IVA</h3>
+    @if(session('success'))
+        <div class="container-fluid mt-3">
+            <div class="row">
+                <div class="col">
+                    <div class="d-flex align-items-center justify-content-center">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <h4>Peringatan</h4>
+                            {{ session('success') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
     <div class="container-fluid mt-2">
         <div class="row">
             <div class="col">
@@ -38,14 +55,51 @@
                                     <th>Pratinjau</th>
                                     <th>Nama File</th>
                                     <th>Label</th>
+                                    <th>Komentar</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                             @foreach($files as $file)
                                 <tr>
-                                    <td><img src="{{ url('files/'.$file->filename) }}" height="124px"></td>
-                                    <td>{{ $file->filename }}</td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="d-flex flex-row justify-content-center">
+                                                    @if(empty($file->filename_pre_iva))
+                                                        <img src="{{ asset('assets/images/no-image.png') }}" height="124px">
+                                                    @else
+                                                        <img src="{{ url('files/'.$file->filename_pre_iva) }}" height="124px">
+                                                    @endif
+                                                </div>
+                                                <div class="d-flex flex-row justify-content-center mt-2">
+                                                    <span class="font-weight-bold">Pre IVA</span>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="d-flex flex-row justify-content-center">
+                                                    <img src="{{ url('files/'.$file->filename_post_iva) }}" height="124px">
+                                                </div>
+                                                <div class="d-flex flex-row justify-content-center mt-2">
+                                                    <span class="font-weight-bold">Post IVA</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="row ml-2">
+                                            <span><span class="font-weight-bold">Pre IVA: </span>
+                                                @if(empty($file->filename_pre_iva))
+                                                    <span>-</span>
+                                                @else
+                                                    <span>{{ $file->filename_pre_iva }}</span>
+                                                @endif
+                                            </span>
+                                        </div>
+                                        <div class="row mt-2 ml-2">
+                                            <span><span class="font-weight-bold">Post IVA: </span>{{ $file->filename_post_iva }}</span>
+                                        </div>
+                                    </td>
                                     <td>@switch($file->label)
                                             @case(0)
                                                 <span>Negatif</span>
@@ -58,14 +112,24 @@
                                             @break
                                             @default
                                                 <span style="font-style: italic">Belum dilabel</span>
-                                        @endswitch</td>
-                                    <td><a href="{{ route('label.edit', $file->id) }}"><button type="button" class="btn btn-warning">Edit</button></a></td>
+                                        @endswitch
+                                    </td>
+                                    <td>
+                                        @if(empty($file->comment))
+                                            <span>-</span>
+                                        @else
+                                            <span>{{ $file->comment }}</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('label.delete', $file->id) }}"><button type="button" class="btn btn-danger">Hapus</button></a>
+                                        <a href="{{ route('label.edit', $file->id) }}"><button type="button" class="btn btn-warning">Edit</button></a>
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
                     </div>
-
                     <a href="{{ route('home') }}"><button type="button" class="btn btn-outline-dark">Kembali</button></a>
                 </div>
             </div>
