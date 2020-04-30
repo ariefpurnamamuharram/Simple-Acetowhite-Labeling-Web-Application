@@ -21,6 +21,19 @@ class LabelingController extends Controller
         ]));
     }
 
+    public function search(Request $request) {
+        $file = ImageUpload::where('id', $request->search)->first();
+
+        if(!empty($file)) {
+            return view('labeledit', compact([
+                'file'
+            ]));
+        }
+        else {
+            return view('filenotfound');
+        }
+    }
+
     public function edit($requestid) {
         $file = ImageUpload::where('id', $requestid)->first();
 

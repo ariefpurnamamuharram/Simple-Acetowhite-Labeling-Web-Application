@@ -20,9 +20,30 @@
                     </div>
                 </div>
             @endif
+
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Manajer Label Foto IVA</div>
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                Manajer Label Foto IVA
+                            </div>
+                            <div class="col-sm-10">
+                                <div class="d-flex flex-row justify-content-end">
+                                    <form method="post" action="{{ route('label.search') }}" enctype="multipart/form-data">
+                                        {{ csrf_field() }}
+                                        <div class="form-group row">
+                                            <label for="search" class="col-form-label"></label>
+                                            <div class="col">
+                                                <input type="text" class="form-control" id="search" name="search" placeholder="ID entri...">
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Cari</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="card-body">
                         <div class="d-flex flex-row justify-content-between">
@@ -35,6 +56,7 @@
                             <table class="table table-bordered">
                                 <thead>
                                 <tr>
+                                    <th>ID</th>
                                     <th>Pratinjau</th>
                                     <th>Deskripsi File</th>
                                     <th>Label</th>
@@ -45,6 +67,7 @@
                                 <tbody>
                                 @foreach($files as $file)
                                     <tr>
+                                        <td>{{ $file->id }}</td>
                                         <td>
                                             <div class="row">
                                                 <div class="col">

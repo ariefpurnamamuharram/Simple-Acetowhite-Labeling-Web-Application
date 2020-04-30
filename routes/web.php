@@ -23,6 +23,7 @@ Route::get('/', function () {
 })->name('welcome');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/label', 'LabelingController@index')->name('label.index');
+Route::post('/search', 'LabelingController@search')->name('label.search');
 Route::get('/label/edit/{requestid}', 'LabelingController@edit')->name('label.edit');
 Route::get('/upload', 'ImageUploadController@fileUpload')->name('file.upload');
 Route::post('/upload/store', 'ImageUploadController@fileStore')->name('file.store');
