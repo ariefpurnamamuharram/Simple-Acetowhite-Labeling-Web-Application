@@ -13,9 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Auth::routes([
+    // Disable register.
+    'register' => false,
+]);
+
 Route::get('/', function () {
     return view('welcome');
-})->name('home');
+})->name('welcome');
+Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/label', 'LabelingController@index')->name('label.index');
 Route::get('/label/edit/{requestid}', 'LabelingController@edit')->name('label.edit');
 Route::get('/upload', 'ImageUploadController@fileUpload')->name('file.upload');

@@ -5,11 +5,17 @@ namespace App\Http\Controllers;
 use App\ImageUpload;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class LabelingController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index() {
-        $files = ImageUpload::orderBy('created_at', 'DESC')->paginate(30);
+        $files = ImageUpload::orderBy('created_at', 'DESC')->paginate(8);
         return view('labelindex', compact([
             'files'
         ]));
@@ -34,11 +40,17 @@ class LabelingController extends Controller
         if(!empty($request->preIVAImage)) {
             $image = $request->file('preIVAImage');
             $imageName = $image->getClientOriginalName();
-            $image->move(public_path('files'), $imageName);
+
+            // Image will be put in files public folder.
+            $ext = pathinfo($imageName, PATHINFO_EXTENSION);
+            $filename = Str::random(24);
+            $filenameWithExt = $filename.".".$ext;
+
+            $image->move(public_path('files/images/iva'), $filenameWithExt);
 
             ImageUpload::where('id', $request->id)->update([
-                'filename_pre_iva' => $imageName,
-                'path_pre_iva' => $imageName,
+                'filename_pre_iva' => $filenameWithExt,
+                'path_pre_iva' => $filenameWithExt,
                 'label' => $request->lblIVA,
                 'comment' => $comment
             ]);
