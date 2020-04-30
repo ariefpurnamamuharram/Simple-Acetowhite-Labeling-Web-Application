@@ -73,9 +73,9 @@
                                                 <div class="col">
                                                     <div class="d-flex flex-row justify-content-center">
                                                         @if(empty($file->filename_pre_iva))
-                                                            <img src="{{ asset('assets/images/no-image.png') }}" height="124px">
+                                                            <img src="{{ asset('assets/images/no-image.png') }}" height="72px">
                                                         @else
-                                                            <img src="{{ url('files/images/iva/'.$file->filename_pre_iva) }}" height="124px">
+                                                            <img src="{{ url('files/images/iva/'.$file->filename_pre_iva) }}" height="72px">
                                                         @endif
                                                     </div>
                                                     <div class="d-flex flex-row justify-content-center mt-2">
@@ -84,7 +84,7 @@
                                                 </div>
                                                 <div class="col">
                                                     <div class="d-flex flex-row justify-content-center">
-                                                        <img src="{{ url('files/images/iva/'.$file->filename_post_iva) }}" height="124px">
+                                                        <img src="{{ url('files/images/iva/'.$file->filename_post_iva) }}" height="72px">
                                                     </div>
                                                     <div class="d-flex flex-row justify-content-center mt-2">
                                                         <span class="font-weight-bold">Post IVA</span>
