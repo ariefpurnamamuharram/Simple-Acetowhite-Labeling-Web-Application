@@ -6,6 +6,7 @@ use App\ImageUpload;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class LabelingController extends Controller
 {
@@ -43,6 +44,16 @@ class LabelingController extends Controller
     }
 
     public function update(Request $request) {
+        $lblIVA = null;
+        $editor = null;
+        if(isset($request->lblIVA)) {
+            $lblIVA = $request->lblIVA;
+            $editor = Auth::User()->name;
+        } else {
+            $lblIVA = 99;
+            $editor = '';
+        }
+
         $comment = null;
         if(!empty($request->comment)) {
             $comment = $request->comment;
@@ -64,12 +75,14 @@ class LabelingController extends Controller
             ImageUpload::where('id', $request->id)->update([
                 'filename_pre_iva' => $filenameWithExt,
                 'path_pre_iva' => $filenameWithExt,
-                'label' => $request->lblIVA,
+                'edited_by' => $editor,
+                'label' => $lblIVA,
                 'comment' => $comment
             ]);
         } else {
             ImageUpload::where('id', $request->id)->update([
-                'label' => $request->lblIVA,
+                'label' => $lblIVA,
+                'edited_by' => $editor,
                 'comment' => $comment
             ]);
         }

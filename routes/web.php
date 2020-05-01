@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\Route;
 Auth::routes([
     // Disable register.
     'register' => false,
+
+    // Disable password reset.
+    'reset' => false
 ]);
 
 Route::get('/', function () {
@@ -29,3 +32,5 @@ Route::get('/upload', 'ImageUploadController@fileUpload')->name('file.upload');
 Route::post('/upload/store', 'ImageUploadController@fileStore')->name('file.store');
 Route::post('/label/update', 'LabelingController@update')->name('label.update');
 Route::get('/label/delete/{requestid}', 'LabelingController@delete')->name('label.delete');
+Route::get('/archive/download/positive-iva', 'ArchiveController@downloadZipPositiveIVA')->name('download.positive.iva');
+Route::get('/archive/download/negative-iva', 'ArchiveController@downloadZipNegativeIVA')->name('download.negative.iva');

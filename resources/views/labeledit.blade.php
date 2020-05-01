@@ -42,15 +42,15 @@
                             <div class="form-group mt-4">
                                 <label for="lblIVA"><h4>Label foto</h4></label>
                                 <select name="lblIVA" class="form-control" id="labelIVA">
+                                    <option selected disabled>-- Pilih Label Foto --</option>
                                     <option value="0" @if(empty($file)) @else @if($file->label == 0) selected=selected @endif @endif>Negatif</option>
                                     <option value="1" @if(empty($file)) @else @if($file->label == 1) selected=selected @endif @endif>Positif</option>
-                                    <option value="98" @if(empty($file)) @else @if($file->label == 98) selected=selected @endif @endif>Undeterminate</option>
                                 </select>
                             </div>
 
                             <div class="form-group mt-4">
                                 <label for="comment"><h4>Komentar</h4></label>
-                                <textarea name="comment" class="form-control" rows="5">@if(!empty($file->comment)){{ $file->comment }}@endif</textarea>
+                                <textarea name="comment" class="form-control" rows="5" placeholder="Masukkan komentar bila ada...">@if(!empty($file->comment)){{ $file->comment }}@endif</textarea>
                             </div>
 
                             <input name="id" type="hidden" value="{{ $file->id }}">

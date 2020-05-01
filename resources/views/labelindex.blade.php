@@ -49,7 +49,20 @@
                         <div class="d-flex flex-row justify-content-between">
                             <a href="{{ route('home') }}"><button class="btn btn-outline-dark">Kembali</button></a>
 
-                            <a href="{{ route('file.upload') }}"><button class="btn btn-primary">Unggah File</button></a>
+                            <div class="d-flex flex-row">
+                                <div class="btn-group mr-2">
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Unduh
+                                    </button>
+
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="{{ route('download.positive.iva') }}">Koleksi Foto IVA Positif</a>
+                                        <a class="dropdown-item" href="{{ route('download.negative.iva') }}">Koleksi Foto IVA Negatif</a>
+                                    </div>
+                                </div>
+
+                                <a href="{{ route('file.upload') }}"><button class="btn btn-primary">Unggah File</button></a>
+                            </div>
                         </div>
 
                         <div class="table-responsive mt-4">
@@ -108,6 +121,15 @@
                                             <hr>
                                             <div class="row mt-2 ml-2">
                                                 <span><span class="font-weight-bold">Diunggah oleh: </span>{{ $file->posted_by }}</span>
+                                            </div>
+                                            <div class="row mt-2 ml-2">
+                                                <span><span class="font-weight-bold">Dilabel oleh: </span>
+                                                    @if(!empty($file->edited_by))
+                                                        <span>{{ $file->edited_by }}</span>
+                                                    @else
+                                                        <span>-</span>
+                                                    @endif
+                                                </span>
                                             </div>
                                         </td>
                                         <td>@switch($file->label)

@@ -14,10 +14,10 @@
                     <a href="{{ route('login') }}" class="ml-2 mr-2"><button type="button" class="btn btn-outline-dark">Login</button></a>
                 </div>
                 <div class="d-flex justify-content-center mt-4">
-                    <span>Dikembangkan untuk <span class="font-weight-bold">CerviCam Project</span> oleh Arief Purnama Muharram</span>
+                    <span>Dikembangkan untuk <span class="font-weight-bold">CerviCam Project</span> oleh <a class="text-dark" href="http://linkedin.com/in/ariefpurnamamuharram" target="_blank">Arief Purnama Muharram</a></span>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <span>&copy; Arief Purnama Muharram 2020</span>
+                    <span>&copy; <a class="text-dark" href="http://linkedin.com/in/ariefpurnamamuharram" target="_blank">Arief Purnama Muharram</a> 2020</span>
                 </div>
             </div>
         </div>
