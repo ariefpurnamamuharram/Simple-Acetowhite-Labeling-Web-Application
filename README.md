@@ -1,6 +1,8 @@
 # Simpe-Acetowhite-Labeling-Web-Application
 Repositori ini berisi prototipe aplikasi web sederhana untuk membantu melabeli lesi acetowhite pada pemeriksaan IVA.
 
-![Screenshot](screenshot.png)
+Welcome
+![Welcome](screenshot.png)
 
-![Screenshot2](screenshot2.png)
+Label Management
+![Label Management](screenshot2.png)
