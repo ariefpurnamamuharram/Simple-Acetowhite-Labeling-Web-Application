@@ -73,6 +73,7 @@
                                     <th>Pratinjau</th>
                                     <th>Deskripsi File</th>
                                     <th>Label</th>
+                                    <th>Fitur/Artefak</th>
                                     <th>Komentar</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -80,7 +81,19 @@
                                 <tbody>
                                 @foreach($files as $file)
                                     <tr>
-                                        <td>{{ $file->id }}</td>
+                                        <td>
+                                            <div class="row ml-2 mr-2">
+                                                <span class="text-center">{{ $file->id }}</span><br>
+                                            </div>
+                                            @if(\App\ImageMark::where('filename', $file->filename_post_iva)->value('is_marked') === 1)
+                                                <div class="row ml-2 mr-2 mt-2">
+                                                    <div class="d-flex flex-column align-items-center justify-content-center">
+                                                        <img src="{{ asset('assets/images/flag.png') }}" height="18px">
+                                                    </div>
+                                                </div>
+                                            @else
+                                            @endif
+                                        </td>
                                         <td>
                                             <div class="row">
                                                 <div class="col">
@@ -106,7 +119,7 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <div class="row ml-2">
+                                            <div class="row ml-2 mr-2">
                                             <span><span class="font-weight-bold">Pre IVA: </span>
                                                 @if(empty($file->filename_pre_iva))
                                                     <span>-</span>
@@ -147,6 +160,98 @@
                                             @endswitch
                                         </td>
                                         <td>
+                                            @if(!empty(\App\ImageArtifact::where('filename', $file->filename_post_iva)->value('cbMetaplasiaRing')))
+                                                @switch(\App\ImageArtifact::where('filename', $file->filename_post_iva)->value('cbMetaplasiaRing'))
+                                                    @case(1)
+                                                        <span>- <span class="font-italic">Metaplasia ring</span></span>
+                                                    @break
+                                                    @default
+                                                @endswitch
+                                            @else
+                                            @endif
+                                            <br>@if(!empty(\App\ImageArtifact::where('filename', $file->filename_post_iva)->value('cbIUD')))
+                                                @switch(\App\ImageArtifact::where('filename', $file->filename_post_iva)->value('cbIUD'))
+                                                    @case(1)
+                                                        <span>- Tali IUD</span>
+                                                    @break
+                                                    @default
+                                                @endswitch
+                                            @else
+                                            @endif
+                                            <br>@if(!empty(\App\ImageArtifact::where('filename', $file->filename_post_iva)->value('cbMenstrualBlood')))
+                                                @switch(\App\ImageArtifact::where('filename', $file->filename_post_iva)->value('cbMenstrualBlood'))
+                                                    @case(1)
+                                                        <span>- Darah menstruasi</span>
+                                                    @break
+                                                    @default
+                                                @endswitch
+                                            @else
+                                            @endif
+                                            <br>@if(!empty(\App\ImageArtifact::where('filename', $file->filename_post_iva)->value('cbSlime')))
+                                                @switch(\App\ImageArtifact::where('filename', $file->filename_post_iva)->value('cbSlime'))
+                                                    @case(1)
+                                                        <span>- Lendir/mukus</span>
+                                                    @break
+                                                    @default
+                                                @endswitch
+                                            @else
+                                            @endif
+                                            <br>@if(!empty(\App\ImageArtifact::where('filename', $file->filename_post_iva)->value('cbFluorAlbus')))
+                                                @switch(\App\ImageArtifact::where('filename', $file->filename_post_iva)->value('cbFluorAlbus'))
+                                                    @case(1)
+                                                        <span>- <span class="font-italic">Fluor albus</span></span>
+                                                    @break
+                                                    @default
+                                                @endswitch
+                                            @else
+                                            @endif
+                                            <br>@if(!empty(\App\ImageArtifact::where('filename', $file->filename_post_iva)->value('cbCervicitis')))
+                                                @switch(\App\ImageArtifact::where('filename', $file->filename_post_iva)->value('cbCervicitis'))
+                                                    @case(1)
+                                                        <span>- Servisitis</span>
+                                                    @break
+                                                    @default
+                                                @endswitch
+                                            @else
+                                            @endif
+                                            <br>@if(!empty(\App\ImageArtifact::where('filename', $file->filename_post_iva)->value('cbCarcinoma')))
+                                                @switch(\App\ImageArtifact::where('filename', $file->filename_post_iva)->value('cbCarcinoma'))
+                                                    @case(1)
+                                                        <span>- Karsinoma</span>
+                                                    @break
+                                                    @default
+                                                @endswitch
+                                            @else
+                                            @endif
+                                            <br>@if(!empty(\App\ImageArtifact::where('filename', $file->filename_post_iva)->value('cbPolyp')))
+                                                @switch(\App\ImageArtifact::where('filename', $file->filename_post_iva)->value('cbPolyp'))
+                                                    @case(1)
+                                                        <span>- Polip</span>
+                                                    @break
+                                                    @default
+                                                @endswitch
+                                            @else
+                                            @endif
+                                            <br>@if(!empty(\App\ImageArtifact::where('filename', $file->filename_post_iva)->value('cbOvulaNabothi')))
+                                                @switch(\App\ImageArtifact::where('filename', $file->filename_post_iva)->value('cbOvulaNabothi'))
+                                                    @case(1)
+                                                        <span>- <span class="font-italic">Ovula Nabothi</span></span>
+                                                    @break
+                                                    @default
+                                                @endswitch
+                                            @else
+                                            @endif
+                                            <br>@if(!empty(\App\ImageArtifact::where('filename', $file->filename_post_iva)->value('cbEctropion')))
+                                                @switch(\App\ImageArtifact::where('filename', $file->filename_post_iva)->value('cbEctropion'))
+                                                    @case(1)
+                                                        <span>- Ektropion</span>
+                                                    @break
+                                                    @default
+                                                @endswitch
+                                            @else
+                                            @endif
+                                        </td>
+                                        <td>
                                             @if(empty($file->comment))
                                                 <span>-</span>
                                             @else
@@ -154,8 +259,15 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="{{ route('label.edit', $file->id) }}"><button class="btn btn-warning">Edit</button></a>
-                                            <a href="{{ route('label.delete', $file->id) }}"><button class="btn btn-danger">Hapus</button></a>
+                                            <a href="{{ route('label.edit', $file->id) }}" class="text-primary">Edit</a><br>
+                                            <a href="{{ route('label.mark', $file->id) }}" class="text-primary">
+                                                @if(\App\ImageMark::where('filename', $file->filename_post_iva)->value('is_marked') === 0)
+                                                    <span>Tandai</span>
+                                                @else
+                                                    <span>Buang tanda</span>
+                                                @endif
+                                            </a><br>
+                                            <a href="{{ route('label.delete', $file->id) }}" class="text-danger">Hapus</a>
                                         </td>
                                     </tr>
                                 @endforeach

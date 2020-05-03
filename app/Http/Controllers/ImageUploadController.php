@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\ImageUpload;
+use App\ImageArtifact;
+use App\ImageMark;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -31,9 +33,9 @@ class ImageUploadController extends Controller
         $filename = Str::random(24);
         $filenameWithExt = $filename.".".$ext;
 
+        // Move image to public folder.
         $image->move(public_path('files/images/iva'), $filenameWithExt);
 
-        // Save to database.
         ImageUpload::create([
             'filename_pre_iva' => '',
             'path_pre_iva' => '',
@@ -43,6 +45,25 @@ class ImageUploadController extends Controller
             'edited_by' => '',
             'label' => 99,
             'comment' => ''
+        ]);
+
+        ImageArtifact::create([
+            'filename' => $filenameWithExt,
+            'cbMetaplasiaRing' => false,
+            'cbIUD' => false,
+            'cbMenstrualBlood' => false,
+            'cbSlime'=> false,
+            'cbFluorAlbus' => false,
+            'cbCervicitis' => false,
+            'cbCarcinoma' => false,
+            'cbPolyp' => false,
+            'cbOvulaNabothi' => false,
+            'cbEctropion' => false
+        ]);
+
+        ImageMark::create([
+            'filename' => $filenameWithExt,
+            'is_marked' => false
         ]);
 
         return response()->json(['success'=>$imageName]);

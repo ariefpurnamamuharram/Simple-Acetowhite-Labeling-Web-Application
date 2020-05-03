@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\ImageUpload;
+use App\ImageArtifact;
+use App\ImageMark;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -17,6 +19,7 @@ class LabelingController extends Controller
 
     public function index() {
         $files = ImageUpload::orderBy('created_at', 'DESC')->paginate(8);
+
         return view('labelindex', compact([
             'files'
         ]));
@@ -36,14 +39,23 @@ class LabelingController extends Controller
     }
 
     public function edit($requestid) {
-        $file = ImageUpload::where('id', $requestid)->first();
+        // Get image instance.
+        $imageInstance = ImageUpload::where('id', $requestid);
+
+        $file = ImageUpload::where('id', $imageInstance->value('id'))->first();
+        $artifact = ImageArtifact::where('filename', $imageInstance->value('filename_post_iva'))->first();
 
         return view('labeledit', compact([
-            'file'
+            'file',
+            'artifact',
         ]));
     }
 
     public function update(Request $request) {
+        // Get image instance.
+        $imageInstance = ImageUpload::where('id', $request->id);
+
+        // Get IVA label and editor name.
         $lblIVA = null;
         $editor = null;
         if(isset($request->lblIVA)) {
@@ -54,6 +66,7 @@ class LabelingController extends Controller
             $editor = '';
         }
 
+        // Get image comment.
         $comment = null;
         if(!empty($request->comment)) {
             $comment = $request->comment;
@@ -61,6 +74,8 @@ class LabelingController extends Controller
             $comment = '-';
         }
 
+        // Get pre IVA image.
+        $filenamePreIVA = null;
         if(!empty($request->preIVAImage)) {
             $image = $request->file('preIVAImage');
             $imageName = $image->getClientOriginalName();
@@ -70,28 +85,71 @@ class LabelingController extends Controller
             $filename = Str::random(24);
             $filenameWithExt = $filename.".".$ext;
 
+            // Move image to public folder.
             $image->move(public_path('files/images/iva'), $filenameWithExt);
 
-            ImageUpload::where('id', $request->id)->update([
-                'filename_pre_iva' => $filenameWithExt,
-                'path_pre_iva' => $filenameWithExt,
-                'edited_by' => $editor,
-                'label' => $lblIVA,
-                'comment' => $comment
-            ]);
+            $filenamePreIVA = $filenameWithExt;
         } else {
-            ImageUpload::where('id', $request->id)->update([
-                'label' => $lblIVA,
-                'edited_by' => $editor,
-                'comment' => $comment
-            ]);
+            $filenamePreIVA = '';
         }
+
+        ImageUpload::where('id', $imageInstance->value('id'))->update([
+            'filename_pre_iva' => $filenamePreIVA,
+            'path_pre_iva' => $filenamePreIVA,
+            'edited_by' => $editor,
+            'label' => $lblIVA,
+            'comment' => $comment
+        ]);
+
+        ImageArtifact::where('filename', $imageInstance->value('filename_post_iva'))->update([
+            'cbMetaplasiaRing' => $this->getImageArtifactValue($request->has('cbMetaplasiaRing')),
+            'cbIUD'=> $this->getImageArtifactValue($request->has('cbIUD')),
+            'cbMenstrualBlood'=> $this->getImageArtifactValue($request->has('cbMenstrualBlood')),
+            'cbSlime'=> $this->getImageArtifactValue($request->has('cbSlime')),
+            'cbFluorAlbus'=> $this->getImageArtifactValue($request->has('cbFluorAlbus')),
+            'cbCervicitis'=> $this->getImageArtifactValue($request->has('cbCervicitis')),
+            'cbCarcinoma'=> $this->getImageArtifactValue($request->has('cbCarcinoma')),
+            'cbPolyp'=> $this->getImageArtifactValue($request->has('cbPolyp')),
+            'cbOvulaNabothi'=> $this->getImageArtifactValue($request->has('cbOvulaNabothi')),
+            'cbEctropion'=> $this->getImageArtifactValue($request->has('cbEctropion'))
+        ]);
 
         return redirect(route('label.index'));
     }
 
+    private function getImageArtifactValue($value) {
+        if(!empty($value)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function mark($request): RedirectResponse {
+        // Get image instance.
+        $imageInstance = ImageUpload::where('id', $request);
+
+        $imageMark = null;
+        if(ImageMark::where('filename', $imageInstance->value('filename_post_iva'))->value('is_marked') === 0) {
+            $imageMark = true;
+        } else {
+            $imageMark = false;
+        }
+
+        ImageMark::where('filename', $imageInstance->value('filename_post_iva'))->update([
+            'is_marked'=> $imageMark,
+        ]);
+
+        return redirect()
+            ->back();
+    }
+
     public function delete($request): RedirectResponse {
-        ImageUpload::where('id', $request)->delete();
+        // Get image instance.
+        $imageInstance = ImageUpload::where('id', $request)->first();
+
+        ImageUpload::where('id', $imageInstance->value('id'))->delete();
+        ImageArtifact::where('filename', $imageInstance->value('filename_post_iva'))->first()->delete();
 
         return redirect()
             ->back()

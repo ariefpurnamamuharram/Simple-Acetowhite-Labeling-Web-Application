@@ -31,6 +31,7 @@ Route::get('/label/edit/{requestid}', 'LabelingController@edit')->name('label.ed
 Route::get('/upload', 'ImageUploadController@fileUpload')->name('file.upload');
 Route::post('/upload/store', 'ImageUploadController@fileStore')->name('file.store');
 Route::post('/label/update', 'LabelingController@update')->name('label.update');
+Route::get('/label/mark/{requestid}', 'LabelingController@mark')->name('label.mark');
 Route::get('/label/delete/{requestid}', 'LabelingController@delete')->name('label.delete');
 Route::get('/archive/download/positive-iva', 'ArchiveController@downloadZipPositiveIVA')->name('download.positive.iva');
 Route::get('/archive/download/negative-iva', 'ArchiveController@downloadZipNegativeIVA')->name('download.negative.iva');
