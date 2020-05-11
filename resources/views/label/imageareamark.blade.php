@@ -56,7 +56,7 @@
                             <div class="form-group">
                                 <label for="textDescription">Deskripsi</label>
                                 <textarea class="form-control" id="textDescription" name="textDescription"
-                                          rows="3"></textarea>
+                                          rows="3">@if(!empty($file)) {{ $file->description }} @endif</textarea>
                             </div>
 
                             <div class="d-flex flex-row justify-content-end">
