@@ -18,7 +18,7 @@ class ImageUploadController extends Controller
     }
 
     public function fileUpload() {
-        return view('imageupload');
+        return view('upload.imageupload');
     }
 
     public function fileStore(Request $request) {

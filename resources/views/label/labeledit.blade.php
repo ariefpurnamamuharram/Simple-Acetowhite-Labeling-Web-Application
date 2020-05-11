@@ -20,7 +20,8 @@
                                     @if(empty($file->filename_pre_iva))
                                         <img src="{{ asset('assets/images/no-image.png') }}" height="240px">
                                     @else
-                                        <img src="{{ url('files/images/iva/'.$file->filename_pre_iva) }}" height="240px">
+                                        <img src="{{ url('files/images/iva/'.$file->filename_pre_iva) }}"
+                                             height="240px">
                                     @endif
                                     <h5 class="mt-2">Pre IVA</h5>
                                 </div>
@@ -40,70 +41,101 @@
                             @endif
 
                             <div class="form-group mt-4">
+                                <h4>Tandai Foto</h4>
+                                @if(empty(DB::table('image_area_marks')->where('filename', $file->filename_post_iva)->first()))
+                                    <a href="{{ route('image.mark', $file->filename_post_iva) }}" target="_blank" class="btn btn-warning">
+                                        Tandai
+                                    </a>
+                                @endif
+                            </div>
+
+                            <div class="form-group mt-4">
                                 <label for="lblIVA"><h4>Label Foto</h4></label>
                                 <select name="lblIVA" class="form-control" id="lblIVA">
                                     <option selected disabled>-- Pilih Label Foto --</option>
-                                    <option value="0" @if(empty($file)) @else @if($file->label == 0) selected=selected @endif @endif>Negatif</option>
-                                    <option value="1" @if(empty($file)) @else @if($file->label == 1) selected=selected @endif @endif>Positif</option>
+                                    <option value="0"
+                                            @if(empty($file)) @else @if($file->label == 0) selected=selected @endif @endif>
+                                        Negatif
+                                    </option>
+                                    <option value="1"
+                                            @if(empty($file)) @else @if($file->label == 1) selected=selected @endif @endif>
+                                        Positif
+                                    </option>
                                 </select>
                             </div>
 
                             <div class="form-group mt-4">
                                 <h4>Fitur/Artefak Foto</h4>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="cbMetaplasiaRing" name="cbMetaplasiaRing"  @if(empty($artifact)) @else @if($artifact->cbMetaplasiaRing == 1) checked=checked @endif @endif>
+                                    <input class="form-check-input" type="checkbox" id="cbMetaplasiaRing"
+                                           name="cbMetaplasiaRing"
+                                           @if(empty($artifact)) @else @if($artifact->cbMetaplasiaRing == 1) checked=checked @endif @endif>
                                     <label class="form-check-label" for="cbMetaplasiaRing"><span class="font-italic">Metaplasia ring</span></label>
                                 </div>
 
                                 <div class="form-check mt-1">
-                                    <input class="form-check-input" type="checkbox" id="cbIUD" name="cbIUD" @if(empty($artifact)) @else @if($artifact->cbIUD == 1) checked=checked @endif @endif>
+                                    <input class="form-check-input" type="checkbox" id="cbIUD" name="cbIUD"
+                                           @if(empty($artifact)) @else @if($artifact->cbIUD == 1) checked=checked @endif @endif>
                                     <label class="form-check-label" for="cbIUD">Tali IUD</label>
                                 </div>
 
                                 <div class="form-check mt-1">
-                                    <input class="form-check-input" type="checkbox" id="cbMenstrualBlood" name="cbMenstrualBlood" @if(empty($artifact)) @else @if($artifact->cbMenstrualBlood == 1) checked=checked @endif @endif>
+                                    <input class="form-check-input" type="checkbox" id="cbMenstrualBlood"
+                                           name="cbMenstrualBlood"
+                                           @if(empty($artifact)) @else @if($artifact->cbMenstrualBlood == 1) checked=checked @endif @endif>
                                     <label class="form-check-label" for="cbMenstrualBlood">Darah menstruasi</label>
                                 </div>
 
                                 <div class="form-check mt-1">
-                                    <input class="form-check-input" type="checkbox" id="cbSlime" name="cbSlime" @if(empty($artifact)) @else @if($artifact->cbSlime == 1) checked=checked @endif @endif>
+                                    <input class="form-check-input" type="checkbox" id="cbSlime" name="cbSlime"
+                                           @if(empty($artifact)) @else @if($artifact->cbSlime == 1) checked=checked @endif @endif>
                                     <label class="form-check-label" for="cbSlime">Lendir/mukus</label>
                                 </div>
 
                                 <div class="form-check mt-1">
-                                    <input class="form-check-input" type="checkbox" id="cbFluorAlbus" name="cbFluorAlbus" @if(empty($artifact)) @else @if($artifact->cbFluorAlbus == 1) checked=checked @endif @endif>
+                                    <input class="form-check-input" type="checkbox" id="cbFluorAlbus"
+                                           name="cbFluorAlbus"
+                                           @if(empty($artifact)) @else @if($artifact->cbFluorAlbus == 1) checked=checked @endif @endif>
                                     <label class="form-check-label" for="cbFluorAlbus"><span class="font-italic">Fluor albus</span></label>
                                 </div>
 
                                 <div class="form-check mt-1">
-                                    <input class="form-check-input" type="checkbox" id="cbCervicitis" name="cbCervicitis" @if(empty($artifact)) @else @if($artifact->cbCervicitis == 1) checked=checked @endif @endif>
+                                    <input class="form-check-input" type="checkbox" id="cbCervicitis"
+                                           name="cbCervicitis"
+                                           @if(empty($artifact)) @else @if($artifact->cbCervicitis == 1) checked=checked @endif @endif>
                                     <label class="form-check-label" for="cbCervicitis">Servisitis</label>
                                 </div>
 
                                 <div class="form-check mt-1">
-                                    <input class="form-check-input" type="checkbox" id="cbCarcinoma" name="cbCarcinoma" @if(empty($artifact)) @else @if($artifact->cbCarcinoma == 1) checked=checked @endif @endif>
+                                    <input class="form-check-input" type="checkbox" id="cbCarcinoma" name="cbCarcinoma"
+                                           @if(empty($artifact)) @else @if($artifact->cbCarcinoma == 1) checked=checked @endif @endif>
                                     <label class="form-check-label" for="cbCarcinoma">Karsinoma</label>
                                 </div>
 
                                 <div class="form-check mt-1">
-                                    <input class="form-check-input" type="checkbox" id="cbPolyp" name="cbPolyp" @if(empty($artifact)) @else @if($artifact->cbPolyp == 1) checked=checked @endif @endif>
+                                    <input class="form-check-input" type="checkbox" id="cbPolyp" name="cbPolyp"
+                                           @if(empty($artifact)) @else @if($artifact->cbPolyp == 1) checked=checked @endif @endif>
                                     <label class="form-check-label" for="cbPolyp">Polip</label>
                                 </div>
 
                                 <div class="form-check mt-1">
-                                    <input class="form-check-input" type="checkbox" id="cbOvulaNabothi" name="cbOvulaNabothi" @if(empty($artifact)) @else @if($artifact->cbOvulaNabothi == 1) checked=checked @endif @endif>
+                                    <input class="form-check-input" type="checkbox" id="cbOvulaNabothi"
+                                           name="cbOvulaNabothi"
+                                           @if(empty($artifact)) @else @if($artifact->cbOvulaNabothi == 1) checked=checked @endif @endif>
                                     <label class="form-check-label" for="cbOvulaNabothi"><span class="font-italic">Ovula nabothi</span></label>
                                 </div>
 
                                 <div class="form-check mt-1">
-                                    <input class="form-check-input" type="checkbox" id="cbEctropion" name="cbEctropion" @if(empty($artifact)) @else @if($artifact->cbEctropion == 1) checked=checked @endif @endif>
+                                    <input class="form-check-input" type="checkbox" id="cbEctropion" name="cbEctropion"
+                                           @if(empty($artifact)) @else @if($artifact->cbEctropion == 1) checked=checked @endif @endif>
                                     <label class="form-check-label" for="cbEctropion">Ektropion</label>
                                 </div>
                             </div>
 
                             <div class="form-group mt-4">
                                 <label for="comment"><h4>Komentar</h4></label>
-                                <textarea name="comment" class="form-control" rows="5" placeholder="Masukkan komentar bila ada...">@if(!empty($file->comment)){{ $file->comment }}@endif</textarea>
+                                <textarea name="comment" class="form-control" rows="5"
+                                          placeholder="Masukkan komentar bila ada...">@if(!empty($file->comment)){{ $file->comment }}@endif</textarea>
                             </div>
 
                             <input name="id" type="hidden" value="{{ $file->id }}">
@@ -111,7 +143,9 @@
                             <div class="row mt-4">
                                 <div class="col">
                                     <div class="d-flex flex-row justify-content-between">
-                                        <a href="{{ route('label.index') }}"><button type="button" class="btn btn-outline-dark">Kembali</button></a>
+                                        <a href="{{ route('label.index') }}">
+                                            <button type="button" class="btn btn-outline-dark">Kembali</button>
+                                        </a>
                                         <button type="submit" class="btn btn-warning">Simpan</button>
                                     </div>
                                 </div>

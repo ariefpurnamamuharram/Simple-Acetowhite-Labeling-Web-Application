@@ -20,7 +20,7 @@ class LabelingController extends Controller
     public function index() {
         $files = ImageUpload::orderBy('created_at', 'DESC')->paginate(8);
 
-        return view('labelindex', compact([
+        return view('label.labelindex', compact([
             'files'
         ]));
     }
@@ -29,12 +29,12 @@ class LabelingController extends Controller
         $file = ImageUpload::where('id', $request->search)->first();
 
         if(!empty($file)) {
-            return view('labeledit', compact([
+            return view('label.labeledit', compact([
                 'file'
             ]));
         }
         else {
-            return view('filenotfound');
+            return view('error.filenotfound');
         }
     }
 
@@ -45,7 +45,7 @@ class LabelingController extends Controller
         $file = ImageUpload::where('id', $imageInstance->value('id'))->first();
         $artifact = ImageArtifact::where('filename', $imageInstance->value('filename_post_iva'))->first();
 
-        return view('labeledit', compact([
+        return view('label.labeledit', compact([
             'file',
             'artifact',
         ]));

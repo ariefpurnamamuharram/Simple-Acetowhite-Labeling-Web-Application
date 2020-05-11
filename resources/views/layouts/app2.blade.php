@@ -16,11 +16,8 @@
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ asset('assets/images/cervicam.png') }}">
 
-    <!-- Dropzone -->
-    <link rel="stylesheet" href="{{ asset('dropzone/css/dropzone.min.css') }}">
-
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
