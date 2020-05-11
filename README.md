@@ -1,5 +1,5 @@
-# Simpe-Acetowhite-Labeling-Web-Application
-Repositori ini berisi prototipe aplikasi web sederhana untuk membantu melabeli lesi acetowhite pada pemeriksaan IVA. Kode sumber program ini ditulis oleh **Arief Purnama Muharram**.
+# Simple Acetowhite Labeling Web Application
+Repositori ini berisi prototipe aplikasi web sederhana untuk membantu melabeli lesi _acetowhite_ pada foto pemeriksaan IVA (inspeksi visual asam asetat). Aplikasi web ini ini dibangun dengan _framework_ Laravel. Kode sumber program ini ditulis oleh **Arief Purnama Muharram**.
 
 ## Welcome
 ![Welcome](screenshot.png)
