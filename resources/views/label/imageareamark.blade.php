@@ -7,8 +7,10 @@
                 <div class="card">
                     <div class="card-header">Tandai Area Foto IVA</div>
                     <div class="card-body">
-                        <form action="#" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('image.mark.store') }}" method="post" enctype="multipart/form-data">
                             {{ csrf_field() }}
+
+                            <input type="hidden" name="filename" id="filename" value="{{ $requestid }}"/>
 
                             <div class="form-row">
                                 <div class="col">
@@ -16,19 +18,19 @@
                                 </div>
                                 <div class="col">
                                     <input type="number" class="form-control" name="rectX0" id="rectX0"
-                                           placeholder="rectX0">
+                                           placeholder="rectX0" @if(!empty($file)) value="{{ $file->rect_x0 }}" @endif>
                                 </div>
                                 <div class="col">
                                     <input type="number" class="form-control" name="rectY0" id="rectY0"
-                                           placeholder="rectY0">
+                                           placeholder="rectY0" @if(!empty($file)) value="{{ $file->rect_y0 }}" @endif>
                                 </div>
                                 <div class="col">
                                     <input type="number" class="form-control" name="rectX1" id="rectX1"
-                                           placeholder="rectX1">
+                                           placeholder="rectX1" @if(!empty($file)) value="{{ $file->rect_x1 }}" @endif>
                                 </div>
                                 <div class="col">
                                     <input type="number" class="form-control" name="rectY1" id="rectY1"
-                                           placeholder="rectY1">
+                                           placeholder="rectY1" @if(!empty($file)) value="{{ $file->rect_y1 }}" @endif>
                                 </div>
                                 <div class="col">
                                     <button type="button" class="btn btn-warning" onclick="executeCanvas()"
@@ -40,18 +42,60 @@
                                     </button>
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <label for="imageMarkLabel">Label</label>
+                                <select class="form-control" id="imageMarkLabel" name="imageMarkLabel">
+                                    <option value="0"
+                                            @if(!empty($file)) @if($file->label == 0) selected="selected" @endif @endif>
+                                        Lesi Acetowhite
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="textDescription">Deskripsi</label>
+                                <textarea class="form-control" id="textDescription" name="textDescription"
+                                          rows="3"></textarea>
+                            </div>
+
+                            <div class="d-flex flex-row justify-content-end">
+                                <button class="btn btn-warning">Simpan</button>
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row justify-content-start" style="margin-top: 36px">
+        <div class="row justify-content-center" style="margin-top: 36px">
             <div class="col-md-8">
-                <h5>Area gambar:</h5>
+                <h5 class="text-center">Area Penampil Gambar</h5>
             </div>
         </div>
         <div class="row justify-content-center mt-2">
             <canvas id="canvas"></canvas>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Pemberitahuan</h5>
+
+                    <button type="button" class="close" data-dismiss="modal" aria-labelledby="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <p id="modalBody"></p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
@@ -112,9 +156,30 @@
             // Initialize canvas.
             init();
 
+            // Load mark if exist.
+            @if(!empty($file))
+            // Load x0, y0, x1, and y1 value.
+            var x0 = '{{ $file->rect_x0 }}';
+            var y0 = '{{ $file->rect_y0 }}';
+            var x1 = '{{ $file->rect_x1 }}';
+            var y1 = '{{ $file->rect_y1 }}';
+
+            // Draw rectangle.
+            ctx.strokeStyle = '#EFFD5F';
+            ctx.strokeRect(x0, y0, x1 - x0, y1 - y0);
+            @endif
+
             // Disable image show button.
             document.getElementById('btnShowImage').style.display = "none";
             document.getElementById('disabledBtnShowImage').style.display = "block";
         }
+
+        @if(session()->has('message'))
+        $(window).on('load', function () {
+            $('#modalTitle').html('Pemberitahuan');
+            $('#modalBody').html('{{ session('message') }}');
+            $('#modal').modal('show');
+        });
+        @endif
     </script>
 @endsection

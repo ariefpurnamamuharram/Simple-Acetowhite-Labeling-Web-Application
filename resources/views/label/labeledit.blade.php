@@ -42,11 +42,10 @@
 
                             <div class="form-group mt-4">
                                 <h4>Tandai Foto</h4>
-                                @if(empty(DB::table('image_area_marks')->where('filename', $file->filename_post_iva)->first()))
-                                    <a href="{{ route('image.mark', $file->filename_post_iva) }}" target="_blank" class="btn btn-warning">
-                                        Tandai
-                                    </a>
-                                @endif
+                                <a href="{{ route('image.mark', $file->filename_post_iva) }}" target="_blank"
+                                   class="btn btn-warning">
+                                    Tandai
+                                </a>
                             </div>
 
                             <div class="form-group mt-4">
