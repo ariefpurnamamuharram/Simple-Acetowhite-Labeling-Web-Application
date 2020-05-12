@@ -15,11 +15,11 @@ class ImageAreaMarkController extends Controller
 
     public function index($requestid)
     {
-        $file = ImageAreaMark::where('filename', $requestid)->first();
+        $files = ImageAreaMark::where('filename', $requestid)->get();
 
         return view('label.imageareamark', compact([
             'requestid',
-            'file',
+            'files',
         ]));
     }
 
@@ -36,40 +36,33 @@ class ImageAreaMarkController extends Controller
         ]);
 
         if (!empty($validate->passes())) {
-            if (!empty(ImageAreaMark::where('filename', $request->filename)->first())) {
-                ImageAreaMark::where('filename', $request->filename)->update([
-                    'filename' => $request->filename,
-                    'rect_x0' => $request->rectX0,
-                    'rect_y0' => $request->rectY0,
-                    'rect_x1' => $request->rectX1,
-                    'rect_y1' => $request->rectY1,
-                    'label' => $request->imageMarkLabel,
-                    'description' => $this->markDescription($request->textDescription),
-                ]);
+            ImageAreaMark::create([
+                'filename' => $request->filename,
+                'rect_x0' => $request->rectX0,
+                'rect_y0' => $request->rectY0,
+                'rect_x1' => $request->rectX1,
+                'rect_y1' => $request->rectY1,
+                'label' => $request->imageMarkLabel,
+                'description' => $this->markDescription($request->textDescription)
+            ]);
 
-                return redirect()
-                    ->back()
-                    ->with('message', 'Data berhasil diperbaharui!');
-            } else {
-                ImageAreaMark::create([
-                    'filename' => $request->filename,
-                    'rect_x0' => $request->rectX0,
-                    'rect_y0' => $request->rectY0,
-                    'rect_x1' => $request->rectX1,
-                    'rect_y1' => $request->rectY1,
-                    'label' => $request->imageMarkLabel,
-                    'description' => $this->markDescription($request->textDescription)
-                ]);
-
-                return redirect()
-                    ->back()
-                    ->with('message', 'Data berhasil disimpan!');
-            }
+            return redirect()
+                ->back()
+                ->with('message', 'Data berhasil disimpan!');
         } else {
             return redirect()
                 ->back()
                 ->with('message', 'Gagal menyimpan! Periksa kembali isian Anda.');
         }
+    }
+
+    public function delete($requestid)
+    {
+        ImageAreaMark::where('id', $requestid)->first()->delete();
+
+        return redirect()
+            ->back()
+            ->with('message', 'Markah berhasil dihapus!');
     }
 
     private function markDescription($value)

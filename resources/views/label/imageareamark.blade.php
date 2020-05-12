@@ -7,8 +7,54 @@
                 <div class="card">
                     <div class="card-header">Tandai Area Foto IVA</div>
                     <div class="card-body">
-                        <form action="{{ route('image.mark.store') }}" method="post" enctype="multipart/form-data">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th class="text-center">ID</th>
+                                    <th class="text-center">Posisi Marka (x0, y0, x1, y1)</th>
+                                    <th class="text-center">Label</th>
+                                    <th class="text-center">Deskripsi</th>
+                                    <th class="text-center">Aksi</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($files as $file)
+                                    <tr>
+                                        <td class="text-center align-middle"><span>{{ $file->id }}</span></td>
+                                        <td class="text-center align-middle"><span>{{ $file->rect_x0 }}, {{ $file->rect_y0 }}, {{ $file->rect_x1 }}, {{ $file->rect_y1 }}</span>
+                                        </td>
+                                        <td class="text-center align-middle">
+                                            @switch($file->label)
+                                                @case(0)
+                                                <span>Lesi Acetowhite</span>
+                                                @break
+                                                @case(99)
+                                                <span>Lainnya</span>
+                                                @break
+                                                @default
+                                                <span>Error</span>
+                                            @endswitch
+                                        </td>
+                                        <td class="align-middle"><span>{{ $file->description }}</span></td>
+                                        <td class="text-center">
+                                            <a href="{{ route('image.mark.delete', $file->id) }}">
+                                                <button class="btn btn-danger">Hapus</button>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <form action="{{ route('image.mark.store') }}" method="post" enctype="multipart/form-data"
+                              class="mt-4">
                             {{ csrf_field() }}
+
+                            <h4>Tambah Marka Baru</h4>
+
+                            <hr/>
 
                             <input type="hidden" name="filename" id="filename" value="{{ $requestid }}"/>
 
@@ -18,19 +64,19 @@
                                 </div>
                                 <div class="col">
                                     <input type="number" class="form-control" name="rectX0" id="rectX0"
-                                           placeholder="rectX0" @if(!empty($file)) value="{{ $file->rect_x0 }}" @endif>
+                                           placeholder="rectX0">
                                 </div>
                                 <div class="col">
                                     <input type="number" class="form-control" name="rectY0" id="rectY0"
-                                           placeholder="rectY0" @if(!empty($file)) value="{{ $file->rect_y0 }}" @endif>
+                                           placeholder="rectY0">
                                 </div>
                                 <div class="col">
                                     <input type="number" class="form-control" name="rectX1" id="rectX1"
-                                           placeholder="rectX1" @if(!empty($file)) value="{{ $file->rect_x1 }}" @endif>
+                                           placeholder="rectX1">
                                 </div>
                                 <div class="col">
                                     <input type="number" class="form-control" name="rectY1" id="rectY1"
-                                           placeholder="rectY1" @if(!empty($file)) value="{{ $file->rect_y1 }}" @endif>
+                                           placeholder="rectY1">
                                 </div>
                                 <div class="col">
                                     <button type="button" class="btn btn-warning" onclick="executeCanvas()"
@@ -46,17 +92,15 @@
                             <div class="form-group">
                                 <label for="imageMarkLabel">Label</label>
                                 <select class="form-control" id="imageMarkLabel" name="imageMarkLabel">
-                                    <option value="0"
-                                            @if(!empty($file)) @if($file->label == 0) selected="selected" @endif @endif>
-                                        Lesi Acetowhite
-                                    </option>
+                                    <option value="0">Lesi Acetowhite</option>
+                                    <option value="99">Lainnya</option>
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label for="textDescription">Deskripsi</label>
                                 <textarea class="form-control" id="textDescription" name="textDescription"
-                                          rows="3">@if(!empty($file)) {{ $file->description }} @endif</textarea>
+                                          rows="3"></textarea>
                             </div>
 
                             <div class="d-flex flex-row justify-content-end">
@@ -144,6 +188,11 @@
                 ctx.strokeStyle = '#EFFD5F';
                 ctx.strokeRect(rect.startX, rect.startY, rect.w, rect.h);
 
+                // Redraw saved marks if any.
+                @if(!empty($files))
+                redrawMarksOnCanvas()
+                @endif
+
                 // Store x0, y0, x1, and y1 value.
                 document.getElementById('rectX0').value = rect.startX;
                 document.getElementById('rectY0').value = rect.startY;
@@ -152,21 +201,54 @@
             }
         }
 
-        function executeCanvas() {
-            // Initialize canvas.
-            init();
+        // Redraw marks if any.
+        function redrawMarksOnCanvas() {
+            @foreach($files as $file)
+            // Create blank drawing area.
+            var blankCtx = null;
+            blankCtx = canvas.getContext("2d");
 
-            // Load mark if exist.
-            @if(!empty($file))
-            // Load x0, y0, x1, and y1 value.
+            // Load x0, y0, x1, and y1 values.
             var x0 = '{{ $file->rect_x0 }}';
             var y0 = '{{ $file->rect_y0 }}';
             var x1 = '{{ $file->rect_x1 }}';
             var y1 = '{{ $file->rect_y1 }}';
 
-            // Draw rectangle.
-            ctx.strokeStyle = '#EFFD5F';
-            ctx.strokeRect(x0, y0, x1 - x0, y1 - y0);
+            // Draw marks.
+            blankCtx.strokeStyle = '#EFFD5F';
+            blankCtx.strokeRect(x0, y0, x1 - x0, y1 - y0);
+
+            // Draw mark label.
+                @switch($file->label)
+                @case(0)
+            var markLabel = "ID: {{ $file->id }}; " + "Label: Lesi Acetowhite";
+                @break
+                @case(99)
+            var markLabel = "ID: {{ $file->id }}; " + "Label: Lainnya";
+                @break
+                @default
+            var markLabel = "ID: {{ $file->id }}; " + "Label: Error";
+            @endswitch
+                blankCtx.font = "16px Arial";
+            blankCtx.textBaseline = "bottom";
+            blankCtx.fillStyle = "black";
+            blankCtx.fillText(markLabel, x0, y0);
+
+            // Draw mark description.
+            blankCtx.font = "14px Arial";
+            blankCtx.textBaseline = "bottom";
+            blankCtx.fillStyle = "black";
+            blankCtx.fillText("Deskripsi: {{ $file->description }}", x0, y1);
+            @endforeach
+        }
+
+        function executeCanvas() {
+            // Initialize canvas.
+            init();
+
+            // Load saved marks if any.
+            @if(!empty($files))
+            redrawMarksOnCanvas()
             @endif
 
             // Disable image show button.

@@ -30,12 +30,14 @@
                             </div>
                             <div class="col-sm-10">
                                 <div class="d-flex flex-row justify-content-end">
-                                    <form method="post" action="{{ route('label.search') }}" enctype="multipart/form-data">
+                                    <form method="post" action="{{ route('label.search') }}"
+                                          enctype="multipart/form-data">
                                         {{ csrf_field() }}
                                         <div class="form-group row">
                                             <label for="search" class="col-form-label"></label>
                                             <div class="col">
-                                                <input type="text" class="form-control" id="search" name="search" placeholder="ID entri...">
+                                                <input type="text" class="form-control" id="search" name="search"
+                                                       placeholder="ID entri...">
                                             </div>
                                             <button type="submit" class="btn btn-primary">Cari</button>
                                         </div>
@@ -47,21 +49,28 @@
 
                     <div class="card-body">
                         <div class="d-flex flex-row justify-content-between">
-                            <a href="{{ route('home') }}"><button class="btn btn-outline-dark">Kembali</button></a>
+                            <a href="{{ route('home') }}">
+                                <button class="btn btn-outline-dark">Kembali</button>
+                            </a>
 
                             <div class="d-flex flex-row">
                                 <div class="btn-group mr-2">
-                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+                                            aria-haspopup="true" aria-expanded="false">
                                         Unduh
                                     </button>
 
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="{{ route('download.positive.iva') }}">Koleksi Foto IVA Positif</a>
-                                        <a class="dropdown-item" href="{{ route('download.negative.iva') }}">Koleksi Foto IVA Negatif</a>
+                                        <a class="dropdown-item" href="{{ route('download.positive.iva') }}">Koleksi
+                                            Foto IVA Positif</a>
+                                        <a class="dropdown-item" href="{{ route('download.negative.iva') }}">Koleksi
+                                            Foto IVA Negatif</a>
                                     </div>
                                 </div>
 
-                                <a href="{{ route('file.upload') }}"><button class="btn btn-primary">Unggah File</button></a>
+                                <a href="{{ route('file.upload') }}">
+                                    <button class="btn btn-primary">Unggah File</button>
+                                </a>
                             </div>
                         </div>
 
@@ -87,7 +96,8 @@
                                             </div>
                                             @if(\App\ImageMark::where('filename', $file->filename_post_iva)->value('is_marked') === 1)
                                                 <div class="row ml-2 mr-2 mt-2">
-                                                    <div class="d-flex flex-column align-items-center justify-content-center">
+                                                    <div
+                                                        class="d-flex flex-column align-items-center justify-content-center">
                                                         <img src="{{ asset('assets/images/flag.png') }}" height="18px">
                                                     </div>
                                                 </div>
@@ -99,9 +109,12 @@
                                                 <div class="col">
                                                     <div class="d-flex flex-row justify-content-center">
                                                         @if(empty($file->filename_pre_iva))
-                                                            <img src="{{ asset('assets/images/no-image.png') }}" height="72px">
+                                                            <img src="{{ asset('assets/images/no-image.png') }}"
+                                                                 height="72px">
                                                         @else
-                                                            <img src="{{ url('files/images/iva/'.$file->filename_pre_iva) }}" height="72px">
+                                                            <img
+                                                                src="{{ url('files/images/iva/'.$file->filename_pre_iva) }}"
+                                                                height="72px">
                                                         @endif
                                                     </div>
                                                     <div class="d-flex flex-row justify-content-center mt-2">
@@ -110,7 +123,9 @@
                                                 </div>
                                                 <div class="col">
                                                     <div class="d-flex flex-row justify-content-center">
-                                                        <img src="{{ url('files/images/iva/'.$file->filename_post_iva) }}" height="72px">
+                                                        <img
+                                                            src="{{ url('files/images/iva/'.$file->filename_post_iva) }}"
+                                                            height="72px">
                                                     </div>
                                                     <div class="d-flex flex-row justify-content-center mt-2">
                                                         <span class="font-weight-bold">Post IVA</span>
@@ -163,7 +178,7 @@
                                             @if(!empty(\App\ImageArtifact::where('filename', $file->filename_post_iva)->value('cbMetaplasiaRing')))
                                                 @switch(\App\ImageArtifact::where('filename', $file->filename_post_iva)->value('cbMetaplasiaRing'))
                                                     @case(1)
-                                                        <span>- <span class="font-italic">Metaplasia ring</span></span>
+                                                    <span>- <span class="font-italic">Metaplasia ring</span></span>
                                                     @break
                                                     @default
                                                 @endswitch
@@ -172,7 +187,7 @@
                                             <br>@if(!empty(\App\ImageArtifact::where('filename', $file->filename_post_iva)->value('cbIUD')))
                                                 @switch(\App\ImageArtifact::where('filename', $file->filename_post_iva)->value('cbIUD'))
                                                     @case(1)
-                                                        <span>- Tali IUD</span>
+                                                    <span>- Tali IUD</span>
                                                     @break
                                                     @default
                                                 @endswitch
@@ -181,7 +196,7 @@
                                             <br>@if(!empty(\App\ImageArtifact::where('filename', $file->filename_post_iva)->value('cbMenstrualBlood')))
                                                 @switch(\App\ImageArtifact::where('filename', $file->filename_post_iva)->value('cbMenstrualBlood'))
                                                     @case(1)
-                                                        <span>- Darah menstruasi</span>
+                                                    <span>- Darah menstruasi</span>
                                                     @break
                                                     @default
                                                 @endswitch
@@ -190,7 +205,7 @@
                                             <br>@if(!empty(\App\ImageArtifact::where('filename', $file->filename_post_iva)->value('cbSlime')))
                                                 @switch(\App\ImageArtifact::where('filename', $file->filename_post_iva)->value('cbSlime'))
                                                     @case(1)
-                                                        <span>- Lendir/mukus</span>
+                                                    <span>- Lendir/mukus</span>
                                                     @break
                                                     @default
                                                 @endswitch
@@ -199,7 +214,7 @@
                                             <br>@if(!empty(\App\ImageArtifact::where('filename', $file->filename_post_iva)->value('cbFluorAlbus')))
                                                 @switch(\App\ImageArtifact::where('filename', $file->filename_post_iva)->value('cbFluorAlbus'))
                                                     @case(1)
-                                                        <span>- <span class="font-italic">Fluor albus</span></span>
+                                                    <span>- <span class="font-italic">Fluor albus</span></span>
                                                     @break
                                                     @default
                                                 @endswitch
@@ -208,7 +223,7 @@
                                             <br>@if(!empty(\App\ImageArtifact::where('filename', $file->filename_post_iva)->value('cbCervicitis')))
                                                 @switch(\App\ImageArtifact::where('filename', $file->filename_post_iva)->value('cbCervicitis'))
                                                     @case(1)
-                                                        <span>- Servisitis</span>
+                                                    <span>- Servisitis</span>
                                                     @break
                                                     @default
                                                 @endswitch
@@ -217,7 +232,7 @@
                                             <br>@if(!empty(\App\ImageArtifact::where('filename', $file->filename_post_iva)->value('cbCarcinoma')))
                                                 @switch(\App\ImageArtifact::where('filename', $file->filename_post_iva)->value('cbCarcinoma'))
                                                     @case(1)
-                                                        <span>- Karsinoma</span>
+                                                    <span>- Karsinoma</span>
                                                     @break
                                                     @default
                                                 @endswitch
@@ -226,7 +241,7 @@
                                             <br>@if(!empty(\App\ImageArtifact::where('filename', $file->filename_post_iva)->value('cbPolyp')))
                                                 @switch(\App\ImageArtifact::where('filename', $file->filename_post_iva)->value('cbPolyp'))
                                                     @case(1)
-                                                        <span>- Polip</span>
+                                                    <span>- Polip</span>
                                                     @break
                                                     @default
                                                 @endswitch
@@ -235,7 +250,7 @@
                                             <br>@if(!empty(\App\ImageArtifact::where('filename', $file->filename_post_iva)->value('cbOvulaNabothi')))
                                                 @switch(\App\ImageArtifact::where('filename', $file->filename_post_iva)->value('cbOvulaNabothi'))
                                                     @case(1)
-                                                        <span>- <span class="font-italic">Ovula Nabothi</span></span>
+                                                    <span>- <span class="font-italic">Ovula Nabothi</span></span>
                                                     @break
                                                     @default
                                                 @endswitch
@@ -244,7 +259,7 @@
                                             <br>@if(!empty(\App\ImageArtifact::where('filename', $file->filename_post_iva)->value('cbEctropion')))
                                                 @switch(\App\ImageArtifact::where('filename', $file->filename_post_iva)->value('cbEctropion'))
                                                     @case(1)
-                                                        <span>- Ektropion</span>
+                                                    <span>- Ektropion</span>
                                                     @break
                                                     @default
                                                 @endswitch
@@ -267,7 +282,8 @@
                                                     <span>Buang tanda</span>
                                                 @endif
                                             </a><br>
-                                            <a href="{{ route('label.delete', $file->id) }}" class="text-danger">Hapus</a>
+                                            <a href="{{ route('label.delete', $file->id) }}"
+                                               class="text-danger">Hapus</a>
                                         </td>
                                     </tr>
                                 @endforeach

@@ -34,6 +34,7 @@ Route::post('/label/update', 'LabelingController@update')->name('label.update');
 Route::get('/label/mark/{requestid}', 'LabelingController@mark')->name('label.mark');
 Route::get('/label/mark/image/mark-area/{requestid}', 'ImageAreaMarkController@index')->name('image.mark');
 Route::post('/label/mark/image/mark-area/store', 'ImageAreaMarkController@store')->name('image.mark.store');
+Route::get('/label/mark/image/mark-area/delete/{requestid}', 'ImageAreaMarkController@delete')->name('image.mark.delete');
 Route::get('/label/delete/{requestid}', 'LabelingController@delete')->name('label.delete');
 Route::get('/archive/download/positive-iva', 'ArchiveController@downloadZipPositiveIVA')->name('download.positive.iva');
 Route::get('/archive/download/negative-iva', 'ArchiveController@downloadZipNegativeIVA')->name('download.negative.iva');
