@@ -40,7 +40,7 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <div class="navbar-nav">
+                <div class="navbar-nav ml-auto">
                     <!-- Authentication Links -->
                     @guest
                         <a class="nav-item">
