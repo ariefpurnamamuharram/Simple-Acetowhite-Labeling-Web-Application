@@ -20,7 +20,8 @@
     <link rel="stylesheet" href="{{ asset('dropzone/css/dropzone.min.css') }}">
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <!-- Disable default app javascript. -->
+    <!--<script src="{{ asset('js/app.js') }}" defer></script>-->
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -40,32 +41,39 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <div class="navbar-nav ml-auto">
-                    <!-- Authentication Links -->
+                <ul class="navbar-nav ml-auto">
                     @guest
-                        <a class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                        </a>
-                        @if (Route::has('register'))
-                            <a class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                            </a>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('login') }}">Masuk</a>
+                        </li>
+                        @if(Route::has('register'))
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('register') }}">Daftar</a>
+                            </li>
                         @endif
                     @else
-                        <a class="nav-item">
-                            <a class="text-dark" href="{{ route('logout') }}"
-                               onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ Auth::user()->name }}
                             </a>
 
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                  style="display: none;">
-                                @csrf
-                            </form>
-                        </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('home') }}">Beranda</a>
+
+                                <a class="dropdown-item" href="{{ route('user.settings') }}">Pengaturan</a>
+
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                   onClick="event.preventDefault(); document.getElementById('logout-form').submit();">Keluar</a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                      style="display: none;">
+                                    @csrf
+                                </form>
+                            </div>
+                        </li>
                     @endguest
-                </div>
+                </ul>
             </div>
         </div>
     </nav>
@@ -74,8 +82,6 @@
         @yield('content')
     </main>
 </div>
-
-@yield('script')
 
 <!-- Bootstrap script -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -87,5 +93,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
+
+@yield('script')
 </body>
 </html>

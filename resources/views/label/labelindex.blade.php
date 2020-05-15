@@ -3,74 +3,54 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            @if(session('success'))
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col">
-                            <div class="d-flex align-items-center justify-content-center">
-                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                    <h4>Peringatan</h4>
-                                    {{ session('success') }}
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endif
-
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
                         <div class="row">
-                            <div class="col-sm-2">
-                                Manajer Label Foto IVA
-                            </div>
-                            <div class="col-sm-10">
-                                <div class="d-flex flex-row justify-content-end">
-                                    <form method="post" action="{{ route('label.search') }}"
-                                          enctype="multipart/form-data">
-                                        {{ csrf_field() }}
-                                        <div class="form-group row">
-                                            <label for="search" class="col-form-label"></label>
-                                            <div class="col">
-                                                <input type="text" class="form-control" id="search" name="search"
-                                                       placeholder="ID entri...">
-                                            </div>
-                                            <button type="submit" class="btn btn-primary">Cari</button>
-                                        </div>
-                                    </form>
-                                </div>
+                            <div class="container">
+                                <span>Manajer Label Foto IVA</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="card-body">
-                        <div class="d-flex flex-row justify-content-between">
-                            <a href="{{ route('home') }}">
-                                <button class="btn btn-outline-dark">Kembali</button>
-                            </a>
-
-                            <div class="d-flex flex-row">
-                                <div class="btn-group mr-2">
-                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false">
-                                        Unduh
-                                    </button>
-
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="{{ route('download.positive.iva') }}">Koleksi
-                                            Foto IVA Positif</a>
-                                        <a class="dropdown-item" href="{{ route('download.negative.iva') }}">Koleksi
-                                            Foto IVA Negatif</a>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <form method="post" action="{{ route('label.search') }}"
+                                      enctype="multipart/form-data">
+                                    {{ csrf_field() }}
+                                    <div class="form-group row">
+                                        <label for="search" class="col-form-label"></label>
+                                        <div class="col">
+                                            <input type="text" class="form-control" id="search" name="search"
+                                                   placeholder="ID entri...">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Cari</button>
                                     </div>
-                                </div>
+                                </form>
+                            </div>
 
-                                <a href="{{ route('file.upload') }}">
-                                    <button class="btn btn-primary">Unggah File</button>
-                                </a>
+                            <div class="col-sm-9">
+                                <div class="d-flex flex-row justify-content-end">
+                                    <div class="btn-group mr-2">
+                                        <button type="button" class="btn btn-primary dropdown-toggle"
+                                                data-toggle="dropdown"
+                                                aria-haspopup="true" aria-expanded="false">
+                                            Unduh
+                                        </button>
+
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="{{ route('download.positive.iva') }}">Koleksi
+                                                Foto IVA Positif</a>
+                                            <a class="dropdown-item" href="{{ route('download.negative.iva') }}">Koleksi
+                                                Foto IVA Negatif</a>
+                                        </div>
+                                    </div>
+
+                                    <a href="{{ route('file.upload') }}">
+                                        <button class="btn btn-primary">Unggah Foto IVA</button>
+                                    </a>
+                                </div>
                             </div>
                         </div>
 
@@ -78,13 +58,13 @@
                             <table class="table table-bordered">
                                 <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Pratinjau</th>
-                                    <th>Deskripsi File</th>
-                                    <th>Label</th>
-                                    <th>Fitur/Artefak</th>
-                                    <th>Komentar</th>
-                                    <th>Aksi</th>
+                                    <th class="text-center">ID</th>
+                                    <th class="text-center">Pratinjau</th>
+                                    <th class="text-center">Deskripsi File</th>
+                                    <th class="text-center">Label</th>
+                                    <th class="text-center">Fitur/Artefak</th>
+                                    <th class="text-center">Komentar</th>
+                                    <th class="text-center">Aksi</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -274,16 +254,29 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="{{ route('label.edit', $file->id) }}" class="text-primary">Edit</a><br>
-                                            <a href="{{ route('label.mark', $file->id) }}" class="text-primary">
-                                                @if(\App\ImageMark::where('filename', $file->filename_post_iva)->value('is_marked') === 0)
-                                                    <span>Tandai</span>
-                                                @else
-                                                    <span>Buang tanda</span>
-                                                @endif
-                                            </a><br>
-                                            <a href="{{ route('label.delete', $file->id) }}"
-                                               class="text-danger">Hapus</a>
+                                            <div class="d-flex justify-content-center">
+                                                <div class="dropdown">
+                                                    <button class="btn btn-secondary dropdown-toggle" type="button"
+                                                            id="dropdownActionButton" data-toggle="dropdown"
+                                                            aria-haspopup="true" aria-expanded="false">
+                                                        Pilih aksi
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownActionButton">
+                                                        <a class="dropdown-item"
+                                                           href="{{ route('label.edit', $file->id) }}">Edit</a>
+                                                        <a class="dropdown-item"
+                                                           href="{{ route('label.mark', $file->id) }}">
+                                                            @if(\App\ImageMark::where('filename', $file->filename_post_iva)->value('is_marked') === 0)
+                                                                <span>Tandai</span>
+                                                            @else
+                                                                <span>Buang tanda</span>
+                                                            @endif
+                                                        </a>
+                                                        <a class="dropdown-item"
+                                                           href="{{ route('label.delete', $file->id) }}">Hapus</a>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -299,4 +292,38 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Pemberitahuan</h5>
+
+                    <button type="button" class="close" data-dismiss="modal" aria-labelledby="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <p id="modalBody"></p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('script')
+    <script type="text/javascript">
+        @if(session()->has('success'))
+        $(window).on('load', function () {
+            $('#modalTitle').html('Pemberitahuan');
+            $('#modalBody').html('{{ session('success') }}');
+            $('#modal').modal('show');
+        });
+        @endif
+    </script>
 @endsection

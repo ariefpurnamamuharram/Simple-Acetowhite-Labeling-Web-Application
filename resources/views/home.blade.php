@@ -12,7 +12,7 @@
                     <h2 class="text-center font-weight-bold">{{ Auth::User()->name }}</h2>
                     <hr>
                     <div class="d-flex flex-row justify-content-center mt-4">
-                        <a href="{{ route('file.upload') }}" class="ml-2 mr-2"><button class="btn btn-outline-dark">Upload Foto IVA</button></a>
+                        <a href="{{ route('file.upload') }}" class="ml-2 mr-2"><button class="btn btn-outline-dark">Unggah Foto IVA</button></a>
                         <a href="{{ route('label.index') }}" class="ml-2 mr-2"><button class="btn btn-outline-dark">Label Foto IVA</button></a>
                     </div>
                 </div>

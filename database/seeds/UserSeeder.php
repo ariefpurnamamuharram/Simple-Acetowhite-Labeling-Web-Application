@@ -16,11 +16,5 @@ class UserSeeder extends Seeder
             'email' => 'ariefpurnamamuharram@gmail.com',
             'password' => Hash::make('11223344'),
         ]);
-
-        DB::table('users')->insert([
-            'name' => 'CerviCam',
-            'email' => 'cervicam.indonesia@gmail.com',
-            'password' => Hash::make('CerviCam2020@IMERI')
-        ]);
     }
 }
