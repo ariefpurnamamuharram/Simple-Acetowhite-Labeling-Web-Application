@@ -137,7 +137,7 @@
                                           placeholder="Masukkan komentar bila ada...">@if(!empty($file->comment)){{ $file->comment }}@endif</textarea>
                             </div>
 
-                            <input name="id" type="hidden" value="{{ $file->id }}">
+                            <input name="filename_post_iva" type="hidden" value="{{ $file->filename_post_iva }}">
 
                             <div class="row mt-4">
                                 <div class="col">
