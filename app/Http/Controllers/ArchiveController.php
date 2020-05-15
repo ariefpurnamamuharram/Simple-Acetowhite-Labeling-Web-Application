@@ -31,7 +31,7 @@ class ArchiveController extends Controller
             return response()->download(public_path($fileName))->deleteFileAfterSend(true);
         }
         else {
-            return view('filenotfound');
+            return view('error.filenotfound');
         }
     }
 
@@ -56,7 +56,7 @@ class ArchiveController extends Controller
 
             return response()->download(public_path($fileName))->deleteFileAfterSend(true);
         } else {
-            return view('filenotfound');
+            return view('error.filenotfound');
         }
     }
 }
