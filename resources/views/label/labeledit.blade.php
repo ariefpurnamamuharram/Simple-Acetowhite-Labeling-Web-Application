@@ -41,11 +41,24 @@
                             @endif
 
                             <div class="form-group mt-4">
-                                <h4>Tandai Foto</h4>
-                                <a href="{{ route('image.mark', $file->filename_post_iva) }}" target="_blank"
-                                   class="btn btn-warning">
-                                    Tandai
-                                </a>
+                                <h4>Tandai Area Foto</h4>
+                                <div class="form-row">
+                                    <div class="d-flex flex-row align-items-center">
+                                        <a href="{{ route('image.mark', $file->filename_post_iva) }}" target="_blank"
+                                           class="btn btn-warning">
+                                            Tandai
+                                        </a>
+                                    </div>
+                                    <div class="d-flex flex-row align-items-center" style="margin-left: 12px;">
+                                        @if(!empty(\App\ImageAreaMark::where('filename', $file->filename_post_iva)->first()))
+                                            <img src="{{ asset('assets/images/correct.png') }}" width="32px"
+                                                 height="32px"/>
+                                        @else
+                                            <img src="{{ asset('assets/images/criss-cross.png') }}" width="32px"
+                                                 height="32px"/>
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="form-group mt-4">

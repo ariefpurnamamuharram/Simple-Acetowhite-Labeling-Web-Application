@@ -26,6 +26,33 @@ class LabelingController extends Controller
         ]));
     }
 
+    public function showPositives()
+    {
+        $files = ImageUpload::orderBy('id', 'DESC')->where('label', 1)->paginate(8);
+
+        return view('label.labelindex', compact([
+            'files'
+        ]));
+    }
+
+    public function showNegatives()
+    {
+        $files = ImageUpload::orderBy('id', 'DESC')->where('label', 0)->paginate(8);
+
+        return view('label.labelindex', compact([
+            'files'
+        ]));
+    }
+
+    public function showNotLabelled()
+    {
+        $files = ImageUpload::orderBy('id', 'DESC')->where('label', 99)->paginate(8);
+
+        return view('label.labelindex', compact([
+            'files'
+        ]));
+    }
+
     public function search(Request $request)
     {
         $file = ImageUpload::where('id', $request->search)->first();

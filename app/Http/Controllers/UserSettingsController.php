@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
-class UserSettings extends Controller
+class UserSettingsController extends Controller
 {
     public function __construct()
     {
@@ -20,42 +20,20 @@ class UserSettings extends Controller
     {
         $validate = Validator::make($request->all(), [
             'name' => 'required',
-            'email' => 'required'
         ]);
 
         if (!empty($validate->passes())) {
-            if ($request->email !== Auth::user()->email) {
-                $validate = Validator::make($request->all(), [
-                    'email' => 'unique:users,email'
-                ]);
+            User::where('id', Auth::user()->id)->first()->update([
+                'name' => $request->name,
+            ]);
 
-                if (!empty($validate->passes())) {
-                    User::where('id', Auth::user()->id)->first()->update([
-                        'name' => $request->name,
-                        'email' => $request->email,
-                    ]);
-
-                    return redirect()
-                        ->back()
-                        ->with('message', 'Data diri Anda berhasil diubah.');
-                } else {
-                    return redirect()
-                        ->back()
-                        ->with('message', 'Email tidak boleh sama dengan pengguna lain');
-                }
-            } else {
-                User::where('id', Auth::user()->id)->first()->update([
-                    'name' => $request->name,
-                ]);
-
-                return redirect()
-                    ->back()
-                    ->with('message', 'Data diri Anda berhasil dibubah.');
-            }
+            return redirect()
+                ->back()
+                ->with('message', 'Data diri Anda berhasil dibubah.');
         } else {
             return redirect()
                 ->back()
-                ->with('message', 'Kolom nama dan email tidak boleh kosong');
+                ->with('message', 'Kolom nama tidak boleh kosong');
         }
     }
 

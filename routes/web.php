@@ -25,7 +25,10 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/label', 'LabelingController@index')->name('label.index');
+Route::get('/label/show-all', 'LabelingController@index')->name('label.index');
+Route::get('/label/show-positive-images', 'LabelingController@showPositives')->name('label.show.positives');
+Route::get('/label/show-negative-images', 'LabelingController@showNegatives')->name('label.show.negatives');
+Route::get('/label/show-not-labelled', 'LabelingController@showNotLabelled')->name('label.show.not.labelled');
 Route::post('/search', 'LabelingController@search')->name('label.search');
 Route::get('/label/edit/{requestid}', 'LabelingController@edit')->name('label.edit');
 Route::get('/upload', 'ImageUploadController@fileUpload')->name('file.upload');
@@ -38,6 +41,6 @@ Route::get('/label/mark/image/mark-area/delete/{requestid}', 'ImageAreaMarkContr
 Route::get('/label/delete/{requestid}', 'LabelingController@delete')->name('label.delete');
 Route::get('/archive/download/positive-iva', 'ArchiveController@downloadZipPositiveIVA')->name('download.positive.iva');
 Route::get('/archive/download/negative-iva', 'ArchiveController@downloadZipNegativeIVA')->name('download.negative.iva');
-Route::get('/user/control', 'UserSettings@index')->name('user.settings');
-Route::post('/user/control/update', 'UserSettings@update')->name('user.update');
-Route::post('/user/control/change-password', 'UserSettings@changePassword')->name('user.change.password');
+Route::get('/user/control', 'UserSettingsController@index')->name('user.settings');
+Route::post('/user/control/update', 'UserSettingsController@update')->name('user.update');
+Route::post('/user/control/change-password', 'UserSettingsController@changePassword')->name('user.change.password');

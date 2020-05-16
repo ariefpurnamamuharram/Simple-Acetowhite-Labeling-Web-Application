@@ -34,6 +34,23 @@
                                 <div class="d-flex flex-row justify-content-end">
                                     <div class="btn-group mr-2">
                                         <button type="button" class="btn btn-primary dropdown-toggle"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Tampilkan
+                                        </button>
+
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="{{ route('label.index') }}">Seluruh Foto</a>
+                                            <a class="dropdown-item" href="{{ route('label.show.positives') }}">Seluruh
+                                                Foto IVA Positif</a>
+                                            <a class="dropdown-item" href="{{ route('label.show.negatives') }}">Seluruh
+                                                Foto IVA Negatif</a>
+                                            <a class="dropdown-item" href="{{ route('label.show.not.labelled') }}">Seluruh
+                                                Foto Belum Dilabel</a>
+                                        </div>
+                                    </div>
+
+                                    <div class="btn-group mr-2">
+                                        <button type="button" class="btn btn-primary dropdown-toggle"
                                                 data-toggle="dropdown"
                                                 aria-haspopup="true" aria-expanded="false">
                                             Unduh
@@ -58,18 +75,27 @@
                             <table class="table table-bordered">
                                 <thead>
                                 <tr>
-                                    <th class="text-center">ID</th>
-                                    <th class="text-center">Pratinjau</th>
-                                    <th class="text-center">Deskripsi File</th>
-                                    <th class="text-center">Label</th>
-                                    <th class="text-center">Komentar</th>
-                                    <th class="text-center">Aksi</th>
+                                    <th class="table-warning text-center">ID</th>
+                                    <th class="table-warning text-center">Pratinjau</th>
+                                    <th class="table-warning text-center">Deskripsi File</th>
+                                    <th class="table-warning text-center">Label</th>
+                                    <th class="table-warning text-center">Komentar</th>
+                                    <th class="table-warning text-center">Aksi</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($files as $file)
                                     <tr>
-                                        <td>
+                                        <td @switch($file->label)
+                                            @case(0)
+                                            class="table-danger"
+                                            @break
+                                            @case(1)
+                                            class="table-success"
+                                            @break
+                                            @default
+                                            class=""
+                                            @endswitch>
                                             <div class="row ml-2 mr-2">
                                                 <span class="text-center">{{ $file->id }}</span><br>
                                             </div>
@@ -83,7 +109,16 @@
                                             @else
                                             @endif
                                         </td>
-                                        <td>
+                                        <td @switch($file->label)
+                                            @case(0)
+                                            class="table-danger"
+                                            @break
+                                            @case(1)
+                                            class="table-success"
+                                            @break
+                                            @default
+                                            class=""
+                                            @endswitch>
                                             <div class="row">
                                                 <div class="col">
                                                     <div class="d-flex flex-row justify-content-center">
@@ -112,7 +147,16 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>
+                                        <td @switch($file->label)
+                                            @case(0)
+                                            class="table-danger"
+                                            @break
+                                            @case(1)
+                                            class="table-success"
+                                            @break
+                                            @default
+                                            class=""
+                                            @endswitch>
                                             <div class="row ml-2 mr-2">
                                             <span><span class="font-weight-bold">Pre IVA: </span>
                                                 @if(empty($file->filename_pre_iva))
@@ -139,7 +183,16 @@
                                                 </span>
                                             </div>
                                         </td>
-                                        <td class="text-center">@switch($file->label)
+                                        <td @switch($file->label)
+                                            @case(0)
+                                            class="table-danger text-center"
+                                            @break
+                                            @case(1)
+                                            class="table-success text-center"
+                                            @break
+                                            @default
+                                            class="text-center"
+                                            @endswitch>@switch($file->label)
                                                 @case(0)
                                                 <span>Negatif</span>
                                                 @break
@@ -153,14 +206,32 @@
                                                 <span style="font-style: italic">Belum dilabel</span>
                                             @endswitch
                                         </td>
-                                        <td>
+                                        <td @switch($file->label)
+                                            @case(0)
+                                            class="table-danger"
+                                            @break
+                                            @case(1)
+                                            class="table-success"
+                                            @break
+                                            @default
+                                            class=""
+                                            @endswitch>
                                             @if(empty($file->comment))
                                                 <span>-</span>
                                             @else
                                                 <span>{{ $file->comment }}</span>
                                             @endif
                                         </td>
-                                        <td>
+                                        <td @switch($file->label)
+                                            @case(0)
+                                            class="table-danger"
+                                            @break
+                                            @case(1)
+                                            class="table-success"
+                                            @break
+                                            @default
+                                            class=""
+                                            @endswitch>
                                             <div class="d-flex justify-content-center">
                                                 <div class="dropdown">
                                                     <button class="btn btn-secondary dropdown-toggle" type="button"

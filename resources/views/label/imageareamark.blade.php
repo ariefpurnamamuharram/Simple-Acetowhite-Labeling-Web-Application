@@ -81,32 +81,42 @@
 
                             <hr/>
 
+                            <!-- Hidden -->
                             <input type="hidden" name="filename" id="filename" value="{{ $requestid }}"/>
 
-                            <div class="form-row">
+                            <!-- Hidden -->
+                            <div class="form-row" style="display: none;">
                                 <div class="col">
                                     <span>Tandai area</span>
                                 </div>
                                 <div class="col">
-                                    <input type="number" class="form-control" name="rectX0" id="rectX0"
+                                    <input type="hidden" class="form-control" name="rectX0" id="rectX0"
                                            placeholder="rectX0">
                                 </div>
                                 <div class="col">
-                                    <input type="number" class="form-control" name="rectY0" id="rectY0"
+                                    <input type="hidden" class="form-control" name="rectY0" id="rectY0"
                                            placeholder="rectY0">
                                 </div>
                                 <div class="col">
-                                    <input type="number" class="form-control" name="rectX1" id="rectX1"
+                                    <input type="hidden" class="form-control" name="rectX1" id="rectX1"
                                            placeholder="rectX1">
                                 </div>
                                 <div class="col">
-                                    <input type="number" class="form-control" name="rectY1" id="rectY1"
+                                    <input type="hidden" class="form-control" name="rectY1" id="rectY1"
                                            placeholder="rectY1">
                                 </div>
                             </div>
 
+                            <div class="form-group row">
+                                <label for="staticMarkArea" class="col-sm-2 col-form-label"><strong>Tandai area
+                                        foto</strong></label>
+                                <div class="col-sm-10">
+                                    <input type="text" readonly class="form-control-plaintext" id="staticMarkArea"
+                                           value="Seleksi area pada gambar untuk menambahkan tanda baru."></div>
+                            </div>
+
                             <div class="form-group">
-                                <label for="imageMarkLabel">Label</label>
+                                <label for="imageMarkLabel" class="col-form-label"><strong>Label</strong></label>
                                 <select class="form-control" id="imageMarkLabel" name="imageMarkLabel">
                                     <option value="0">Lesi Acetowhite</option>
                                     <option value="99">Lainnya</option>
@@ -114,7 +124,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="textDescription">Deskripsi</label>
+                                <label for="textDescription" class="col-form-label"><strong>Deskripsi</strong></label>
                                 <textarea class="form-control" id="textDescription" name="textDescription"
                                           rows="5"></textarea>
                             </div>
