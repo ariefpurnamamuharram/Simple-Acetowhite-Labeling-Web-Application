@@ -1,10 +1,35 @@
 @extends('layouts.app')
 
+@section('style')
+    <style>
+        #canvas {
+            cursor: crosshair;
+        }
+    </style>
+@endsection
+
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8 mt-4">
-                <div class="card">
+            <canvas id="canvas" width="0" height="0"></canvas>
+        </div>
+        <div id="imagePreviewBox" class="row ml-1 mr-1" style="border: 2px dashed #656564; min-height: 240px;">
+            <div class="col">
+                <div style="margin-top: 72px;">
+                    <div class="row justify-content-center">
+                        <p class="text-center">Area Penampil Gambar</p>
+                    </div>
+                    <div class="row justify-content-center">
+                        <button type="button" class="btn btn-warning" onclick="executeCanvas()"
+                                id="btnShowImage">Tampilkan
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col mt-4">
+                <div class="card" id="imageAreaMarkWindow">
                     <div class="card-header">Tandai Area Foto IVA</div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -78,15 +103,6 @@
                                     <input type="number" class="form-control" name="rectY1" id="rectY1"
                                            placeholder="rectY1">
                                 </div>
-                                <div class="col">
-                                    <button type="button" class="btn btn-warning" onclick="executeCanvas()"
-                                            id="btnShowImage">Tampilkan
-                                    </button>
-
-                                    <button type="button" class="btn btn-warning" id="disabledBtnShowImage" disabled
-                                            style="display: none;">Tampilkan
-                                    </button>
-                                </div>
                             </div>
 
                             <div class="form-group">
@@ -100,7 +116,7 @@
                             <div class="form-group">
                                 <label for="textDescription">Deskripsi</label>
                                 <textarea class="form-control" id="textDescription" name="textDescription"
-                                          rows="3"></textarea>
+                                          rows="5"></textarea>
                             </div>
 
                             <div class="d-flex flex-row justify-content-end">
@@ -111,157 +127,156 @@
                 </div>
             </div>
         </div>
-        <div class="row justify-content-center" style="margin-top: 36px">
-            <div class="col-md-8">
-                <h5 class="text-center">Area Penampil Gambar</h5>
-            </div>
-        </div>
-        <div class="row justify-content-center mt-2">
-            <canvas id="canvas"></canvas>
-        </div>
-    </div>
 
-    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalTitle">Pemberitahuan</h5>
+        <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalTitle">Pemberitahuan</h5>
 
-                    <button type="button" class="close" data-dismiss="modal" aria-labelledby="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+                        <button type="button" class="close" data-dismiss="modal" aria-labelledby="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
 
-                <div class="modal-body">
-                    <p id="modalBody"></p>
-                </div>
+                    <div class="modal-body">
+                        <p id="modalBody"></p>
+                    </div>
 
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-@endsection
+        @endsection
 
-@section('script')
-    <script type="text/javascript">
-        var rect = {};
-        var drag = false;
-        var canvas = document.getElementById("canvas");
-        var ctx = canvas.getContext("2d");
-        var img = new Image();
+        @section('script')
+            <script type="text/javascript">
+                var rect = {};
+                var drag = false;
+                var canvas = document.getElementById("canvas");
+                var ctx = canvas.getContext("2d");
+                var img = new Image();
 
-        // Load image.
-        img.src = "{{ url('files/images/iva/'.$requestid) }}";
+                // Create constants.
+                const canvasW = 480;
 
-        // setup canvas.
-        function init() {
-            canvas.width = img.width;
-            canvas.height = img.height;
-            ctx.drawImage(img, 0, 0);
-            canvas.addEventListener('mousedown', mouseDown, false);
-            canvas.addEventListener('mouseup', mouseUp, false);
-            canvas.addEventListener('mousemove', mouseMove, false);
-        }
+                // Load image.
+                img.src = "{{ url('files/images/iva/'.$requestid) }}";
 
-        // Mouse down listener.
-        function mouseDown(e) {
-            rect.startX = e.pageX - this.offsetLeft;
-            rect.startY = e.pageY - this.offsetTop;
-            drag = true;
-        }
+                // setup canvas.
+                function init() {
+                    canvas.width = canvasW;
+                    canvas.height = Math.round(canvasW * img.height / img.width);
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    canvas.addEventListener('mousedown', mouseDown, false);
+                    canvas.addEventListener('mouseup', mouseUp, false);
+                    canvas.addEventListener('mousemove', mouseMove, false);
+                }
 
-        // Mouse up listener.
-        function mouseUp(e) {
-            drag = false;
-        }
+                // Mouse down listener.
+                function mouseDown(e) {
+                    rect.startX = e.pageX - this.offsetLeft;
+                    rect.startY = e.pageY - this.offsetTop;
+                    drag = true;
+                }
 
-        // Mouse move listener.
-        function mouseMove(e) {
-            if (drag) {
-                // Draw rectangle on canvas.
-                ctx.clearRect(0, 0, img.width, img.height);
-                ctx.drawImage(img, 0, 0);
-                rect.w = (e.pageX - this.offsetLeft) - rect.startX;
-                rect.h = (e.pageY - this.offsetTop) - rect.startY;
-                ctx.strokeStyle = '#EFFD5F';
-                ctx.strokeRect(rect.startX, rect.startY, rect.w, rect.h);
+                // Mouse up listener.
+                function mouseUp(e) {
+                    drag = false;
+                }
 
-                // Redraw saved marks if any.
-                @if(!empty($files))
-                redrawMarksOnCanvas()
+                // Mouse move listener.
+                function mouseMove(e) {
+                    if (drag) {
+                        // Draw rectangle on canvas.
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                        rect.w = (e.pageX - this.offsetLeft) - rect.startX;
+                        rect.h = (e.pageY - this.offsetTop) - rect.startY;
+                        ctx.strokeStyle = '#EFFD5F';
+                        ctx.strokeRect(rect.startX, rect.startY, rect.w, rect.h);
+
+                        // Redraw saved marks if any.
+                        @if(!empty($files))
+                        redrawMarksOnCanvas()
+                        @endif
+
+                        // Get scaling factor.
+                        var scalingFactor = Math.round(img.width / canvas.width);
+
+                        // Store x0, y0, x1, and y1 value.
+                        document.getElementById('rectX0').value = rect.startX * scalingFactor;
+                        document.getElementById('rectY0').value = rect.startY * scalingFactor;
+                        document.getElementById('rectX1').value = (e.pageX - this.offsetLeft) * scalingFactor;
+                        document.getElementById('rectY1').value = (e.pageY - this.offsetTop) * scalingFactor;
+                    }
+                }
+
+                // Redraw marks if any.
+                function redrawMarksOnCanvas() {
+                    @foreach($files as $file)
+                    // Create blank drawing area.
+                    var blankCtx = null;
+                    blankCtx = canvas.getContext("2d");
+
+                    // Load x0, y0, x1, and y1 values.
+                    var x0 = '{{ $file->rect_x0 }}';
+                    var y0 = '{{ $file->rect_y0 }}';
+                    var x1 = '{{ $file->rect_x1 }}';
+                    var y1 = '{{ $file->rect_y1 }}';
+
+                    // Get scaling factor.
+                    var scalingFactor = Math.round(img.width / canvas.width);
+
+                    // Draw marks.
+                    blankCtx.strokeStyle = '#EFFD5F';
+                    blankCtx.strokeRect(Math.round(x0 / scalingFactor), Math.round(y0 / scalingFactor), Math.round((x1 - x0) / scalingFactor), Math.round((y1 - y0) / scalingFactor));
+
+                    // Draw mark label.
+                        @switch($file->label)
+                        @case(0)
+                    var markLabel = "ID: {{ $file->id }}; " + "Label: Lesi Acetowhite";
+                        @break
+                        @case(99)
+                    var markLabel = "ID: {{ $file->id }}; " + "Label: Lainnya";
+                        @break
+                        @default
+                    var markLabel = "ID: {{ $file->id }}; " + "Label: Error";
+                    @endswitch
+                        blankCtx.font = "14px Arial";
+                    blankCtx.textBaseline = "bottom";
+                    blankCtx.fillStyle = "black";
+                    blankCtx.fillText(markLabel, Math.round(x0 / scalingFactor), Math.round(y0 / scalingFactor) - 3);
+
+                    // Draw mark description.
+                    blankCtx.font = "12px Arial";
+                    blankCtx.textBaseline = "top";
+                    blankCtx.fillStyle = "black";
+                    blankCtx.fillText("Deskripsi: {{ $file->description }}", Math.round(x0 / scalingFactor), Math.round(y1 / scalingFactor) + 6);
+                    @endforeach
+                }
+
+                function executeCanvas() {
+                    // Initialize canvas.
+                    init();
+
+                    // Load saved marks if any.
+                    @if(!empty($files))
+                    redrawMarksOnCanvas()
+                    @endif
+
+                    // Hide imageViewBody.
+                    document.getElementById('imagePreviewBox').style.display = "none";
+                }
+
+                @if(session()->has('message'))
+                $(window).on('load', function () {
+                    $('#modalTitle').html('Pemberitahuan');
+                    $('#modalBody').html('{{ session('message') }}');
+                    $('#modal').modal('show');
+                });
                 @endif
-
-                // Store x0, y0, x1, and y1 value.
-                document.getElementById('rectX0').value = rect.startX;
-                document.getElementById('rectY0').value = rect.startY;
-                document.getElementById('rectX1').value = e.pageX - this.offsetLeft;
-                document.getElementById('rectY1').value = e.pageY - this.offsetTop;
-            }
-        }
-
-        // Redraw marks if any.
-        function redrawMarksOnCanvas() {
-            @foreach($files as $file)
-            // Create blank drawing area.
-            var blankCtx = null;
-            blankCtx = canvas.getContext("2d");
-
-            // Load x0, y0, x1, and y1 values.
-            var x0 = '{{ $file->rect_x0 }}';
-            var y0 = '{{ $file->rect_y0 }}';
-            var x1 = '{{ $file->rect_x1 }}';
-            var y1 = '{{ $file->rect_y1 }}';
-
-            // Draw marks.
-            blankCtx.strokeStyle = '#EFFD5F';
-            blankCtx.strokeRect(x0, y0, x1 - x0, y1 - y0);
-
-            // Draw mark label.
-                @switch($file->label)
-                @case(0)
-            var markLabel = "ID: {{ $file->id }}; " + "Label: Lesi Acetowhite";
-                @break
-                @case(99)
-            var markLabel = "ID: {{ $file->id }}; " + "Label: Lainnya";
-                @break
-                @default
-            var markLabel = "ID: {{ $file->id }}; " + "Label: Error";
-            @endswitch
-                blankCtx.font = "16px Arial";
-            blankCtx.textBaseline = "bottom";
-            blankCtx.fillStyle = "black";
-            blankCtx.fillText(markLabel, x0, y0);
-
-            // Draw mark description.
-            blankCtx.font = "14px Arial";
-            blankCtx.textBaseline = "bottom";
-            blankCtx.fillStyle = "black";
-            blankCtx.fillText("Deskripsi: {{ $file->description }}", x0, y1);
-            @endforeach
-        }
-
-        function executeCanvas() {
-            // Initialize canvas.
-            init();
-
-            // Load saved marks if any.
-            @if(!empty($files))
-            redrawMarksOnCanvas()
-            @endif
-
-            // Disable image show button.
-            document.getElementById('btnShowImage').style.display = "none";
-            document.getElementById('disabledBtnShowImage').style.display = "block";
-        }
-
-        @if(session()->has('message'))
-        $(window).on('load', function () {
-            $('#modalTitle').html('Pemberitahuan');
-            $('#modalBody').html('{{ session('message') }}');
-            $('#modal').modal('show');
-        });
-        @endif
-    </script>
+            </script>
 @endsection
