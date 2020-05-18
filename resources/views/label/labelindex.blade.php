@@ -39,14 +39,19 @@
                                         </button>
 
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="{{ route('label.index') }}">Seluruh Foto</a>
-                                            <a class="dropdown-item" href="{{ route('label.show.positives') }}">Seluruh
+                                            <a class="dropdown-item" href="{{ route('label.index') }}">Semua Foto</a>
+                                            <a class="dropdown-item" href="{{ route('label.show.positives') }}">Semua
                                                 Foto IVA Positif</a>
-                                            <a class="dropdown-item" href="{{ route('label.show.negatives') }}">Seluruh
+                                            <a class="dropdown-item" href="{{ route('label.show.negatives') }}">Semua
                                                 Foto IVA Negatif</a>
-                                            <a class="dropdown-item" href="{{ route('label.show.not.labelled') }}">Seluruh
+                                            <a class="dropdown-item" href="{{ route('label.show.not.labelled') }}">Semua
                                                 Foto Belum Dilabel</a>
                                         </div>
+                                    </div>
+
+                                    <div class="mr-2">
+                                        <a role="button" class="btn btn-primary" href="#" data-toggle="modal"
+                                           data-target="#modalStatistics">Statistik</a>
                                     </div>
 
                                     <div class="btn-group mr-2">
@@ -63,10 +68,6 @@
                                                 Foto IVA Negatif</a>
                                         </div>
                                     </div>
-
-                                    <a href="{{ route('file.upload') }}">
-                                        <button class="btn btn-primary">Unggah Foto IVA</button>
-                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -199,9 +200,6 @@
                                                 @case(1)
                                                 <span>Positif</span>
                                                 @break
-                                                @case(98)
-                                                <span style="font-style: italic">Undeterminate</span>
-                                                @break
                                                 @default
                                                 <span style="font-style: italic">Belum dilabel</span>
                                             @endswitch
@@ -284,6 +282,62 @@
 
                 <div class="modal-body">
                     <p id="modalBody"></p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalStatistics" tabindex="-1" role="dialog" aria-labelledby="modalStatisticsTitle"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalStatisticsTitle">Statistik</h5>
+
+                    <button type="button" class="close" data-dismiss="modal" aria-labelledby="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <span>Total data:</span>
+                            </div>
+                            <div class="col-sm-7">
+                                <span>{{ count(\App\ImageUpload::get()) }} foto</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <span>Total foto IVA positif:</span>
+                            </div>
+                            <div class="col-sm-7">
+                                <span>{{ count(\App\ImageUpload::where('label', 1)->get()) }} foto</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <span>Total foto IVA negatif:</span>
+                            </div>
+                            <div class="col-sm-7">
+                                <span>{{ count(\App\ImageUpload::where('label', 0)->get()) }} foto</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <span>Total foto belum dilabel:</span>
+                            </div>
+                            <div class="col-sm-7">
+                                <span>{{ count(\App\ImageUpload::where('label', 99)->get()) }} foto</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="modal-footer">
