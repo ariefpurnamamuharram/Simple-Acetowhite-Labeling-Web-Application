@@ -14,7 +14,6 @@ class ImageArtifact extends Model
         'cbSlime',
         'cbFluorAlbus',
         'cbCervicitis',
-        'cbCarcinoma',
         'cbPolyp',
         'cbOvulaNabothi',
         'cbEctropion'

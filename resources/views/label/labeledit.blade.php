@@ -77,7 +77,7 @@
                             </div>
 
                             <div class="form-group mt-4">
-                                <h4>Fitur/Artefak Foto</h4>
+                                <h4>Temuan Lain</h4>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="cbMetaplasiaRing"
                                            name="cbMetaplasiaRing"
@@ -116,12 +116,6 @@
                                            name="cbCervicitis"
                                            @if(empty($artifact)) @else @if($artifact->cbCervicitis == 1) checked=checked @endif @endif>
                                     <label class="form-check-label" for="cbCervicitis">Servisitis</label>
-                                </div>
-
-                                <div class="form-check mt-1">
-                                    <input class="form-check-input" type="checkbox" id="cbCarcinoma" name="cbCarcinoma"
-                                           @if(empty($artifact)) @else @if($artifact->cbCarcinoma == 1) checked=checked @endif @endif>
-                                    <label class="form-check-label" for="cbCarcinoma">Karsinoma</label>
                                 </div>
 
                                 <div class="form-check mt-1">

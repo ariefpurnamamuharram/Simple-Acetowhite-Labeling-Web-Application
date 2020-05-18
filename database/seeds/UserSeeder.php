@@ -11,10 +11,24 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
-            'name' => 'Arief Purnama Muharram',
-            'email' => 'ariefpurnamamuharram@gmail.com',
-            'password' => Hash::make('11223344'),
-        ]);
+        /*
+         * Modify this variable to add new user.
+         * Flush the database using php artisan db:seed --class=UserSeeder command.
+         */
+        $users = [
+            [
+                'name' => 'Arief Purnama Muharram',
+                'email' => 'ariefpurnamamuharram@gmail.com',
+                'password' => '11223344',
+            ],
+        ];
+
+        foreach ($users as $user) {
+            DB::table('users')->insert([
+                'name' => $user['name'],
+                'email' => $user['email'],
+                'password' => Hash::make($user['password']),
+            ]);
+        }
     }
 }

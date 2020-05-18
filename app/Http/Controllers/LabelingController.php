@@ -132,7 +132,6 @@ class LabelingController extends Controller
             'cbSlime' => $this->getImageArtifactValue($request->has('cbSlime')),
             'cbFluorAlbus' => $this->getImageArtifactValue($request->has('cbFluorAlbus')),
             'cbCervicitis' => $this->getImageArtifactValue($request->has('cbCervicitis')),
-            'cbCarcinoma' => $this->getImageArtifactValue($request->has('cbCarcinoma')),
             'cbPolyp' => $this->getImageArtifactValue($request->has('cbPolyp')),
             'cbOvulaNabothi' => $this->getImageArtifactValue($request->has('cbOvulaNabothi')),
             'cbEctropion' => $this->getImageArtifactValue($request->has('cbEctropion'))

@@ -55,7 +55,6 @@ class ImageUploadController extends Controller
             'cbSlime'=> false,
             'cbFluorAlbus' => false,
             'cbCervicitis' => false,
-            'cbCarcinoma' => false,
             'cbPolyp' => false,
             'cbOvulaNabothi' => false,
             'cbEctropion' => false

@@ -22,7 +22,6 @@ class CreateImageArtifactsMigration extends Migration
             $table->boolean('cbSlime');
             $table->boolean('cbFluorAlbus');
             $table->boolean('cbCervicitis');
-            $table->boolean('cbCarcinoma');
             $table->boolean('cbPolyp');
             $table->boolean('cbOvulaNabothi');
             $table->boolean('cbEctropion');
