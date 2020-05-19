@@ -9,11 +9,15 @@
 
                     <div class="card-body">
                         <span>Silakan unggah file foto pemeriksaan IVA Anda disini.</span>
-                        <form method="post" action="{{ route('file.store') }}" enctype="multipart/form-data" class="dropzone mt-2" id="dropzone">
+                        <form method="post" action="{{ route('file.store') }}" enctype="multipart/form-data"
+                              class="dropzone mt-2" id="dropzone">
                             {{ csrf_field() }}
                         </form>
+                        <span style="font-size: 0.85em;">(Maksimal 100 file setiap kali permintaan unggahan, maksimal ukuran setiap file 12 mb.)</span>
                         <div class="d-flex justify-content-start mt-4">
-                            <a href="{{ route('home') }}"><button type="button" class="btn btn-outline-dark">Kembali</button></a>
+                            <a href="{{ route('home') }}">
+                                <button type="button" class="btn btn-outline-dark">Kembali</button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -27,18 +31,18 @@
 <script type="text/javascript">
     Dropzone.options.dropzone = {
         maxFilesize: 12,
-        renameFile: function(file) {
+        renameFile: function (file) {
             var dt = new Date();
             var time = dt.getTime();
-            return time+"_"+file.name;
+            return time + "_" + file.name;
         },
         acceptedFiles: ".jpeg,.jpg,.png",
         addRemoveLinks: false,
-        timeout: 50000,
-        success: function(file, response) {
+        timeout: 500000,
+        success: function (file, response) {
             console.log(response);
         },
-        error: function(file, response) {
+        error: function (file, response) {
             return false;
         }
     }
