@@ -25,8 +25,8 @@
         </div>
     </div>
 @endsection
-<!-- Dropzone -->
 
+<!-- Dropzone -->
 <script src="{{ asset('dropzone/js/dropzone.js') }}"></script>
 <script type="text/javascript">
     Dropzone.options.dropzone = {
