@@ -13,7 +13,7 @@
                               class="dropzone mt-2" id="dropzone">
                             {{ csrf_field() }}
                         </form>
-                        <span style="font-size: 0.85em;">(Maksimal 100 file setiap kali permintaan unggahan, maksimal ukuran setiap file 12 mb.)</span>
+                        <span style="font-size: 0.85em;">(Disarankan maksimal 10 file setiap unggahan, maksimal ukuran setiap file 12 mb.)</span>
                         <div class="d-flex justify-content-start mt-4">
                             <a href="{{ route('home') }}">
                                 <button type="button" class="btn btn-outline-dark">Kembali</button>
