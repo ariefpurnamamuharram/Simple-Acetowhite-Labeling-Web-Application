@@ -3,24 +3,29 @@
 namespace App\Http\Controllers;
 
 use App\ImageUpload;
-use Illuminate\Http\Request;
 use File;
+use Illuminate\Http\Request;
 use ZipArchive;
 
 class ArchiveController extends Controller
 {
-    public function downloadZipPositiveIVA() {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    public function downloadZipPositiveIVA()
+    {
         $zip = new ZipArchive;
 
         $fileName = 'download-iva-positive.zip';
 
         $files = ImageUpload::where('label', 1)->get();
 
-        if(!$files->isEmpty()) {
-            if ($zip->open(public_path($fileName), ZipArchive::CREATE || ZipArchive::OVERWRITE) === TRUE)
-            {
+        if (!$files->isEmpty()) {
+            if ($zip->open(public_path($fileName), ZipArchive::CREATE || ZipArchive::OVERWRITE) === TRUE) {
                 foreach ($files as $key => $value) {
-                    $item = public_path('files/images/iva/'.$value->filename_post_iva);
+                    $item = public_path('files/images/iva/' . $value->filename_post_iva);
                     $relativeNameInZipFile = basename($item);
                     $zip->addFile($item, $relativeNameInZipFile);
                 }
@@ -29,24 +34,23 @@ class ArchiveController extends Controller
             }
 
             return response()->download(public_path($fileName))->deleteFileAfterSend(true);
-        }
-        else {
+        } else {
             return view('error.filenotfound');
         }
     }
 
-    public function downloadZipNegativeIVA() {
+    public function downloadZipNegativeIVA()
+    {
         $zip = new ZipArchive;
 
         $fileName = 'download-iva-negative.zip';
 
         $files = ImageUpload::where('label', 0)->get();
 
-        if(!$files->isEmpty()) {
-            if ($zip->open(public_path($fileName), ZipArchive::CREATE || ZipArchive::OVERWRITE) === TRUE)
-            {
+        if (!$files->isEmpty()) {
+            if ($zip->open(public_path($fileName), ZipArchive::CREATE || ZipArchive::OVERWRITE) === TRUE) {
                 foreach ($files as $key => $value) {
-                    $item = public_path('files/images/iva/'.$value->filename_post_iva);
+                    $item = public_path('files/images/iva/' . $value->filename_post_iva);
                     $relativeNameInZipFile = basename($item);
                     $zip->addFile($item, $relativeNameInZipFile);
                 }
