@@ -22,7 +22,7 @@ curl \
     -X GET \
     -H "Accept: application/json" \
     -H "Authorization: Bearer XXX" \
-    http://localhost:8000/api/download-iva-positive \
+    http://localhost/api/download-iva-positive \
     --output file.zip
 ```
 Ganti `XXX` dengan API Token Anda.
@@ -33,7 +33,7 @@ curl \
     -X GET \
     -H "Accept: application/json" \
     -H "Authorization: Bearer XXX" \
-    http://localhost:8000/api/download-iva-negative \
+    http://localhost/api/download-iva-negative \
     --output file.zip
 ```
 Ganti `XXX` dengan API Token Anda.
