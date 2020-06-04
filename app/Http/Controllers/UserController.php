@@ -8,12 +8,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
-class UserSettingsController extends Controller
+class UserController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
+    }
+
+    public function index()
+    {
+        return view('user.index');
     }
 
     public function update(Request $request): RedirectResponse
@@ -58,8 +64,25 @@ class UserSettingsController extends Controller
         }
     }
 
-    public function index()
+    public function generateApiToken(Request $request): RedirectResponse
     {
-        return view('user.index');
+        User::where('email', Auth::user()->email)->first()->update([
+            'api_token' => Str::random(60),
+        ]);
+
+        return redirect()
+            ->back()
+            ->with('message', 'API Token berhasil dihasilkan!');
+    }
+
+    public function revokeApiToken(Request $request): RedirectResponse
+    {
+        User::where('email', Auth::user()->email)->first()->update([
+            'api_token' => null,
+        ]);
+
+        return redirect()
+            ->back()
+            ->with('message', 'API Token berhasil dihapus!');
     }
 }

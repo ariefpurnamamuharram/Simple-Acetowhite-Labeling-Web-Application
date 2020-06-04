@@ -41,6 +41,8 @@ Route::get('/label/mark/image/mark-area/delete/{requestid}', 'ImageAreaMarkContr
 Route::get('/label/delete/{requestid}', 'LabelingController@delete')->name('label.delete');
 Route::get('/archive/download/positive-iva', 'ArchiveController@downloadZipPositiveIVA')->name('download.positive.iva');
 Route::get('/archive/download/negative-iva', 'ArchiveController@downloadZipNegativeIVA')->name('download.negative.iva');
-Route::get('/user/control', 'UserSettingsController@index')->name('user.settings');
-Route::post('/user/control/update', 'UserSettingsController@update')->name('user.update');
-Route::post('/user/control/change-password', 'UserSettingsController@changePassword')->name('user.change.password');
+Route::get('/user/control', 'UserController@index')->name('user.settings');
+Route::post('/user/control/update', 'UserController@update')->name('user.update');
+Route::post('/user/control/change-password', 'UserController@changePassword')->name('user.change.password');
+Route::post('/user/generate-api-token', 'UserController@generateApiToken')->name('user.generate.api.token');
+Route::post('/user/revoke-api-token', 'UserController@revokeApiToken')->name('user.revoke.api.token');

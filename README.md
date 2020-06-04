@@ -11,3 +11,29 @@ Repositori ini berisi prototipe aplikasi web sederhana untuk membantu melabeli l
 ![Label Management](screenshot3.png)
 
 ![Label Management](screenshot4.png)
+
+## API Support
+![API Support](screenshot5.png)
+
+### Daftar Akses API
+- Download koleksi foto IVA positif
+```
+curl \
+    -X GET \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer XXX" \
+    http://localhost:8000/api/download-iva-positive \
+    --output file.zip
+```
+Ganti `XXX` dengan API Token Anda.
+
+- Download koleksi foto IVA negatif
+```
+curl \
+    -X GET \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer XXX" \
+    http://localhost:8000/api/download-iva-negative \
+    --output file.zip
+```
+Ganti `XXX` dengan API Token Anda.

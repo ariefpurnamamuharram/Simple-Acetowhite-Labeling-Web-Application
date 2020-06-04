@@ -6,11 +6,11 @@ use App\ImageUpload;
 use File;
 use ZipArchive;
 
-class ArchiveController extends Controller
+class ApiRequestController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth:api');
     }
 
     public function downloadZipPositiveIVA()
@@ -34,7 +34,9 @@ class ArchiveController extends Controller
 
             return response()->download(public_path($fileName))->deleteFileAfterSend(true);
         } else {
-            return view('error.filenotfound');
+            return response()->json([
+                'message' => 'File not found!'
+            ]);
         }
     }
 
@@ -59,7 +61,10 @@ class ArchiveController extends Controller
 
             return response()->download(public_path($fileName))->deleteFileAfterSend(true);
         } else {
-            return view('error.filenotfound');
+            return response()
+                ->json([
+                    'message' => 'File not found!'
+                ]);
         }
     }
 }
