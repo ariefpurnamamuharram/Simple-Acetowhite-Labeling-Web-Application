@@ -14,6 +14,9 @@ class ApiRequestController extends Controller
         $this->middleware('auth:api');
     }
 
+    private const LABEL_IVA_POSITIVE = 'positive';
+    private const LABEL_IVA_NEGATIVE = 'negative';
+
     public function downloadZipPositiveIVA()
     {
         $zip = new ZipArchive;
@@ -38,7 +41,7 @@ class ApiRequestController extends Controller
                     }
                     array_push($data_json, [
                         'name' => $name,
-                        'label' => 'positive',
+                        'label' => self::LABEL_IVA_POSITIVE,
                         'bounding_box' => $bounding_boxes,
                     ]);
                 }
@@ -87,7 +90,7 @@ class ApiRequestController extends Controller
                     }
                     array_push($data_json, [
                         'name' => $name,
-                        'label' => 'positive',
+                        'label' => self::LABEL_IVA_NEGATIVE,
                         'bounding_box' => $bounding_boxes,
                     ]);
                 }
