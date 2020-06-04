@@ -8,6 +8,7 @@ use App\ImageUpload;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
 class LabelingController extends Controller
@@ -171,9 +172,14 @@ class LabelingController extends Controller
 
     public function delete($request): RedirectResponse
     {
+        // Delete physical file.
+        File::delete(public_path('files/images/iva/' . $request));
+
+        // Delete record.
         ImageUpload::where('filename_post_iva', $request)->first()->delete();
         ImageArtifact::where('filename', $request)->first()->delete();
 
+        // Return response
         return redirect()
             ->back()
             ->withSuccess(sprintf("Data berhasil dihapus"));
