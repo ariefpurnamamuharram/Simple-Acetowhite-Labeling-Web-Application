@@ -111,7 +111,7 @@
                 <div class="modal-body">
                     <h3 class="text-center">Simple Acetowhite Labeling</h3>
                     <p class="text-center">Sistem Manajemen Koleksi Foto Pemeriksaan IVA Serviks</p>
-                    <p class="text-center">Versi 2020.01.02-beta01<br>Dirilis pada bulan Juni 2020</p>
+                    <p class="text-center">Versi 2020.01<br>Dirilis pada bulan Juni 2020</p>
                     <p class="text-center"><strong>Dibuat oleh</strong><br><a class="text-dark"
                                                                               href="http://linkedin.com/in/ariefpurnamamuharram"
                                                                               target="_blank">Arief Purnama Muharram</a>
