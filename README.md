@@ -1,4 +1,7 @@
 # Simple Acetowhite Labeling Web Application
+![Stable version](https://img.shields.io/badge/Stable_version-2020.01-yellowgreen.svg)
+![Release Date](https://img.shields.io/badge/Release_date-June_2020-yellow.svg)
+
 Repositori ini berisi aplikasi web sederhana untuk membantu melabeli lesi _acetowhite_ pada foto pemeriksaan IVA (inspeksi visual asam asetat) serviks. Aplikasi web ini ini dibangun dengan menggunakan _framework_ Laravel. Kode sumber program ini ditulis oleh **Arief Purnama Muharram**.
 
 ## Panduan Instalasi
@@ -49,7 +52,7 @@ Ganti `XXX` dengan API Token Anda.
 Tim riset CerviCam:
 1. Dr. dr. Hariyono Winarto, Sp.OG(K).
 2. dr. Anindya Pradipta Susanto, B.Eng., MM.
-3. Ucca Ratulangi Widitha, S.Ked.
+3. Ucca Ratulangi Widitha, S.Ked., B.Med.Sci.
 4. Alessa Fahira, S.Ked.
 5. Arief Purnama Muharram, S.Ked.
 6. Harits Abdurrahman, S.Kom.
