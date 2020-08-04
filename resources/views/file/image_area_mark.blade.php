@@ -13,6 +13,7 @@
         <div class="row justify-content-center">
             <canvas id="canvas" width="0" height="0"></canvas>
         </div>
+
         <div id="imagePreviewBox" class="row ml-1 mr-1" style="border: 2px dashed #656564; min-height: 240px;">
             <div class="col">
                 <div style="margin-top: 72px;">
@@ -27,17 +28,20 @@
                 </div>
             </div>
         </div>
+
         <div class="row justify-content-center">
             <div class="col mt-4">
-                <div class="card" id="imageAreaMarkWindow">
-                    <div class="card-header">Tandai Area Foto IVA</div>
+                <div class="card shadow-sm" id="imageAreaMarkWindow">
+                    <div class="card-header" style="background-color: #FF357C!important;">
+                        <span class="text-white">Tandai Area Foto IVA</span>
+                    </div>
+
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered">
                                 <thead>
                                 <tr>
                                     <th class="text-center">ID</th>
-                                    <th class="text-center">Posisi Marka (x0, y0, x1, y1)</th>
                                     <th class="text-center">Label</th>
                                     <th class="text-center">Deskripsi</th>
                                     <th class="text-center">Aksi</th>
@@ -47,8 +51,6 @@
                                 @foreach($files as $file)
                                     <tr>
                                         <td class="text-center align-middle"><span>{{ $file->id }}</span></td>
-                                        <td class="text-center align-middle"><span>{{ $file->rect_x0 }}, {{ $file->rect_y0 }}, {{ $file->rect_x1 }}, {{ $file->rect_y1 }}</span>
-                                        </td>
                                         <td class="text-center align-middle">
                                             @switch($file->label)
                                                 @case(0)
@@ -107,54 +109,42 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
-                                <label for="staticMarkArea" class="col-sm-2 col-form-label"><strong>Tandai area
-                                        foto</strong></label>
-                                <div class="col-sm-10">
-                                    <input type="text" readonly class="form-control-plaintext" id="staticMarkArea"
-                                           value="Seleksi area pada gambar untuk menambahkan tanda baru."></div>
+                            <div class="form-group">
+                                <label for="staticMarkArea" class="col-form-label">
+                                    <strong>Tandai area foto</strong>
+                                </label>
+
+                                <input type="text" readonly class="form-control-plaintext" id="staticMarkArea"
+                                       value="Seleksi area pada gambar untuk menambahkan tanda baru.">
                             </div>
 
                             <div class="form-group">
                                 <label for="imageMarkLabel" class="col-form-label"><strong>Label</strong></label>
-                                <select class="form-control" id="imageMarkLabel" name="imageMarkLabel">
+
+                                <select class="form-control @error('imageMarkLabel') is-invalid @enderror"
+                                        id="imageMarkLabel" name="imageMarkLabel">
+                                    <option selected disabled>-- Pilih Label Temuan --</option>
+
                                     <option value="0">Lesi Acetowhite</option>
+
                                     <option value="99">Lainnya</option>
                                 </select>
+
+                                <span class="invalid-feedback"
+                                      role="alert">{{ $errors->first('imageMarkLabel') }}</span>
                             </div>
 
                             <div class="form-group">
                                 <label for="textDescription" class="col-form-label"><strong>Deskripsi</strong></label>
+
                                 <textarea class="form-control" id="textDescription" name="textDescription"
-                                          rows="5"></textarea>
+                                          rows="5" placeholder="Tambahkan deskripsi temuan jika ada"></textarea>
                             </div>
 
                             <div class="d-flex flex-row justify-content-end">
                                 <button class="btn btn-warning">Simpan</button>
                             </div>
                         </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modalTitle">Pemberitahuan</h5>
-
-                        <button type="button" class="close" data-dismiss="modal" aria-labelledby="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-                    <div class="modal-body">
-                        <p id="modalBody"></p>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>

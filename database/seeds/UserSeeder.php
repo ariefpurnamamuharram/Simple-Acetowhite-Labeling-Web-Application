@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -18,9 +20,9 @@ class UserSeeder extends Seeder
          */
         $users = [
             [
-                'name' => '',
-                'email' => '',
-                'password' => '',
+                'name' => 'CerviCam Administrator',
+                'email' => 'administrator.cervicam@cervicam.com',
+                'password' => 'cervicam2020',
             ],
         ];
 

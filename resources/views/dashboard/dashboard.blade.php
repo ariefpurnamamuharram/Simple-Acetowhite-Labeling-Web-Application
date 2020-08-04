@@ -44,10 +44,10 @@
                                 @foreach($files as $file)
                                     <tr @switch($file->label)
                                         @case(0)
-                                        class="table-danger"
+                                        class="table-success"
                                         @break
                                         @case(1)
-                                        class="table-success"
+                                        class="table-danger"
                                         @break
                                         @default
                                         class=""
@@ -117,10 +117,12 @@
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownActionButton">
                                                         <a class="dropdown-item"
-                                                           href="{{ route('file.edit', $file->filename_post_iva) }}">Edit</a>
+                                                           href="{{ route('file.edit', $file->filename_post_iva) }}">
+                                                            Edit Label Foto
+                                                        </a>
 
                                                         <a class="dropdown-item disabled" href="#">
-                                                            Hapus
+                                                            Hapus Foto
                                                         </a>
                                                     </div>
                                                 </div>
