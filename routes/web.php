@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,35 +15,76 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes([
-    // Disable register.
     'register' => false,
-
-    // Disable password reset.
     'reset' => false
 ]);
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/label/show-all', 'LabelingController@index')->name('label.index');
-Route::get('/label/show-positive-images', 'LabelingController@showPositives')->name('label.show.positives');
-Route::get('/label/show-negative-images', 'LabelingController@showNegatives')->name('label.show.negatives');
-Route::get('/label/show-not-labelled', 'LabelingController@showNotLabelled')->name('label.show.not.labelled');
-Route::post('/search', 'LabelingController@search')->name('label.search');
-Route::get('/label/edit/{requestid}', 'LabelingController@edit')->name('label.edit');
-Route::get('/upload', 'ImageUploadController@fileUpload')->name('file.upload');
-Route::post('/upload/store', 'ImageUploadController@fileStore')->name('file.store');
-Route::post('/label/update', 'LabelingController@update')->name('label.update');
-Route::get('/label/mark/{requestid}', 'LabelingController@mark')->name('label.mark');
-Route::get('/label/mark/image/mark-area/{requestid}', 'ImageAreaMarkController@index')->name('image.mark');
-Route::post('/label/mark/image/mark-area/store', 'ImageAreaMarkController@store')->name('image.mark.store');
-Route::get('/label/mark/image/mark-area/delete/{requestid}', 'ImageAreaMarkController@delete')->name('image.mark.delete');
-Route::get('/label/delete/{requestid}', 'LabelingController@delete')->name('label.delete');
-Route::get('/archive/download/positive-iva', 'ArchiveController@downloadZipPositiveIVA')->name('download.positive.iva');
-Route::get('/archive/download/negative-iva', 'ArchiveController@downloadZipNegativeIVA')->name('download.negative.iva');
-Route::get('/user/control', 'UserController@index')->name('user.settings');
-Route::post('/user/control/update', 'UserController@update')->name('user.update');
-Route::post('/user/control/change-password', 'UserController@changePassword')->name('user.change.password');
-Route::post('/user/generate-api-token', 'UserController@generateApiToken')->name('user.generate.api.token');
-Route::post('/user/revoke-api-token', 'UserController@revokeApiToken')->name('user.revoke.api.token');
+Route::get('/', 'WelcomeController@index')->name('welcome');
+
+
+/*
+|--------------------------------------------------------------------------
+| Dashboard Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/dashboard/all', 'DashboardController@index')->name('dashboard');
+Route::get('/dashboard/positives', 'DashboardController@showPositives')->name('dashboard.show.positives');
+Route::get('/dashboard/negatives', 'DashboardController@showNegatives')->name('dashboard.show.negatives');
+Route::get('/dashboard/not-labelled', 'DashboardController@showNotLabelled')->name('dashboard.show.not.labelled');
+
+
+/*
+|--------------------------------------------------------------------------
+| File Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::post('/file/update', 'DashboardController@update')->name('file.update');
+Route::get('/file/edit/{requestid}', 'DashboardController@edit')->name('file.edit');
+Route::get('/file/delete/{requestid}', 'DashboardController@delete')->name('file.delete');
+Route::get('/file/mark-area/{requestid}', 'ImageAreaMarkController@index')->name('image.mark');
+Route::get('/file/mark-area/delete/{requestid}', 'ImageAreaMarkController@delete')->name('image.mark.delete');
+Route::post('/file/mark-area/store', 'ImageAreaMarkController@store')->name('image.mark.store');
+
+
+/*
+|--------------------------------------------------------------------------
+| Upload Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/upload', 'FileUploadController@fileUpload')->name('file.upload');
+Route::post('/upload/store', 'FileUploadController@fileStore')->name('file.store');
+
+
+/*
+|--------------------------------------------------------------------------
+| Archive Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/archive/download/positives', 'ArchiveController@downloadPositives')->name('download.positives');
+Route::get('/archive/download/negatives', 'ArchiveController@downloadNegatives')->name('download.negatives');
+
+
+/*
+|--------------------------------------------------------------------------
+| Search Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::post('/search', 'SearchController@search')->name('file.search');
+
+
+/*
+|--------------------------------------------------------------------------
+| User Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/user/my', 'UserController@index')->name('user.settings');
+Route::post('/user/my/update', 'UserController@update')->name('user.update');
+Route::post('/user/my/change-password', 'PasswordController@changePassword')->name('password.change');
+Route::post('/user/my/generate-api-token', 'UserController@generateApiToken')->name('user.generate.api.token');
+Route::post('/user/my/revoke-api-token', 'UserController@revokeApiToken')->name('user.revoke.api.token');

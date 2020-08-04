@@ -12,7 +12,7 @@
                         <span>File tidak ditemukan</span>
                     </div>
                     <div class="d-flex flex-row mt-3">
-                        <a href="{{ route('label.index') }}"><button class="btn btn-outline-dark">Kembali</button></a>
+                        <a href="{{ route('file.index') }}"><button class="btn btn-outline-dark">Kembali</button></a>
                     </div>
                 </div>
             </div>

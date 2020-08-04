@@ -8,7 +8,7 @@
                     <div class="card-header">Edit Foto IVA</div>
 
                     <div class="card-body">
-                        <form action="{{ route('label.update') }}" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('file.update') }}" method="post" enctype="multipart/form-data">
                             {{ csrf_field() }}
 
                             <div class="row col">
@@ -149,7 +149,7 @@
                             <div class="row mt-4">
                                 <div class="col">
                                     <div class="d-flex flex-row justify-content-between">
-                                        <a href="{{ route('label.index') }}">
+                                        <a href="{{ route('dashboard') }}">
                                             <button type="button" class="btn btn-outline-dark">Kembali</button>
                                         </a>
                                         <button type="submit" class="btn btn-warning">Simpan</button>

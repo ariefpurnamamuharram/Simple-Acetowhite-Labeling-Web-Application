@@ -14,7 +14,7 @@ class ImageAreaMark extends Model
         'rect_y0',
         'rect_x1',
         'rect_y1',
-        'label',
+        'file',
         'description'
     ];
 }

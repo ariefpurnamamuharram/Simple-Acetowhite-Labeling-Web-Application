@@ -6,7 +6,6 @@ use App\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -19,7 +18,7 @@ class UserController extends Controller
 
     public function index()
     {
-        return view('user.index');
+        return view('user.user_profile');
     }
 
     public function update(Request $request): RedirectResponse
@@ -40,27 +39,6 @@ class UserController extends Controller
             return redirect()
                 ->back()
                 ->with('message', 'Kolom nama tidak boleh kosong');
-        }
-    }
-
-    public function changePassword(Request $request): RedirectResponse
-    {
-        $validate = Validator::make($request->all(), [
-            'password' => 'required'
-        ]);
-
-        if (!empty($validate->passes())) {
-            User::where('id', Auth::user()->id)->first()->update([
-                'password' => Hash::make($request->password),
-            ]);
-
-            return redirect()
-                ->back()
-                ->with('message', 'Password Anda berhasil diubah.');
-        } else {
-            return redirect()
-                ->back()
-                ->with('message', 'Kolom password tidak boleh dikosongkan.');
         }
     }
 

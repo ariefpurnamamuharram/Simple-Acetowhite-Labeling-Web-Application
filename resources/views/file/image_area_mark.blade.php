@@ -52,7 +52,7 @@
                                         <td class="text-center align-middle">
                                             @switch($file->label)
                                                 @case(0)
-                                                <span>Lesi Acetowhite</span>
+                                                <span>Lesi acetowhite</span>
                                                 @break
                                                 @case(99)
                                                 <span>Lainnya</span>
@@ -244,15 +244,15 @@
                     blankCtx.strokeStyle = '#EFFD5F';
                     blankCtx.strokeRect(Math.round(x0 / scalingFactor), Math.round(y0 / scalingFactor), Math.round((x1 - x0) / scalingFactor), Math.round((y1 - y0) / scalingFactor));
 
-                    // Draw mark label.
-                        @switch($file->label)
-                        @case(0)
+                    // Draw mark file.
+                    @switch($file->label)
+                    @case(0)
                     var markLabel = "ID: {{ $file->id }}; " + "Label: Lesi Acetowhite";
-                        @break
-                        @case(99)
+                    @break
+                    @case(99)
                     var markLabel = "ID: {{ $file->id }}; " + "Label: Lainnya";
-                        @break
-                        @default
+                    @break
+                    @default
                     var markLabel = "ID: {{ $file->id }}; " + "Label: Error";
                     @endswitch
                         blankCtx.font = "14px Arial";

@@ -13,5 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/download-iva-positive', 'ApiRequestController@downloadZipPositiveIVA');
-Route::middleware('auth:api')->get('/download-iva-negative', 'ApiRequestController@downloadZipNegativeIVA');
+Route::middleware('auth:api')->get('/download-positives', 'ApiRequestController@downloadPositives');
+
+Route::middleware('auth:api')->get('/download-negatives', 'ApiRequestController@downloadNegatives');

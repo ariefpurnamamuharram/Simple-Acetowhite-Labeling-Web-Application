@@ -20,7 +20,7 @@ class CreateImageAreaMarksMigration extends Migration
             $table->integer('rect_y0');
             $table->integer('rect_x1');
             $table->integer('rect_y1');
-            $table->integer('label');
+            $table->integer('file');
             $table->string('description');
             $table->timestamps();
         });

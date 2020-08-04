@@ -3,9 +3,11 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8 mt-4">
-                <div class="card">
-                    <div class="card-header">Pengaturan Pengguna</div>
+            <div class="col-md-8 mt-2">
+                <div class="card shadow-sm animate__animated animate__fadeInUp">
+                    <div class="card-header" style="background-color: #FF357C!important;">
+                        <span class="text-white">Pengaturan Pengguna</span>
+                    </div>
 
                     <div class="card-body">
                         <form action="{{ route('user.update') }}" method="post" enctype="multipart/form-data">
@@ -33,28 +35,6 @@
 
                             <div class="d-flex justify-content-end mt-2">
                                 <button type="submit" class="btn btn-warning">Simpan</button>
-                            </div>
-                        </form>
-
-                        <form action="{{ route('user.change.password') }}" method="post" enctype="multipart/form-data"
-                              class="mt-4">
-                            {{ csrf_field() }}
-
-                            <h4><strong>Password</strong></h4>
-
-                            <hr/>
-
-                            <p>Silakan isi kolom berikut jika Anda ingin merubah <em>password</em> Anda.</p>
-
-                            <div class="form-group row">
-                                <label for="password" class="col-sm-3 col-form-label">Password baru</label>
-                                <div class="col-sm-9">
-                                    <input type="password" class="form-control" id="password" name="password">
-                                </div>
-                            </div>
-
-                            <div class="d-flex justify-content-end">
-                                <button type="submit" class="btn btn-danger">Ubah Password</button>
                             </div>
                         </form>
 
@@ -108,7 +88,7 @@
 
                                     <button type="button" class="btn btn-warning" style="margin-left: 12px;"
                                             onclick="event.preventDefault(); document.getElementById('generate-api-token-form').submit();">
-                                        Generate Token
+                                        Buat Token
                                     </button>
                                 </div>
                             </div>

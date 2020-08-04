@@ -15,16 +15,16 @@ class CreateImageArtifactsMigration extends Migration
     {
         Schema::create('image_artifacts', function (Blueprint $table) {
             $table->id();
-            $table->string('filename', 100);
-            $table->boolean('cbMetaplasiaRing');
-            $table->boolean('cbIUD');
-            $table->boolean('cbMenstrualBlood');
-            $table->boolean('cbSlime');
-            $table->boolean('cbFluorAlbus');
-            $table->boolean('cbCervicitis');
-            $table->boolean('cbPolyp');
-            $table->boolean('cbOvulaNabothi');
-            $table->boolean('cbEctropion');
+            $table->string('filename');
+            $table->boolean('cbMetaplasiaRing')->default(false);
+            $table->boolean('cbIUD')->default(false);
+            $table->boolean('cbMenstrualBlood')->default(false);
+            $table->boolean('cbSlime')->default(false);
+            $table->boolean('cbFluorAlbus')->default(false);
+            $table->boolean('cbCervicitis')->default(false);
+            $table->boolean('cbPolyp')->default(false);
+            $table->boolean('cbOvulaNabothi')->default(false);
+            $table->boolean('cbEctropion')->default(false);
             $table->timestamps();
         });
     }

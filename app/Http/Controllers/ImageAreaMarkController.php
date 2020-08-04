@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\ImageAreaMark;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class ImageAreaMarkController extends Controller
 {
@@ -13,19 +12,26 @@ class ImageAreaMarkController extends Controller
         $this->middleware('auth');
     }
 
+    private function checkNullValue($value)
+    {
+        if (empty($value)) {
+            return "";
+        } else {
+            return $value;
+        }
+    }
+
     public function index($requestid)
     {
-        $files = ImageAreaMark::where('filename', $requestid)->get();
-
-        return view('label.imageareamark', compact([
-            'requestid',
-            'files',
-        ]));
+        return view('file.image_area_mark', [
+            'requestid' => $requestid,
+            'files' => ImageAreaMark::where('filename', $requestid)->get(),
+        ]);
     }
 
     public function store(Request $request)
     {
-        $validate = Validator::make($request->all(), [
+        $this->validate($request, [
             'filename' => 'required',
             'rectX0' => 'required',
             'rectY0' => 'required',
@@ -35,25 +41,19 @@ class ImageAreaMarkController extends Controller
             'textDescription' => 'nullable',
         ]);
 
-        if (!empty($validate->passes())) {
-            ImageAreaMark::create([
-                'filename' => $request->filename,
-                'rect_x0' => $request->rectX0,
-                'rect_y0' => $request->rectY0,
-                'rect_x1' => $request->rectX1,
-                'rect_y1' => $request->rectY1,
-                'label' => $request->imageMarkLabel,
-                'description' => $this->markDescription($request->textDescription)
-            ]);
+        ImageAreaMark::create([
+            'filename' => $request->filename,
+            'rect_x0' => $request->rectX0,
+            'rect_y0' => $request->rectY0,
+            'rect_x1' => $request->rectX1,
+            'rect_y1' => $request->rectY1,
+            'file' => $request->imageMarkLabel,
+            'description' => $this->checkNullValue($request->textDescription)
+        ]);
 
-            return redirect()
-                ->back()
-                ->with('message', 'Data berhasil disimpan!');
-        } else {
-            return redirect()
-                ->back()
-                ->with('message', 'Gagal menyimpan! Periksa kembali isian Anda.');
-        }
+        return redirect()
+            ->back()
+            ->with('message', 'Data berhasil disimpan!');
     }
 
     public function delete($requestid)
@@ -62,15 +62,6 @@ class ImageAreaMarkController extends Controller
 
         return redirect()
             ->back()
-            ->with('message', 'Markah berhasil dihapus!');
-    }
-
-    private function markDescription($value)
-    {
-        if (empty($value)) {
-            return "";
-        } else {
-            return $value;
-        }
+            ->with('message', 'Data berhasil dihapus!');
     }
 }

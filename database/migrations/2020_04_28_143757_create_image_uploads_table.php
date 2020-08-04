@@ -15,14 +15,13 @@ class CreateImageUploadsTable extends Migration
     {
         Schema::create('image_uploads', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('filename_pre_iva', 100);
-            $table->string('path_pre_iva');
-            $table->string('filename_post_iva', 100);
+            $table->string('filename_pre_iva')->nullable()->default(null);
+            $table->string('path_pre_iva')->nullable()->default(null);
+            $table->string('filename_post_iva');
             $table->string('path_post_iva');
             $table->string('posted_by');
-            $table->string('edited_by');
             $table->integer('label');
-            $table->string('comment');
+            $table->string('comment')->nullable()->default(null);
             $table->timestamps();
         });
     }

@@ -14,20 +14,24 @@ class ArchiveController extends Controller
         $this->middleware('auth');
     }
 
-    private const LABEL_IVA_POSITIVE = 'positive';
-    private const LABEL_IVA_NEGATIVE = 'negative';
+    private const LABEL_POSITIVE = 'positive';
 
-    public function downloadZipPositiveIVA()
+    private const LABEL_POSITIVE_CODE = 1;
+
+    private const LABEL_NEGATIVE = 'negative';
+
+    private const LABEL_NEGATIVE_CODE = 0;
+
+    public function downloadPositives()
     {
         $zip = new ZipArchive;
+        $fileName = 'download-positives.zip';
+        $files = ImageUpload::where('file', self::LABEL_POSITIVE_CODE)->get();
 
-        $fileName = 'download-iva-positive.zip';
-
-        $files = ImageUpload::where('label', 1)->get();
-
-        if (!$files->isEmpty()) {
+        if (!empty($files)) {
             if ($zip->open(public_path($fileName), ZipArchive::CREATE || ZipArchive::OVERWRITE) === TRUE) {
                 $data_json = [];
+
                 foreach ($files as $key => $value) {
                     $item = public_path('files/images/iva/' . $value->filename_post_iva);
                     $relativeNameInZipFile = basename($item);
@@ -41,7 +45,7 @@ class ArchiveController extends Controller
                     }
                     array_push($data_json, [
                         'name' => $name,
-                        'label' => self::LABEL_IVA_POSITIVE,
+                        'file' => self::LABEL_IVA_POSITIVE,
                         'bounding_box' => $bounding_boxes,
                     ]);
                 }
@@ -64,17 +68,16 @@ class ArchiveController extends Controller
         }
     }
 
-    public function downloadZipNegativeIVA()
+    public function downloadNegatives()
     {
         $zip = new ZipArchive;
+        $fileName = 'download-negatives.zip';
+        $files = ImageUpload::where('file', self::LABEL_NEGATIVE_CODE)->get();
 
-        $fileName = 'download-iva-negative.zip';
-
-        $files = ImageUpload::where('label', 0)->get();
-
-        if (!$files->isEmpty()) {
+        if (!empty($files)) {
             if ($zip->open(public_path($fileName), ZipArchive::CREATE || ZipArchive::OVERWRITE) === TRUE) {
                 $data_json = [];
+
                 foreach ($files as $key => $value) {
                     $item = public_path('files/images/iva/' . $value->filename_post_iva);
                     $relativeNameInZipFile = basename($item);
@@ -88,7 +91,7 @@ class ArchiveController extends Controller
                     }
                     array_push($data_json, [
                         'name' => $name,
-                        'label' => self::LABEL_IVA_NEGATIVE,
+                        'file' => self::LABEL_IVA_NEGATIVE,
                         'bounding_box' => $bounding_boxes,
                     ]);
                 }
