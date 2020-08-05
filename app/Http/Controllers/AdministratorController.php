@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ImageUpload;
 use App\User;
 use App\UserDetails;
 use Illuminate\Http\RedirectResponse;
@@ -31,7 +32,9 @@ class AdministratorController extends Controller
 
     public function dashboard()
     {
-        return view('administrator.dashboard.dashboard');
+        return view('administrator.dashboard.dashboard', [
+            'files' => ImageUpload::orderBy('id', 'DESC')->get(),
+        ]);
     }
 
     public function newUser()

@@ -281,7 +281,37 @@
                     // Draw mark file.
                     @switch($file->label)
                     @case(0)
-                    var markLabel = "ID: {{ $file->id }}; " + "Label: Lesi Acetowhite";
+                    var markLabel = "ID: {{ $file->id }}; " + "Label: Lesi acetowhite";
+                    @break
+                    @case(1)
+                    var markLabel = "ID: {{ $file->id }}; " + "Label: Metaplasia ring";
+                    @break
+                    @case(2)
+                    var markLabel = "ID: {{ $file->id }}; " + "Label: Tali IUD";
+                    @break
+                    @case(3)
+                    var markLabel = "ID: {{ $file->id }}; " + "Label: Darah menstruasi";
+                    @break
+                    @case(4)
+                    var markLabel = "ID: {{ $file->id }}; " + "Label: Lendir/mukus";
+                    @break
+                    @case(5)
+                    var markLabel = "ID: {{ $file->id }}; " + "Label: Fluor albus";
+                    @break
+                    @case(6)
+                    var markLabel = "ID: {{ $file->id }}; " + "Label: Servisitis";
+                    @break
+                    @case(7)
+                    var markLabel = "ID: {{ $file->id }}; " + "Label: Polip";
+                    @break
+                    @case(8)
+                    var markLabel = "ID: {{ $file->id }}; " + "Label: Ovula nabothi";
+                    @break
+                    @case(9)
+                    var markLabel = "ID: {{ $file->id }}; " + "Label: Ektoprion";
+                    @break
+                    @case(10)
+                    var markLabel = "ID: {{ $file->id }}; " + "Label: Refleksi cahaya";
                     @break
                     @case(99)
                     var markLabel = "ID: {{ $file->id }}; " + "Label: Lainnya";
