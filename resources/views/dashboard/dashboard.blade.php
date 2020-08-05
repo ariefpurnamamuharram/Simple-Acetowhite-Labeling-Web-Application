@@ -17,10 +17,17 @@
                                     {{ csrf_field() }}
                                     <div class="form-group row">
                                         <label for="search" class="col-form-label"></label>
+
                                         <div class="col">
-                                            <input type="text" class="form-control" id="search" name="search"
+                                            <input type="text"
+                                                   class="form-control @error('search') is-invalid @enderror"
+                                                   id="search" name="search"
                                                    placeholder="ID entri...">
                                         </div>
+
+                                        <span class="invalid-feedback"
+                                              role="alert">{{ $errors->first('search') }}</span>
+
                                         <button type="submit" class="btn btn-primary">Cari</button>
                                     </div>
                                 </form>
@@ -42,7 +49,9 @@
                                 </thead>
                                 <tbody>
                                 @foreach($files as $file)
-                                    <tr @if(!empty(ImageLabel::where(['filename' => $file->filename_post_iva, 'email' => Auth::user()->email])->first())) @switch(ImageLabel::where(['filename' => $file->filename_post_iva, 'email' => Auth::user()->email])->first()->label)
+                                    <tr @if(!empty($file->filename_post_iva)))
+                                        @if(!empty(ImageLabel::where(['filename' => $file->filename_post_iva, 'email' => Auth::user()->email])->first()))
+                                        @switch(ImageLabel::where(['filename' => $file->filename_post_iva, 'email' => Auth::user()->email])->first()->label)
                                         @case(0)
                                         class="table-success"
                                         @break
@@ -50,7 +59,24 @@
                                         class="table-danger"
                                         @break
                                         @endswitch
-                                        @else class=""
+                                        @else
+                                        class=""
+                                        @endif
+
+                                        @else
+
+                                        @if(!empty(ImageLabel::where(['filename' => $file->filename, 'email' => Auth::user()->email])->first()))
+                                        @switch(ImageLabel::where(['filename' => $file->filename, 'email' => Auth::user()->email])->first()->label)
+                                        @case(0)
+                                        class="table-success"
+                                        @break
+                                        @case(1)
+                                        class="table-danger"
+                                        @break
+                                        @endswitch
+                                        @else
+                                        class=""
+                                        @endif
                                         @endif>
                                         <td>
                                             <div class="d-flex justify-content-center">
@@ -77,7 +103,7 @@
                                                 <div class="col">
                                                     <div class="d-flex flex-row justify-content-center">
                                                         <img
-                                                            src="{{ url('files/images/iva/'.$file->filename_post_iva) }}"
+                                                            src="@if(!empty($file->filename_post_iva)) {{ url('files/images/iva/'.$file->filename_post_iva) }} @else {{ url('files/images/iva/'.$file->filename) }} @endif"
                                                             height="72px">
                                                     </div>
                                                     <div class="d-flex flex-row justify-content-center mt-2">
@@ -86,72 +112,151 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="text-center">@if(!empty(ImageLabel::where(['filename' => $file->filename_post_iva, 'email' => Auth::user()->email])->first()))
-                                                @switch(ImageLabel::where(['filename' => $file->filename_post_iva, 'email' => Auth::user()->email])->first()->label)
-                                                    @case(0)
-                                                    <span>Negatif</span>
-                                                    @break
-                                                    @case(1)
-                                                    <span>Positif</span>
-                                                    @break
-                                                    @default
+                                        <td class="text-center">
+                                            @if(!empty($file->filename_post_iva))
+                                                @if(!empty(ImageLabel::where(['filename' => $file->filename_post_iva, 'email' => Auth::user()->email])->first()))
+                                                    @switch(ImageLabel::where(['filename' => $file->filename_post_iva, 'email' => Auth::user()->email])->first()->label)
+                                                        @case(0)
+                                                        <span>Negatif</span>
+                                                        @break
+                                                        @case(1)
+                                                        <span>Positif</span>
+                                                        @break
+                                                        @default
+                                                        <span style="font-style: italic">Belum dilabel</span>
+                                                    @endswitch
+                                                @else
                                                     <span style="font-style: italic">Belum dilabel</span>
-                                                @endswitch
+                                                @endif
+
                                             @else
-                                                <span style="font-style: italic">Belum dilabel</span>
+
+                                                @if(!empty(ImageLabel::where(['filename' => $file->filename, 'email' => Auth::user()->email])->first()))
+                                                    @switch(ImageLabel::where(['filename' => $file->filename, 'email' => Auth::user()->email])->first()->label)
+                                                        @case(0)
+                                                        <span>Negatif</span>
+                                                        @break
+                                                        @case(1)
+                                                        <span>Positif</span>
+                                                        @break
+                                                        @default
+                                                        <span style="font-style: italic">Belum dilabel</span>
+                                                    @endswitch
+                                                @else
+                                                    <span style="font-style: italic">Belum dilabel</span>
+                                                @endif
                                             @endif
                                         </td>
                                         <td>
-                                            @if(!empty(ImageAreaMark::where(['filename' => $file->filename_post_iva, 'email' => Auth::user()->email])->get()))
-                                                <ul>
-                                                    @foreach(ImageAreaMark::where(['filename' => $file->filename_post_iva, 'email' => Auth::user()->email])->get() as $mark)
-                                                        @switch($mark->label)
-                                                            @case(0)
-                                                            <li>Lesi acetowhite</li>
-                                                            @break
-                                                            @case(1)
-                                                            <li>Metaplasia ring</li>
-                                                            @break
-                                                            @case(2)
-                                                            <li>Tali IUD</li>
-                                                            @break
-                                                            @case(3)
-                                                            <li>Darah menstruasi</li>
-                                                            @break
-                                                            @case(4)
-                                                            <li>Lendir/mukus</li>
-                                                            @break
-                                                            @case(5)
-                                                            <li>Fluor albus</li>
-                                                            @break
-                                                            @case(6)
-                                                            <li>Servisitis</li>
-                                                            @break
-                                                            @case(7)
-                                                            <li>Polip</li>
-                                                            @break
-                                                            @case(8)
-                                                            <li>Ovula nabothi</li>
-                                                            @break
-                                                            @case(9)
-                                                            <li>Ektoprion</li>
-                                                            @break
-                                                            @case(10)
-                                                            <li>Refleksi cahaya</li>
-                                                            @break
-                                                            @case(99)
-                                                            <li>Lainnya</li>
-                                                            @break
-                                                        @endswitch
-                                                    @endforeach
-                                                </ul>
+                                            @if(!empty($file->filename_post_iva))
+                                                @if(!empty(ImageAreaMark::where(['filename' => $file->filename_post_iva, 'email' => Auth::user()->email])->get()))
+                                                    <ul>
+                                                        @foreach(ImageAreaMark::where(['filename' => $file->filename_post_iva, 'email' => Auth::user()->email])->get() as $mark)
+                                                            @switch($mark->label)
+                                                                @case(0)
+                                                                <li>Lesi acetowhite</li>
+                                                                @break
+                                                                @case(1)
+                                                                <li>Metaplasia ring</li>
+                                                                @break
+                                                                @case(2)
+                                                                <li>Tali IUD</li>
+                                                                @break
+                                                                @case(3)
+                                                                <li>Darah menstruasi</li>
+                                                                @break
+                                                                @case(4)
+                                                                <li>Lendir/mukus</li>
+                                                                @break
+                                                                @case(5)
+                                                                <li>Fluor albus</li>
+                                                                @break
+                                                                @case(6)
+                                                                <li>Servisitis</li>
+                                                                @break
+                                                                @case(7)
+                                                                <li>Polip</li>
+                                                                @break
+                                                                @case(8)
+                                                                <li>Ovula nabothi</li>
+                                                                @break
+                                                                @case(9)
+                                                                <li>Ektoprion</li>
+                                                                @break
+                                                                @case(10)
+                                                                <li>Refleksi cahaya</li>
+                                                                @break
+                                                                @case(99)
+                                                                <li>Lainnya</li>
+                                                                @break
+                                                            @endswitch
+                                                        @endforeach
+                                                    </ul>
+                                                @endif
+
+                                            @else
+
+                                                @if(!empty(ImageAreaMark::where(['filename' => $file->filename, 'email' => Auth::user()->email])->get()))
+                                                    <ul>
+                                                        @foreach(ImageAreaMark::where(['filename' => $file->filename, 'email' => Auth::user()->email])->get() as $mark)
+                                                            @switch($mark->label)
+                                                                @case(0)
+                                                                <li>Lesi acetowhite</li>
+                                                                @break
+                                                                @case(1)
+                                                                <li>Metaplasia ring</li>
+                                                                @break
+                                                                @case(2)
+                                                                <li>Tali IUD</li>
+                                                                @break
+                                                                @case(3)
+                                                                <li>Darah menstruasi</li>
+                                                                @break
+                                                                @case(4)
+                                                                <li>Lendir/mukus</li>
+                                                                @break
+                                                                @case(5)
+                                                                <li>Fluor albus</li>
+                                                                @break
+                                                                @case(6)
+                                                                <li>Servisitis</li>
+                                                                @break
+                                                                @case(7)
+                                                                <li>Polip</li>
+                                                                @break
+                                                                @case(8)
+                                                                <li>Ovula nabothi</li>
+                                                                @break
+                                                                @case(9)
+                                                                <li>Ektoprion</li>
+                                                                @break
+                                                                @case(10)
+                                                                <li>Refleksi cahaya</li>
+                                                                @break
+                                                                @case(99)
+                                                                <li>Lainnya</li>
+                                                                @break
+                                                            @endswitch
+                                                        @endforeach
+                                                    </ul>
+                                                @endif
                                             @endif
                                         </td>
                                         <td>
-                                            @if(!empty(ImageLabel::where(['filename' => $file->filename_post_iva, 'email' => Auth::user()->email])->first()->comment))
-                                                <span>{{ ImageLabel::where(['filename' => $file->filename_post_iva, 'email' => Auth::user()->email])->first()->comment }}</span>
+                                            @if(!empty($file->filename_post_iva))
+                                                @if(!empty(ImageLabel::where(['filename' => $file->filename_post_iva, 'email' => Auth::user()->email])->first()->comment))
+                                                    <span>{{ ImageLabel::where(['filename' => $file->filename_post_iva, 'email' => Auth::user()->email])->first()->comment }}</span>
+                                                @else
+                                                    <span>-</span>
+                                                @endif
+
                                             @else
-                                                <span>-</span>
+
+                                                @if(!empty(ImageLabel::where(['filename' => $file->filename, 'email' => Auth::user()->email])->first()->comment))
+                                                    <span>{{ ImageLabel::where(['filename' => $file->filename, 'email' => Auth::user()->email])->first()->comment }}</span>
+                                                @else
+                                                    <span>-</span>
+                                                @endif
                                             @endif
                                         </td>
                                         <td>
@@ -165,7 +270,7 @@
 
                                                     <div class="dropdown-menu" aria-labelledby="dropdownActionButton">
                                                         <a class="dropdown-item"
-                                                           href="{{ route('file.edit', $file->filename_post_iva) }}">
+                                                           href="@if(!empty($file->filename_post_iva)) {{ route('file.edit', $file->filename_post_iva) }} @else {{ route('file.edit', $file->filename) }} @endif">
                                                             Edit Label Foto
                                                         </a>
 

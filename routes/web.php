@@ -95,6 +95,7 @@ Route::post('/user/my/revoke-api-token', 'UserController@revokeApiToken')->name(
 |--------------------------------------------------------------------------
 */
 
+Route::get('/administrator/dashboard', 'AdministratorController@dashboard')->name('administrator.dashboard');
 Route::get('/administrator/users', 'AdministratorController@users')->name('administrator.users');
 Route::get('/administrator/user/new', 'AdministratorController@newUser')->name('administrator.new.user');
 Route::post('/administrator/user/store', 'AdministratorController@storeUser')->name('administrator.store.user');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ImageLabel;
 use App\ImageUpload;
 use Illuminate\Http\Request;
 
@@ -14,10 +15,14 @@ class SearchController extends Controller
 
     public function search(Request $request)
     {
-        $file = ImageUpload::where('id', $request->search)->first();
+        $this->validate($request, [
+            'search' => 'required',
+        ]);
 
-        if (!empty($file)) {
-            return view('dashboard.dashboard', [
+        if (!empty(ImageUpload::where('id', $request->search)->first())) {
+            $file = ImageLabel::where('filename', ImageUpload::where('id', $request->search)->first()->filename_post_iva)->first();
+
+            return view('file.file_edit', [
                 'file' => $file,
             ]);
         } else {

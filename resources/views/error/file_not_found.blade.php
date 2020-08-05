@@ -1,22 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Error</div>
-
-                <div class="card-body">
-                    <div class="d-flex flex-row">
-                        <span>File tidak ditemukan</span>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-sm">
+                    <div class="card-header" style="background-color: #FF357C!important;">
+                        <span class="text-white">Error</span>
                     </div>
-                    <div class="d-flex flex-row mt-3">
-                        <a href="{{ route('file.index') }}"><button class="btn btn-outline-dark">Kembali</button></a>
+
+                    <div class="card-body">
+                        <p>File tidak ditemukan</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 @endsection

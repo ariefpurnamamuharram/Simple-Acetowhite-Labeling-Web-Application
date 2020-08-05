@@ -29,6 +29,11 @@ class AdministratorController extends Controller
         return view('administrator.users.users_list');
     }
 
+    public function dashboard()
+    {
+        return view('administrator.dashboard.dashboard');
+    }
+
     public function newUser()
     {
         return view('administrator.users.user_new');

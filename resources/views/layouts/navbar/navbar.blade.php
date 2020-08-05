@@ -38,7 +38,7 @@
 
                                 <div class="dropdown-header">Administrator</div>
 
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{{ route('administrator.dashboard') }}">
                                     Ringkasan Seluruh Foto
                                 </a>
 
