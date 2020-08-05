@@ -24,21 +24,23 @@
                                             <img src="{{ asset('assets/images/no-image.png') }}" height="240px"
                                                  alt="Pre-IVA image">
                                         @else
-                                            <img src="{{ url('files/images/iva/'.$file->filename_pre_iva) }}"
-                                                 height="240px" alt="Pre-IVA image">
+                                            <img
+                                                src="{{ url('files/images/iva/'.ImageUpload::where('filename_post_iva', $file->filename)->first()->filename_pre_iva) }}"
+                                                height="240px" alt="Pre-IVA image">
                                         @endif
 
                                         <h5 class="mt-2">Pre-IVA</h5>
                                     </div>
                                     <div class="col">
-                                        <img src="{{ url('files/images/iva/'.$file->filename_post_iva) }}"
-                                             height="240px" alt="Post IVA image">
+                                        <img
+                                            src="{{ url('files/images/iva/'.ImageUpload::where('filename_post_iva', $file->filename)->first()->filename_post_iva) }}"
+                                            height="240px" alt="Post IVA image">
 
                                         <h5 class="mt-2">Post IVA</h5>
                                     </div>
                                 </div>
 
-                                @if(empty($file->filename_pre_iva))
+                                @if(empty(ImageUpload::where('filename_post_iva', $file->filename)->first()->filename_pre_iva))
                                     <div class="form-group mt-4">
                                         <h4>Foto Pre-IVA</h4>
 
@@ -50,8 +52,9 @@
                                                    id="preIVAImage"
                                                    name="preIVAImage">
 
-                                            <label for="preIVAImage" class="custom-file-label">Unggah Foto Pre
-                                                IVA</label>
+                                            <label for="preIVAImage" class="custom-file-label">
+                                                Unggah Foto Pre IVA
+                                            </label>
 
                                             <span class="invalid-feedback"
                                                   role="alert">{{ $errors->first('preIVAImage') }}</span>
@@ -71,13 +74,13 @@
                                         id="lblIVA">
                                     <option selected disabled>-- Pilih Label Foto --</option>
 
-                                    <option value="0"
-                                            @if(empty($file)) @else @if($file->label == 0) selected=selected @endif @endif>
+                                    <option value="{{ ImageUpload::IMAGE_LABEL_NEGATIVE_CODE }}"
+                                            @if($file->label == ImageUpload::IMAGE_LABEL_NEGATIVE_CODE) selected="selected" @endif>
                                         Negatif
                                     </option>
 
-                                    <option value="1"
-                                            @if(empty($file)) @else @if($file->label == 1) selected=selected @endif @endif>
+                                    <option value="{{ ImageUpload::IMAGE_LABEL_POSITIVE_CODE }}"
+                                            @if($file->label == ImageUpload::IMAGE_LABEL_POSITIVE_CODE) selected @endif>
                                         Positif
                                     </option>
                                 </select>
@@ -92,14 +95,14 @@
 
                                 <div class="form-row ml-1">
                                     <div class="d-flex flex-row align-items-center">
-                                        <a href="{{ route('image.mark', $file->filename_post_iva) }}" target="_blank"
+                                        <a href="{{ route('image.mark', $file->filename) }}" target="_blank"
                                            class="btn btn-warning">
                                             Tandai
                                         </a>
                                     </div>
 
                                     <div class="d-flex flex-row align-items-center" style="margin-left: 12px;">
-                                        @if(!empty(\App\ImageAreaMark::where('filename', $file->filename_post_iva)->first()))
+                                        @if(!empty(ImageAreaMark::where(['filename' => $file->filename, 'email' => Auth::user()->email])->first()))
                                             <img src="{{ asset('assets/images/correct.png') }}" width="32px"
                                                  height="32px"/>
                                         @else
@@ -121,7 +124,7 @@
                                           placeholder="Masukkan komentar bila ada...">@if(!empty($file->comment)){{ $file->comment }}@endif</textarea>
                             </div>
 
-                            <input name="filename_post_iva" type="hidden" value="{{ $file->filename_post_iva }}">
+                            <input name="filename_post_iva" type="hidden" value="{{ $file->filename }}">
 
                             <div class="row mt-4">
                                 <div class="col">

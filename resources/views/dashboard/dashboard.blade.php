@@ -42,7 +42,7 @@
                                 </thead>
                                 <tbody>
                                 @foreach($files as $file)
-                                    <tr @if(!empty(ImageLabel::where(['filename' => $file->filename_post_iva, 'email' => Auth::user()->email])->first()->label)) @switch(ImageLabel::where(['filename' => $file->filename_post_iva, 'email' => Auth::user()->email])->first()->label)
+                                    <tr @if(!empty(ImageLabel::where(['filename' => $file->filename_post_iva, 'email' => Auth::user()->email])->first())) @switch(ImageLabel::where(['filename' => $file->filename_post_iva, 'email' => Auth::user()->email])->first()->label)
                                         @case(0)
                                         class="table-success"
                                         @break
@@ -86,7 +86,7 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="text-center">@if(!empty(ImageLabel::where(['filename' => $file->filename_post_iva, 'email' => Auth::user()->email])->first()->label))
+                                        <td class="text-center">@if(!empty(ImageLabel::where(['filename' => $file->filename_post_iva, 'email' => Auth::user()->email])->first()))
                                                 @switch(ImageLabel::where(['filename' => $file->filename_post_iva, 'email' => Auth::user()->email])->first()->label)
                                                     @case(0)
                                                     <span>Negatif</span>
@@ -94,6 +94,8 @@
                                                     @case(1)
                                                     <span>Positif</span>
                                                     @break
+                                                    @default
+                                                    <span style="font-style: italic">Belum dilabel</span>
                                                 @endswitch
                                             @else
                                                 <span style="font-style: italic">Belum dilabel</span>
@@ -103,8 +105,8 @@
                                             //
                                         </td>
                                         <td>
-                                            @if(!empty(ImageLabel::where(['filename' => $file->filename_post_iva, 'email' => Auth::user()->email])->first()->label))
-                                                <span>{{ ImageLabel::where(['filename' => $file->filename_post_iva, 'email' => Auth::user()->email])->first()->label }}</span>
+                                            @if(!empty(ImageLabel::where(['filename' => $file->filename_post_iva, 'email' => Auth::user()->email])->first()->comment))
+                                                <span>{{ ImageLabel::where(['filename' => $file->filename_post_iva, 'email' => Auth::user()->email])->first()->comment }}</span>
                                             @else
                                                 <span>-</span>
                                             @endif

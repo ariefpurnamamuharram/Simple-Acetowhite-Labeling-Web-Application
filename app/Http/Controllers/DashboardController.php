@@ -60,20 +60,25 @@ class DashboardController extends Controller
 
     public function edit($requestid)
     {
+        if (empty(ImageLabel::where(['filename' => $requestid, 'email' => Auth::user()->email])->first())) {
+            ImageLabel::create([
+                'filename' => $requestid,
+                'email' => Auth::user()->email,
+            ]);
+        }
+
         return view('file.file_edit', [
-            'file' => ImageUpload::where('filename_post_iva', $requestid)->first(),
-            'artifact' => ImageArtifact::where('filename', $requestid)->first(),
+            'file' => ImageLabel::where(['filename' => $requestid, 'email' => Auth::user()->email])->first(),
         ]);
     }
 
     public function update(Request $request)
     {
-        // Get IVA file and editor name.
-        if (isset($request->lblIVA)) {
-            $lblIVA = $request->lblIVA;
-        } else {
-            $lblIVA = ImageUpload::IMAGE_NOT_LABELED_CODE;
-        }
+        $this->validate($request, [
+            'filename_post_iva' => 'required',
+            'lblIVA' => 'required',
+            'comment' => 'nullable',
+        ]);
 
         // Get pre IVA image.
         if (!empty($request->preIVAImage)) {
@@ -88,29 +93,29 @@ class DashboardController extends Controller
             // Move image to public folder.
             $image->move(public_path('files/images/iva'), $filenameWithExt);
 
-            $filenamePreIVA = $filenameWithExt;
-        } else {
-            $filenamePreIVA = '';
+            // Record file.
+            ImageUpload::where('filename_post_iva', $request->filename_post_iva)->first()->update([
+                'filename_pre_iva' => $filenameWithExt,
+                'path_pre_iva' => $filenameWithExt,
+            ]);
         }
 
-        ImageUpload::where('filename_post_iva', $request->filename_post_iva)->update([
-            'filename_pre_iva' => $filenamePreIVA,
-            'path_pre_iva' => $filenamePreIVA,
-            'label' => $lblIVA,
-            'comment' => $request->comment
-        ]);
-
-        ImageArtifact::where('filename', $request->filename_post_iva)->update([
-            'cbMetaplasiaRing' => $this->checkBoolValue($request->has('cbMetaplasiaRing')),
-            'cbIUD' => $this->checkBoolValue($request->has('cbIUD')),
-            'cbMenstrualBlood' => $this->checkBoolValue($request->has('cbMenstrualBlood')),
-            'cbSlime' => $this->checkBoolValue($request->has('cbSlime')),
-            'cbFluorAlbus' => $this->checkBoolValue($request->has('cbFluorAlbus')),
-            'cbCervicitis' => $this->checkBoolValue($request->has('cbCervicitis')),
-            'cbPolyp' => $this->checkBoolValue($request->has('cbPolyp')),
-            'cbOvulaNabothi' => $this->checkBoolValue($request->has('cbOvulaNabothi')),
-            'cbEctropion' => $this->checkBoolValue($request->has('cbEctropion'))
-        ]);
+        if (!empty(ImageLabel::where(['filename' => $request->filename_post_iva, 'email' => Auth::user()->email])->get())) {
+            ImageLabel::where([
+                'filename' => $request->filename_post_iva,
+                'email' => Auth::user()->email,
+            ])->first()->update([
+                'label' => $request->lblIVA,
+                'comment' => $request->comment,
+            ]);
+        } else {
+            ImageLabel::create([
+                'filename' => $request->filename_post_iva,
+                'email' => Auth::user()->email,
+                'label' => $request->lblIVA,
+                'comment' => $request->comment,
+            ]);
+        }
 
         return redirect()
             ->route('dashboard')
