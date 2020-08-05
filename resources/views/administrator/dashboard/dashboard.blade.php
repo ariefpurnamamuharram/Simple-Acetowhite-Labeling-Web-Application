@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container-fluid">
+    <div class="container">
         <h2 class="font-weight-bold" style="color: #FF357C!important;">
             <span>Dasbor Ringkasan</span>
         </h2>
@@ -70,6 +70,46 @@
                                                     <a href="{{ route('image.mark', $image->filename) }}"
                                                        target="_blank">[Marka]</a>
                                                 @endif<br>
+                                                <span><span class="font-weight-bold">Temuan: </span>@foreach(ImageAreaMark::where(['filename' => $image->filename, 'email' => $image->email])->get() as $mark)
+                                                        @switch($mark->label)
+                                                            @case(0)
+                                                            Lesi acetowhite
+                                                            @break
+                                                            @case(1)
+                                                            Metaplasia ring
+                                                            @break
+                                                            @case(2)
+                                                            Tali IUD
+                                                            @break
+                                                            @case(3)
+                                                            Darah menstruasi
+                                                            @break
+                                                            @case(4)
+                                                            Lendir/mukus
+                                                            @break
+                                                            @case(5)
+                                                            Fluor albus
+                                                            @break
+                                                            @case(6)
+                                                            Servisitis
+                                                            @break
+                                                            @case(7)
+                                                            Polip
+                                                            @break
+                                                            @case(8)
+                                                            Ovula nabothi
+                                                            @break
+                                                            @case(9)
+                                                            Ektoprion
+                                                            @break
+                                                            @case(10)
+                                                            Refleksi cahaya
+                                                            @break
+                                                            @case(99)
+                                                            Lainnya
+                                                            @break
+                                                        @endswitch,
+                                                    @endforeach</span><br>
                                                 <span><span class="font-weight-bold">Komentar: </span>{{ $image->comment }}</span>
                                             </li><br>
                                         @endif
