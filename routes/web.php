@@ -78,7 +78,7 @@ Route::post('/search', 'SearchController@search')->name('file.search');
 
 /*
 |--------------------------------------------------------------------------
-| User Routes
+| Users Routes
 |--------------------------------------------------------------------------
 */
 
@@ -87,3 +87,15 @@ Route::post('/user/my/update', 'UserController@update')->name('user.update');
 Route::post('/user/my/change-password', 'PasswordController@changePassword')->name('password.change');
 Route::post('/user/my/generate-api-token', 'UserController@generateApiToken')->name('user.generate.api.token');
 Route::post('/user/my/revoke-api-token', 'UserController@revokeApiToken')->name('user.revoke.api.token');
+
+
+/*
+|--------------------------------------------------------------------------
+| Administrator Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/administrator/users', 'AdministratorController@users')->name('administrator.users');
+Route::get('/administrator/user/new', 'AdministratorController@newUser')->name('administrator.new.user');
+Route::post('/administrator/user/store', 'AdministratorController@storeUser')->name('administrator.store.user');
+Route::post('/administrator/user/delete', 'AdministratorController@deleteUser')->name('administrator.delete.user');

@@ -1,7 +1,7 @@
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
     <div class="container">
-        <a class="navbar-brand" href="{{ route('dashboard') }}">
+        <a class="navbar-brand" href="@auth {{ route('dashboard') }} @else {{ route('welcome') }} @endauth">
             <span class="navbar-title">Simple Acetowhite Labeling</span>
         </a>
 
@@ -61,11 +61,13 @@
                             </a>
 
                             <div class="dropdown-menu animate__animated animate__fadeInDown">
-                                <a class="dropdown-item" href="#">
+                                <div class="dropdown-header">Pengaturan Pengguna</div>
+
+                                <a class="dropdown-item" href="{{ route('administrator.users') }}">
                                     Daftar Pengguna
                                 </a>
 
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{{ route('administrator.new.user') }}">
                                     Tambah Pengguna
                                 </a>
                             </div>
