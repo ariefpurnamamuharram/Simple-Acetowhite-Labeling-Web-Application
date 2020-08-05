@@ -102,7 +102,50 @@
                                             @endif
                                         </td>
                                         <td>
-                                            //
+                                            @if(!empty(ImageAreaMark::where(['filename' => $file->filename_post_iva, 'email' => Auth::user()->email])->get()))
+                                                <ul>
+                                                    @foreach(ImageAreaMark::where(['filename' => $file->filename_post_iva, 'email' => Auth::user()->email])->get() as $mark)
+                                                        @switch($mark->label)
+                                                            @case(0)
+                                                            <li>Lesi acetowhite</li>
+                                                            @break
+                                                            @case(1)
+                                                            <li>Metaplasia ring</li>
+                                                            @break
+                                                            @case(2)
+                                                            <li>Tali IUD</li>
+                                                            @break
+                                                            @case(3)
+                                                            <li>Darah menstruasi</li>
+                                                            @break
+                                                            @case(4)
+                                                            <li>Lendir/mukus</li>
+                                                            @break
+                                                            @case(5)
+                                                            <li>Fluor albus</li>
+                                                            @break
+                                                            @case(6)
+                                                            <li>Servisitis</li>
+                                                            @break
+                                                            @case(7)
+                                                            <li>Polip</li>
+                                                            @break
+                                                            @case(8)
+                                                            <li>Ovula nabothi</li>
+                                                            @break
+                                                            @case(9)
+                                                            <li>Ektoprion</li>
+                                                            @break
+                                                            @case(10)
+                                                            <li>Refleksi cahaya</li>
+                                                            @break
+                                                            @case(99)
+                                                            <li>Lainnya</li>
+                                                            @break
+                                                        @endswitch
+                                                    @endforeach
+                                                </ul>
+                                            @endif
                                         </td>
                                         <td>
                                             @if(!empty(ImageLabel::where(['filename' => $file->filename_post_iva, 'email' => Auth::user()->email])->first()->comment))

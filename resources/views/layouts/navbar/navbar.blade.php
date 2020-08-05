@@ -32,8 +32,45 @@
                             <a class="dropdown-item" href="{{ route('dashboard.show.negatives') }}">
                                 Semua Foto IVA Negatif
                             </a>
+
+                            @if(UserDetails::where('email', Auth::user()->email)->first()->is_administrator == true)
+                                <div class="dropdown-divider"></div>
+
+                                <div class="dropdown-header">Administrator</div>
+
+                                <a class="dropdown-item" href="#">
+                                    Ringkasan Seluruh Foto
+                                </a>
+
+                                <a class="dropdown-item" href="#">
+                                    Unduh Seluruh Foto IVA Positif
+                                </a>
+
+                                <a class="dropdown-item" href="#">
+                                    Unduh Seluruh Foto IVA Negatif
+                                </a>
+                            @endif
                         </div>
                     </li>
+
+                    @if(UserDetails::where('email', Auth::user()->email)->first()->is_administrator == true)
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark font-weight-bold" href="#" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Administrator
+                            </a>
+
+                            <div class="dropdown-menu animate__animated animate__fadeInDown">
+                                <a class="dropdown-item" href="#">
+                                    Daftar Pengguna
+                                </a>
+
+                                <a class="dropdown-item" href="#">
+                                    Tambah Pengguna
+                                </a>
+                            </div>
+                        </li>
+                    @endif
 
                     <li class="nav-item">
                         <a class="nav-link text-dark font-weight-bold" href="{{ route('file.upload') }}">Unggah Foto</a>
