@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\ImageAreaMark;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ImageAreaMarkController extends Controller
 {
@@ -12,20 +13,11 @@ class ImageAreaMarkController extends Controller
         $this->middleware('auth');
     }
 
-    private function checkNullValue($value)
-    {
-        if (empty($value)) {
-            return "";
-        } else {
-            return $value;
-        }
-    }
-
     public function index($requestid)
     {
         return view('file.image_area_mark', [
             'requestid' => $requestid,
-            'files' => ImageAreaMark::where('filename', $requestid)->get(),
+            'files' => ImageAreaMark::where(['filename' => $requestid, 'email' => Auth::user()->email])->get(),
         ]);
     }
 
@@ -43,12 +35,13 @@ class ImageAreaMarkController extends Controller
 
         ImageAreaMark::create([
             'filename' => $request->filename,
+            'email' => Auth::user()->email,
             'rect_x0' => $request->rectX0,
             'rect_y0' => $request->rectY0,
             'rect_x1' => $request->rectX1,
             'rect_y1' => $request->rectY1,
-            'file' => $request->imageMarkLabel,
-            'description' => $this->checkNullValue($request->textDescription)
+            'label' => $request->imageMarkLabel,
+            'description' => $request->textDescription
         ]);
 
         return redirect()

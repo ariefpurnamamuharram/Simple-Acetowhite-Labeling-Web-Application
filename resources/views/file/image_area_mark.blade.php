@@ -47,30 +47,68 @@
                                     <th class="text-center">Aksi</th>
                                 </tr>
                                 </thead>
+
                                 <tbody>
-                                @foreach($files as $file)
-                                    <tr>
-                                        <td class="text-center align-middle"><span>{{ $file->id }}</span></td>
-                                        <td class="text-center align-middle">
-                                            @switch($file->label)
-                                                @case(0)
-                                                <span>Lesi acetowhite</span>
-                                                @break
-                                                @case(99)
-                                                <span>Lainnya</span>
-                                                @break
-                                                @default
-                                                <span>Error</span>
-                                            @endswitch
-                                        </td>
-                                        <td class="align-middle"><span>{{ $file->description }}</span></td>
-                                        <td class="text-center">
-                                            <a href="{{ route('image.mark.delete', $file->id) }}">
-                                                <button class="btn btn-danger">Hapus</button>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                @if(!empty($files))
+                                    @foreach($files as $file)
+                                        <tr class="text-center align-middle">
+                                            <td>
+                                                <span>{{ $file->id }}</span>
+                                            </td>
+
+                                            <td>
+                                                @switch($file->label)
+                                                    @case(0)
+                                                    <span>Lesi acetowhite</span>
+                                                    @break
+                                                    @case(1)
+                                                    <span>Metaplasia ring</span>
+                                                    @break
+                                                    @case(2)
+                                                    <span>Tali IUD</span>
+                                                    @break
+                                                    @case(3)
+                                                    <span>Darah menstruasi</span>
+                                                    @break
+                                                    @case(4)
+                                                    <span>Lendir/mukus</span>
+                                                    @break
+                                                    @case(5)
+                                                    <span>Fluor albus</span>
+                                                    @break
+                                                    @case(6)
+                                                    <span>Servisitis</span>
+                                                    @break
+                                                    @case(7)
+                                                    <span>Polip</span>
+                                                    @break
+                                                    @case(8)
+                                                    <span>Ovula nabothi</span>
+                                                    @break
+                                                    @case(9)
+                                                    <span>Ektoprion</span>
+                                                    @break
+                                                    @case(10)
+                                                    <span>Refleksi cahaya</span>
+                                                    @break
+                                                    @case(99)
+                                                    <span>Lainnya</span>
+                                                    @break
+                                                @endswitch
+                                            </td>
+
+                                            <td>
+                                                <span>{{ $file->description }}</span>
+                                            </td>
+
+                                            <td class="text-center">
+                                                <a href="{{ route('image.mark.delete', $file->id) }}">
+                                                    <button class="btn btn-danger">Hapus</button>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
                                 </tbody>
                             </table>
                         </div>
@@ -83,10 +121,8 @@
 
                             <hr/>
 
-                            <!-- Hidden -->
                             <input type="hidden" name="filename" id="filename" value="{{ $requestid }}"/>
 
-                            <!-- Hidden -->
                             <div class="form-row" style="display: none;">
                                 <div class="col">
                                     <span>Tandai area</span>
@@ -123,10 +159,18 @@
 
                                 <select class="form-control @error('imageMarkLabel') is-invalid @enderror"
                                         id="imageMarkLabel" name="imageMarkLabel">
-                                    <option selected disabled>-- Pilih Label Temuan --</option>
-
-                                    <option value="0">Lesi Acetowhite</option>
-
+                                    <option selected disabled>-- Pilih label temuan --</option>
+                                    <option value="0">Lesi acetowhite</option>
+                                    <option value="1">Metaplasia ring</option>
+                                    <option value="2">Tali IUD</option>
+                                    <option value="3">Darah menstruasi</option>
+                                    <option value="4">Lendir/mukus</option>
+                                    <option value="5">Fluor albus</option>
+                                    <option value="6">Servisitis</option>
+                                    <option value="7">Polip</option>
+                                    <option value="8">Ovula nabothi</option>
+                                    <option value="9">Ektoprion</option>
+                                    <option value="10">Refleksi cahaya</option>
                                     <option value="99">Lainnya</option>
                                 </select>
 
