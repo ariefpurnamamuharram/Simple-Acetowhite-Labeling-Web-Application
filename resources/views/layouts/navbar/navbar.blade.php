@@ -42,11 +42,11 @@
                                     Ringkasan Seluruh Foto
                                 </a>
 
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{{ route('download.positives') }}">
                                     Unduh Seluruh Foto IVA Positif
                                 </a>
 
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{{ route('download.negatives') }}">
                                     Unduh Seluruh Foto IVA Negatif
                                 </a>
                             @endif
