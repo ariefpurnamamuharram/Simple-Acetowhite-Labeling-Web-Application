@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\ImageAreaMark;
 use App\ImageLabel;
 use App\ImageUpload;
-use Illuminate\Support\Facades\File;
 use ZipArchive;
 
 class ArchiveController extends Controller
@@ -87,20 +85,36 @@ class ArchiveController extends Controller
 
     public function downloadNegatives()
     {
+        // Prepare ZipArchive
         $zip = new ZipArchive;
         $fileName = 'download-negatives.zip';
-        $files = ImageUpload::where('file', self::LABEL_NEGATIVE_CODE)->get();
 
-        if (!empty($files)) {
+        // Get all negative images
+        $images_negative = [];
+        foreach (ImageLabel::where('label', ImageUpload::IMAGE_LABEL_NEGATIVE_CODE)->get() as $file) {
+            array_push($images_negative, $file->filename);
+        }
+
+        if (!empty($images_negative)) {
+            // Get all positive images
+            $images_positive = [];
+            foreach (ImageLabel::where('label', ImageUpload::IMAGE_LABEL_POSITIVE_CODE)->get() as $file) {
+                array_push($images_positive, $file->filename);
+            }
+
+            // Intersect array
+            $files = array_diff($images_negative, $images_positive);
+
             if ($zip->open(public_path($fileName), ZipArchive::CREATE || ZipArchive::OVERWRITE) === TRUE) {
+                // Prepare metadata JSON file
                 $data_json = [];
 
-                foreach ($files as $key => $value) {
-                    $item = public_path('files/images/iva/' . $value->filename_post_iva);
+                foreach (array_unique($files) as $key => $value) {
+                    $item = public_path('files/images/iva/' . $value);
                     $relativeNameInZipFile = basename($item);
                     $zip->addFile($item, $relativeNameInZipFile);
 
-                    // Populate file metadata for JSON.
+                    /* // Populate file metadata for JSON.
                     $name = $value->filename_post_iva;
                     $bounding_boxes = [];
                     foreach (ImageAreaMark::where('filename', $value->filename_post_iva)->get() as $key => $value) {
@@ -110,24 +124,24 @@ class ArchiveController extends Controller
                         'name' => $name,
                         'file' => self::LABEL_IVA_NEGATIVE,
                         'bounding_box' => $bounding_boxes,
-                    ]);
+                    ]);*/
                 }
 
-                // Create file metadata JSON object.
-                file_put_contents(public_path('file_metadata.json'), json_encode($data_json));
+                /* // Create file metadata JSON object.
+                file_put_contents(public_path('file_metadata.json'), json_encode($data_json));*/
 
-                // Add file metadata to zip file.
-                $zip->addFile(public_path('file_metadata.json'), basename(public_path('file_metadata.json')));
+                /* // Add file metadata to zip file.
+                $zip->addFile(public_path('file_metadata.json'), basename(public_path('file_metadata.json')));*/
 
                 $zip->close();
             }
 
-            // Delete file metadata JSON file.
-            File::delete(public_path('file_metadata.json'));
+            /* // Delete file metadata JSON file.
+            File::delete(public_path('file_metadata.json'));*/
 
             return response()->download(public_path($fileName))->deleteFileAfterSend(true);
         } else {
-            return view('error.filenotfound');
+            return view('error.file_not_found');
         }
     }
 }

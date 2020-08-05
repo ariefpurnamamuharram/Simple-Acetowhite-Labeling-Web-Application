@@ -72,8 +72,6 @@
 
                                 <select name="lblIVA" class="form-control @error('lblIVA') invalid-feedback @enderror"
                                         id="lblIVA">
-                                    <option selected disabled>-- Pilih Label Foto --</option>
-
                                     <option value="{{ ImageUpload::IMAGE_LABEL_NEGATIVE_CODE }}"
                                             @if($file->label == ImageUpload::IMAGE_LABEL_NEGATIVE_CODE) selected="selected" @endif>
                                         Negatif

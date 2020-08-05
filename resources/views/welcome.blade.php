@@ -27,6 +27,16 @@
                         </button>
                     </a>
                 </div>
+
+                <section style="margin-top: 48px;">
+                    <div class="d-flex justify-content-center">
+                        <span class="text-center font-weight-bold">Didukung oleh:</span>
+                    </div>
+
+                    <div class="d-flex justify-content-center mt-3">
+                        <img src="{{ asset('assets/images/imeri.png') }}" height="72px" alt="IMERI">
+                    </div>
+                </section>
             </div>
         </div>
     </div>
