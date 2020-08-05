@@ -1,6 +1,6 @@
 # Simple Acetowhite Labeling Web Application
-![Stable version](https://img.shields.io/badge/Stable_version-2020.01-yellowgreen.svg)
-![Release Date](https://img.shields.io/badge/Release_date-June_2020-yellow.svg)
+![Stable version](https://img.shields.io/badge/Stable_version-2020.02-yellowgreen.svg)
+![Release Date](https://img.shields.io/badge/Release_date-August_2020-yellow.svg)
 
 Repositori ini berisi aplikasi web sederhana untuk membantu melabeli lesi _acetowhite_ pada foto pemeriksaan IVA (inspeksi visual asam asetat) serviks. Aplikasi web ini ini dibangun dengan menggunakan _framework_ Laravel. Kode sumber program ini ditulis oleh **Arief Purnama Muharram**.
 

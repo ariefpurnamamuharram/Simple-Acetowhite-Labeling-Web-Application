@@ -27,7 +27,7 @@ class PasswordController extends Controller
             'password' => 'required|min:8|confirmed'
         ]);
 
-        if (Hash::check($request->password, Auth::user()->password)) {
+        if (Hash::check($request->currentPassword, Auth::user()->password)) {
             User::where('id', Auth::user()->id)->first()->update([
                 'password' => Hash::make($request->password),
             ]);
