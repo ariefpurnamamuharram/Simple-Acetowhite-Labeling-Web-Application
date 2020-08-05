@@ -13,31 +13,11 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-5">
-                        <span>Total foto IVA positif:</span>
+                        <span>Total foto IVA diunggah:</span>
                     </div>
 
                     <div class="col-sm-7">
-                        <span>{{ count(ImageUpload::where('label', 1)->get()) }} foto</span>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-sm-5">
-                        <span>Total foto IVA negatif</span>
-                    </div>
-
-                    <div class="col-sm-7">
-                        <span>{{ count(ImageUpload::where('label', 0)->get()) }} foto</span>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-sm-5">
-                        <span>Total foto belum dilabel:</span>
-                    </div>
-
-                    <div class="col-sm-7">
-                        <span>{{ count(ImageUpload::where('label', 99)->get()) }} foto</span>
+                        <span>{{ count(ImageUpload::get()) }} foto</span>
                     </div>
                 </div>
             </div>

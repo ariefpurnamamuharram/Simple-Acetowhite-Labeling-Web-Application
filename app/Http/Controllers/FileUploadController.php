@@ -39,12 +39,7 @@ class FileUploadController extends Controller
         ImageUpload::create([
             'filename_post_iva' => $filenameWithExt,
             'path_post_iva' => $filenameWithExt,
-            'posted_by' => Auth::User()->email,
-            'label' => ImageUpload::IMAGE_NOT_LABELED_CODE,
-        ]);
-
-        ImageArtifact::create([
-            'filename' => $filenameWithExt,
+            'uploaded_by' => Auth::User()->email,
         ]);
 
         return response()->json(['success' => $imageName]);

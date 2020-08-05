@@ -8,6 +8,7 @@ class ImageArtifact extends Model
 {
     protected $fillable = [
         'filename',
+        'email',
         'cbMetaplasiaRing',
         'cbIUD',
         'cbMenstrualBlood',
@@ -16,6 +17,7 @@ class ImageArtifact extends Model
         'cbCervicitis',
         'cbPolyp',
         'cbOvulaNabothi',
-        'cbEctropion'
+        'cbEctropion',
+        'cbReflections',
     ];
 }

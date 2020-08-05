@@ -1,7 +1,9 @@
 <?php
 
+use App\ImageLabel;
 use App\ImageUpload;
 use App\User;
+use App\UserDetails;
 
 return [
 
@@ -212,6 +214,7 @@ return [
         'Hash' => Illuminate\Support\Facades\Hash::class,
         'Http' => Illuminate\Support\Facades\Http::class,
         'ImageUpload' => ImageUpload::class,
+        'ImageLabel' => ImageLabel::class,
         'Lang' => Illuminate\Support\Facades\Lang::class,
         'Log' => Illuminate\Support\Facades\Log::class,
         'Mail' => Illuminate\Support\Facades\Mail::class,
@@ -229,6 +232,7 @@ return [
         'Str' => Illuminate\Support\Str::class,
         'URL' => Illuminate\Support\Facades\URL::class,
         'User' => User::class,
+        'UserDetails' => UserDetails::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 

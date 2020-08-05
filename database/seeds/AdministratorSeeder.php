@@ -5,7 +5,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
-class UserSeeder extends Seeder
+class AdministratorSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,10 +14,6 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        /*
-         * Modify this variable to add new user.
-         * Flush the database using php artisan db:seed --class=UserSeeder command.
-         */
         $users = [
             [
                 'name' => 'CerviCam Administrator',
@@ -31,6 +27,13 @@ class UserSeeder extends Seeder
                 'name' => $user['name'],
                 'email' => $user['email'],
                 'password' => Hash::make($user['password']),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
+
+            DB::table('users_details')->insert([
+                'email' => $user['email'],
+                'is_administrator' => true,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);

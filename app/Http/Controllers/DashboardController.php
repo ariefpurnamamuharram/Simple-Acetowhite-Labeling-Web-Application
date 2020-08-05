@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\ImageArtifact;
+use App\ImageLabel;
 use App\ImageUpload;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
@@ -41,21 +43,18 @@ class DashboardController extends Controller
     public function showPositives()
     {
         return view('dashboard.dashboard', [
-            'files' => ImageUpload::orderBy('id', 'DESC')->where('label', self::LABEL_POSITIVE_CODE)->paginate(8),
+            'files' => ImageLabel::where([
+                'email' => Auth::user()->email,
+                'label' => self::LABEL_POSITIVE_CODE])->orderBy('id', 'DESC')->paginate(8),
         ]);
     }
 
     public function showNegatives()
     {
         return view('dashboard.dashboard', [
-            'files' => ImageUpload::orderBy('id', 'DESC')->where('label', self::LABEL_NEGATIVE_CODE)->paginate(8),
-        ]);
-    }
-
-    public function showNotLabelled()
-    {
-        return view('dashboard.dashboard', [
-            'files' => ImageUpload::orderBy('id', 'DESC')->where('label', self::LABEL_UNKNOWN_CODE)->paginate(8),
+            'files' => ImageLabel::where([
+                'email' => Auth::user()->email,
+                'label' => self::LABEL_NEGATIVE_CODE])->orderBy('id', 'DESC')->paginate(8),
         ]);
     }
 

@@ -32,9 +32,10 @@
 
                     <br>
 
-                    <span class="text-center"><strong>Dibuat oleh</strong><br><a class="text-dark"
-                                                                                 href="http://linkedin.com/in/ariefpurnamamuharram"
-                                                                                 target="_blank">Arief Purnama Muharram</a>
+                    <span class="text-center">
+                        <strong>Dibuat oleh</strong><br><a class="text-decoration-none text-dark"
+                                                           href="http://linkedin.com/in/ariefpurnamamuharram"
+                                                           target="_blank">Arief Purnama Muharram</a><br>Jakarta, Indonesia
                 </span>
                 </div>
             </div>

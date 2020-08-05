@@ -42,16 +42,16 @@
                                 </thead>
                                 <tbody>
                                 @foreach($files as $file)
-                                    <tr @switch($file->label)
+                                    <tr @if(!empty(ImageLabel::where(['filename' => $file->filename_post_iva, 'email' => Auth::user()->email])->first()->label)) @switch(ImageLabel::where(['filename' => $file->filename_post_iva, 'email' => Auth::user()->email])->first()->label)
                                         @case(0)
                                         class="table-success"
                                         @break
                                         @case(1)
                                         class="table-danger"
                                         @break
-                                        @default
-                                        class=""
-                                        @endswitch>
+                                        @endswitch
+                                        @else class=""
+                                        @endif>
                                         <td>
                                             <div class="d-flex justify-content-center">
                                                 <span class="text-center">{{ $file->id }}</span>
@@ -86,25 +86,27 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="text-center">@switch($file->label)
-                                                @case(0)
-                                                <span>Negatif</span>
-                                                @break
-                                                @case(1)
-                                                <span>Positif</span>
-                                                @break
-                                                @default
+                                        <td class="text-center">@if(!empty(ImageLabel::where(['filename' => $file->filename_post_iva, 'email' => Auth::user()->email])->first()->label))
+                                                @switch(ImageLabel::where(['filename' => $file->filename_post_iva, 'email' => Auth::user()->email])->first()->label)
+                                                    @case(0)
+                                                    <span>Negatif</span>
+                                                    @break
+                                                    @case(1)
+                                                    <span>Positif</span>
+                                                    @break
+                                                @endswitch
+                                            @else
                                                 <span style="font-style: italic">Belum dilabel</span>
-                                            @endswitch
+                                            @endif
                                         </td>
                                         <td>
                                             //
                                         </td>
                                         <td>
-                                            @if(empty($file->comment))
-                                                <span>-</span>
+                                            @if(!empty(ImageLabel::where(['filename' => $file->filename_post_iva, 'email' => Auth::user()->email])->first()->label))
+                                                <span>{{ ImageLabel::where(['filename' => $file->filename_post_iva, 'email' => Auth::user()->email])->first()->label }}</span>
                                             @else
-                                                <span>{{ $file->comment }}</span>
+                                                <span>-</span>
                                             @endif
                                         </td>
                                         <td>
@@ -115,6 +117,7 @@
                                                             aria-haspopup="true" aria-expanded="false">
                                                         Pilih aksi
                                                     </button>
+
                                                     <div class="dropdown-menu" aria-labelledby="dropdownActionButton">
                                                         <a class="dropdown-item"
                                                            href="{{ route('file.edit', $file->filename_post_iva) }}">

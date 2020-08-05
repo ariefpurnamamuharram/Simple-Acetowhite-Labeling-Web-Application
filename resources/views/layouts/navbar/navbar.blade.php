@@ -1,5 +1,5 @@
 <!-- Navbar -->
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
     <div class="container">
         <a class="navbar-brand" href="{{ route('dashboard') }}">
             <span class="navbar-title">Simple Acetowhite Labeling</span>
@@ -12,44 +12,41 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-dark font-weight-bold" href="#" role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dasbor
-                    </a>
-
-                    <div class="dropdown-menu animate__animated animate__fadeInDown">
-                        <a class="dropdown-item" href="{{ route('dashboard') }}">
-                            Semua Foto
+            @auth
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-dark font-weight-bold" href="#" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Dasbor
                         </a>
 
-                        <a class="dropdown-item" href="{{ route('dashboard.show.positives') }}">
-                            Semua Foto IVA Positif
-                        </a>
+                        <div class="dropdown-menu animate__animated animate__fadeInDown">
+                            <a class="dropdown-item" href="{{ route('dashboard') }}">
+                                Semua Foto
+                            </a>
 
-                        <a class="dropdown-item" href="{{ route('dashboard.show.negatives') }}">
-                            Semua Foto IVA Negatif
-                        </a>
+                            <a class="dropdown-item" href="{{ route('dashboard.show.positives') }}">
+                                Semua Foto IVA Positif
+                            </a>
 
-                        <a class="dropdown-item" href="{{ route('dashboard.show.not.labelled') }}">
-                            Semua Foto Belum Dilabel
-                        </a>
-                    </div>
-                </li>
+                            <a class="dropdown-item" href="{{ route('dashboard.show.negatives') }}">
+                                Semua Foto IVA Negatif
+                            </a>
+                        </div>
+                    </li>
 
-                <li class="nav-item">
-                    <a class="nav-link text-dark font-weight-bold" href="{{ route('file.upload') }}">Unggah Foto</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark font-weight-bold" href="{{ route('file.upload') }}">Unggah Foto</a>
+                    </li>
 
-                <li class="nav-item">
-                    <a class="nav-link text-dark font-weight-bold" href="#" role="button" data-toggle="modal"
-                       data-target="#modalStatistics">Statistik</a>
-                </li>
-            </ul>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark font-weight-bold" href="#" role="button" data-toggle="modal"
+                           data-target="#modalStatistics">Statistik</a>
+                    </li>
+                </ul>
+            @endauth
 
             <ul class="navbar-nav ml-auto">
-                <!-- Guest navbar -->
                 @guest
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">Masuk</a>
@@ -68,10 +65,12 @@
                     </li>
                 @else
                     <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle text-dark font-weight-bold" href="#"
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle text-dark" href="#"
                            role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            {{ Auth::user()->name }}
+                            <span
+                                class="font-weight-bold">{{ Auth::user()->name }}</span> @if(UserDetails::where('email', Auth::user()->email)->first()->is_administrator == true)
+                                <span>(Administrator)</span>@endif
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right animate__animated animate__fadeInDown"

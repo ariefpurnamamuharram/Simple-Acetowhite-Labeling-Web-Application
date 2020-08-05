@@ -19,9 +19,7 @@ class CreateImageUploadsTable extends Migration
             $table->string('path_pre_iva')->nullable()->default(null);
             $table->string('filename_post_iva');
             $table->string('path_post_iva');
-            $table->string('posted_by');
-            $table->integer('label');
-            $table->string('comment')->nullable()->default(null);
+            $table->string('uploaded_by');
             $table->timestamps();
         });
     }

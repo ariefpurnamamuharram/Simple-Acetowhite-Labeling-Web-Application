@@ -31,7 +31,6 @@ Route::get('/', 'WelcomeController@index')->name('welcome');
 Route::get('/dashboard/all', 'DashboardController@index')->name('dashboard');
 Route::get('/dashboard/positives', 'DashboardController@showPositives')->name('dashboard.show.positives');
 Route::get('/dashboard/negatives', 'DashboardController@showNegatives')->name('dashboard.show.negatives');
-Route::get('/dashboard/not-labelled', 'DashboardController@showNotLabelled')->name('dashboard.show.not.labelled');
 
 
 /*
