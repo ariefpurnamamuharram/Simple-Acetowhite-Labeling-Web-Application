@@ -25,6 +25,10 @@ Repositori ini berisi aplikasi web sederhana untuk membantu melabeli lesi _aceto
 
 ![API Support](screenshot5.png)
 
+### Update: Version 2020.02
+
+![Welcome v2020.02](screenshot6.png)
+
 ## Daftar Akses API
 - Download koleksi foto IVA positif
 ```
@@ -44,6 +48,30 @@ curl \
     -H "Accept: application/json" \
     -H "Authorization: Bearer XXX" \
     http://localhost/api/download-iva-negative \
+    --output file.zip
+```
+Ganti `XXX` dengan API Token Anda.
+
+### Update: Version 2020.02
+
+- Download koleksi foto IVA positif
+```
+curl \
+    -X GET \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer XXX" \
+    http://localhost/api/download-positives \
+    --output file.zip
+```
+Ganti `XXX` dengan API Token Anda.
+
+- Download koleksi foto IVA negatif
+```
+curl \
+    -X GET \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer XXX" \
+    http://localhost/api/download-negatives \
     --output file.zip
 ```
 Ganti `XXX` dengan API Token Anda.
