@@ -12,9 +12,9 @@
             <table class="table table-hover">
                 <thead>
                 <tr class="text-center text-white" style="background-color: #FF357C!important;">
-                    <th>ID</th>
-                    <th>Pratinjau</th>
-                    <th>Ekspertise Kolektif</th>
+                    <th class="align-middle">ID</th>
+                    <th class="align-middle">Pratinjau</th>
+                    <th class="align-middle">Ekspertise Kolektif</th>
                 </tr>
                 </thead>
 

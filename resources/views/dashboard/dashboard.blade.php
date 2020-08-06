@@ -39,12 +39,12 @@
                                 <thead>
                                 <tr class="text-center"
                                     style="background-color: #FBE0DC!important; color: #241D4C!important;">
-                                    <th>ID</th>
-                                    <th>Pratinjau</th>
-                                    <th>Label</th>
-                                    <th>Temuan</th>
-                                    <th>Komentar</th>
-                                    <th>Aksi</th>
+                                    <th class="align-middle">ID</th>
+                                    <th class="align-middle">Pratinjau</th>
+                                    <th class="align-middle">Label</th>
+                                    <th class="align-middle">Temuan</th>
+                                    <th class="align-middle">Komentar</th>
+                                    <th class="align-middle">Aksi</th>
                                 </tr>
                                 </thead>
                                 <tbody>

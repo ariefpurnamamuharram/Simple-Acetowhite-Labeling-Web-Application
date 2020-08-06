@@ -5,9 +5,7 @@
         <div class="row align-items-center mt-4">
             <div class="col">
                 <div class="d-flex justify-content-center">
-                    <div class="animate__animated animate__flipInY animate__delay-1s">
-                        <img src="{{ asset('assets/images/cervicam.png') }}" height="160px" alt="CerviCam logo"/>
-                    </div>
+                    <img src="{{ asset('assets/images/cervicam.png') }}" height="160px" alt="CerviCam logo"/>
                 </div>
 
                 <div class="d-flex justify-content-center mt-2">

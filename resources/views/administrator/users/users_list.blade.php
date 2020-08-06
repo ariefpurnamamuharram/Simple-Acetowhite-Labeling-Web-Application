@@ -12,30 +12,28 @@
                     <table class="table table-bordered table-hover">
                         <thead>
                         <tr class="text-center text-white" style="background-color: #FF357C!important;">
-                            <th>Nama</th>
-                            <th>Email</th>
-                            <th>Administrator</th>
-                            <th>Aksi</th>
+                            <th class="align-middle">Nama</th>
+                            <th class="align-middle">Email</th>
+                            <th class="align-middle">Administrator</th>
+                            <th class="align-middle">Aksi</th>
                         </tr>
                         </thead>
 
                         <tbody>
                         @foreach(User::orderBy('name', "DESC")->get() as $user)
-                            <tr class="text-center align-middle">
-                                <td>{{ $user->name }}</td>
-                                <td>{{ $user->email }}</td>
-                                <td>
+                            <tr class="text-center">
+                                <td class="align-middle">{{ $user->name }}</td>
+                                <td class="align-middle"><span class="text-nowrap">{{ $user->email }}</span></td>
+                                <td class="align-middle">
                                     <div class="d-flex justify-content-center">
-                                        <div class="form-group">
-                                            <input id="isAdministrator" type="checkbox" class="form-check-input"
-                                                   disabled
-                                                   @if(UserDetails::where('email', $user->email)->first()->is_administrator == true) checked="checked" @endif>
-
-                                            <label for="isAdministrator" class="d-none col-form-label"></label>
-                                        </div>
+                                        @if(UserDetails::where('email', $user->email)->first()->is_administrator == true)
+                                            <span class="text-center">v</span>
+                                        @else
+                                            <span class="text-center">x</span>
+                                        @endif
                                     </div>
                                 </td>
-                                <td>
+                                <td class="align-middle">
                                     <div class="d-flex justify-content-center">
                                         <div class="dropdown">
                                             <button class="btn btn-secondary dropdown-toggle" type="button"
