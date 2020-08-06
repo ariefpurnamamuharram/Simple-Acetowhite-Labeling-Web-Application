@@ -27,13 +27,17 @@ class AdministratorController extends Controller
 
     public function users()
     {
-        return view('administrator.users.users_list');
+        $users = User::orderBy('name', "ASC")->paginate(8);
+
+        return view('administrator.users.users_list', [
+            'users' => $users,
+        ]);
     }
 
     public function dashboard()
     {
         return view('administrator.dashboard.dashboard', [
-            'files' => ImageUpload::orderBy('id', 'DESC')->get(),
+            'files' => ImageUpload::orderBy('id', 'DESC')->paginate(8),
         ]);
     }
 

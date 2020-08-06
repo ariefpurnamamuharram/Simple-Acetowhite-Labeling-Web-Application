@@ -20,7 +20,7 @@
                         </thead>
 
                         <tbody>
-                        @foreach(User::orderBy('name', "DESC")->get() as $user)
+                        @foreach($users as $user)
                             <tr class="text-center">
                                 <td class="align-middle">{{ $user->name }}</td>
                                 <td class="align-middle"><span class="text-nowrap">{{ $user->email }}</span></td>
@@ -61,6 +61,10 @@
                         @endforeach
                         </tbody>
                     </table>
+                </div>
+
+                <div class="mt-2">
+                    {{ $users->links() }}
                 </div>
             </div>
         </div>
