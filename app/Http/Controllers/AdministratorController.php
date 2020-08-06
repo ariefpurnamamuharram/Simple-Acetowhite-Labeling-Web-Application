@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ImageAreaMark;
 use App\ImageUpload;
 use App\User;
 use App\UserDetails;
@@ -38,6 +39,14 @@ class AdministratorController extends Controller
     {
         return view('administrator.dashboard.dashboard', [
             'files' => ImageUpload::orderBy('id', 'DESC')->paginate(8),
+        ]);
+    }
+
+    public function imageAreaMarks($requestid)
+    {
+        return view('administrator.file.image_area_mark', [
+            'requestid' => $requestid,
+            'files' => ImageAreaMark::where('filename', $requestid)->get(),
         ]);
     }
 

@@ -67,7 +67,7 @@
                                                         @break
                                                     @endswitch
                                                 </a> @if(!empty(ImageAreaMark::where(['filename' => $image->filename, 'email' => $image->email])->first()))
-                                                    <a href="{{ route('image.mark', $image->filename) }}"
+                                                    <a href="{{ route('administrator.area.marks', $image->filename) }}"
                                                        target="_blank">[Marka]</a>
                                                 @endif<br>
                                                 <span><span class="font-weight-bold">Temuan: </span>@foreach(ImageAreaMark::where(['filename' => $image->filename, 'email' => $image->email])->get() as $mark)

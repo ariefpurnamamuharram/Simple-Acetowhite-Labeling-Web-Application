@@ -32,7 +32,9 @@
                     </div>
 
                     <div class="d-flex justify-content-center mt-3">
-                        <img src="{{ asset('assets/images/imeri.png') }}" height="72px" alt="IMERI">
+                        <a href="http://imeri.fk.ui.ac.id/" target="_blank">
+                            <img src="{{ asset('assets/images/imeri.png') }}" height="72px" alt="IMERI">
+                        </a>
                     </div>
                 </section>
             </div>

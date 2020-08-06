@@ -43,16 +43,7 @@
                                             </button>
 
                                             <div class="dropdown-menu" aria-labelledby="dropdownActionButton">
-                                                <form action="{{ route('administrator.delete.user') }}" method="post"
-                                                      enctype="multipart/form-data">
-                                                    @csrf
-
-                                                    <input type="hidden" name="email" value="{{ $user->email }}">
-
-                                                    <button class="dropdown-item" type="submit">
-                                                        Hapus pengguna
-                                                    </button>
-                                                </form>
+                                                <a href="#" class="dropdown-item disabled">Hapus pengguna</a>
                                             </div>
                                         </div>
                                     </div>
