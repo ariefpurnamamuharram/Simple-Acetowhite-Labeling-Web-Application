@@ -44,7 +44,6 @@
                                     <th class="text-center">ID</th>
                                     <th class="text-center">Label</th>
                                     <th class="text-center">Deskripsi</th>
-                                    <th class="text-center">Aksi</th>
                                 </tr>
                                 </thead>
 
@@ -99,12 +98,6 @@
 
                                             <td>
                                                 <span>{{ $file->description }}</span>
-                                            </td>
-
-                                            <td class="text-center">
-                                                <a href="{{ route('image.mark.delete', $file->id) }}">
-                                                    <button class="btn btn-danger">Hapus</button>
-                                                </a>
                                             </td>
                                         </tr>
                                     @endforeach
