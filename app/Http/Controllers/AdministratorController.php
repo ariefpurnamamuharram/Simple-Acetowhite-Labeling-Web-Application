@@ -42,11 +42,14 @@ class AdministratorController extends Controller
         ]);
     }
 
-    public function imageAreaMarks($requestid)
+    public function imageAreaMarks($email, $filename)
     {
         return view('administrator.file.image_area_mark', [
-            'requestid' => $requestid,
-            'files' => ImageAreaMark::where('filename', $requestid)->get(),
+            'filename' => $filename,
+            'files' => ImageAreaMark::where([
+                'filename' => $filename,
+                'email' => $email,
+            ])->get(),
         ]);
     }
 

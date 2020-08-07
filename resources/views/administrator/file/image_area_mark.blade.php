@@ -124,7 +124,7 @@
                 const canvasW = 480;
 
                 // Load image.
-                img.src = "{{ url('files/images/iva/'.$requestid) }}";
+                img.src = "{{ url('files/images/iva/'.$filename) }}";
 
                 // setup canvas.
                 function init() {
