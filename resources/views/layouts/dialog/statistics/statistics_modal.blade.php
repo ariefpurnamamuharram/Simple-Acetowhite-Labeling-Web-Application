@@ -20,6 +20,18 @@
                         <span>{{ count(ImageUpload::get()) }} foto</span>
                     </div>
                 </div>
+
+                @if(UserDetails::where('email', Auth::user()->email)->first()->is_administrator == true)
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <span>Total foto IVA dilabel:</span>
+                        </div>
+
+                        <div class="col-sm-7">
+                            <span>{{ count(array_unique(ImageLabel::get()->pluck('filename')->all())) }} foto</span>
+                        </div>
+                    </div>
+                @endif
             </div>
 
             <div class="modal-footer">

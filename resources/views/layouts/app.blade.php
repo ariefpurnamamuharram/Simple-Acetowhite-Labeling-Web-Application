@@ -73,17 +73,19 @@
     </div>
 </footer>
 
-<!-- Statistics modal -->
-@include('layouts.dialog.statistics.statistics_modal')
-
-<!-- Change password modal -->
-@include('layouts.dialog.password.change_password_modal')
-
 <!-- About modal -->
 @include('layouts.dialog.about.about_modal')
 
 <!-- Message modal -->
 @include('layouts.dialog.message.message_modal')
+
+@auth
+    <!-- Statistics modal -->
+    @include('layouts.dialog.statistics.statistics_modal')
+
+    <!-- Change password modal -->
+    @include('layouts.dialog.password.change_password_modal')
+@endauth
 
 <!-- Bootstrap script -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
