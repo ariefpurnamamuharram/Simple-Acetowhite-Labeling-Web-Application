@@ -70,45 +70,20 @@
                                                     <a href="{{ route('administrator.area.marks', [User::where('email', $image->email)->first()->email, $image->filename]) }}"
                                                        target="_blank">[Marka]</a>
                                                 @endif<br>
-                                                <span><span class="font-weight-bold">Temuan: </span>@foreach(ImageAreaMark::where(['filename' => $image->filename, 'email' => $image->email])->get() as $mark)
-                                                        @switch($mark->label)
-                                                            @case(0)
-                                                            Lesi acetowhite
-                                                            @break
-                                                            @case(1)
-                                                            Metaplasia ring
-                                                            @break
-                                                            @case(2)
-                                                            Tali IUD
-                                                            @break
-                                                            @case(3)
-                                                            Darah menstruasi
-                                                            @break
-                                                            @case(4)
-                                                            Lendir/mukus
-                                                            @break
-                                                            @case(5)
-                                                            Fluor albus
-                                                            @break
-                                                            @case(6)
-                                                            Servisitis
-                                                            @break
-                                                            @case(7)
-                                                            Polip
-                                                            @break
-                                                            @case(8)
-                                                            Ovula nabothi
-                                                            @break
-                                                            @case(9)
-                                                            Ektoprion
-                                                            @break
-                                                            @case(10)
-                                                            Refleksi cahaya
-                                                            @break
-                                                            @case(99)
-                                                            Lainnya
-                                                            @break
-                                                        @endswitch,
+                                                <span><span class="font-weight-bold">Temuan: </span>@foreach(array_unique(ImageAreaMark::where(['filename' => $image->filename, 'email' => $image->email])->get()->pluck('label')->all()) as $mark)
+                                                        @switch($mark)
+                                                            @case(0)<span>Lesi acetowhite</span>@break @case(1)
+                                                            <span>Metaplasia ring</span>@break @case(2)
+                                                            <span>Tali IUD</span>@break @case(3)
+                                                            <span>Darah menstruasi</span>@break @case(4)<span>Lendir/mukus</span>@break @case(5)
+                                                            <span>Fluor albus</span>@break @case(6)
+                                                            <span>Servisitis</span>@break @case(7)
+                                                            <span>Polip</span>@break @case(8)
+                                                            <span>Ovula nabothi</span>@break @case(9)
+                                                            <span>Ektoprion</span>@break @case(10)
+                                                            <span>Refleksi cahaya</span>@break @case(99)
+                                                            <span>Lainnya</span>@break
+                                                        @endswitch;
                                                     @endforeach</span><br>
                                                 <span><span class="font-weight-bold">Komentar: </span>{{ $image->comment }}</span>
                                             </li><br>

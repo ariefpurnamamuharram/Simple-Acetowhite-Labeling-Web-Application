@@ -12,9 +12,10 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-3">
-                                <form method="post" action="{{ route('file.search') }}"
+                                <form action="{{ route('file.search') }}" method="post"
                                       enctype="multipart/form-data">
-                                    {{ csrf_field() }}
+                                    @csrf
+
                                     <div class="form-group row">
                                         <label for="search" class="col-form-label"></label>
 
@@ -151,8 +152,8 @@
                                             @if(!empty($file->filename_post_iva))
                                                 @if(!empty(ImageAreaMark::where(['filename' => $file->filename_post_iva, 'email' => Auth::user()->email])->get()))
                                                     <ul>
-                                                        @foreach(ImageAreaMark::where(['filename' => $file->filename_post_iva, 'email' => Auth::user()->email])->get() as $mark)
-                                                            @switch($mark->label)
+                                                        @foreach(array_unique(ImageAreaMark::where(['filename' => $file->filename_post_iva, 'email' => Auth::user()->email])->get()->pluck('label')->all()) as $mark)
+                                                            @switch($mark)
                                                                 @case(0)
                                                                 <li>Lesi acetowhite</li>
                                                                 @break
@@ -198,8 +199,8 @@
 
                                                 @if(!empty(ImageAreaMark::where(['filename' => $file->filename, 'email' => Auth::user()->email])->get()))
                                                     <ul>
-                                                        @foreach(ImageAreaMark::where(['filename' => $file->filename, 'email' => Auth::user()->email])->get() as $mark)
-                                                            @switch($mark->label)
+                                                        @foreach(array_unique(ImageAreaMark::where(['filename' => $file->filename, 'email' => Auth::user()->email])->get()->pluck('label')->all()) as $mark)
+                                                            @switch($mark)
                                                                 @case(0)
                                                                 <li>Lesi acetowhite</li>
                                                                 @break

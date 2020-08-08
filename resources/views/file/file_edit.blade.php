@@ -11,7 +11,7 @@
 
                     <div class="card-body">
                         <form action="{{ route('file.update') }}" method="post" enctype="multipart/form-data">
-                            {{ csrf_field() }}
+                            @csrf
 
                             <section>
                                 <h4>Foto IVA</h4>
@@ -68,10 +68,15 @@
 
                                 <hr/>
 
-                                <label for="lblIVA" class="d-none"></label>
+                                <label for="lblIVA">Pilih pelabelan foto IVA Anda</label>
 
-                                <select name="lblIVA" class="form-control @error('lblIVA') invalid-feedback @enderror"
-                                        id="lblIVA">
+                                <select name="lblIVA" id="lblIVA"
+                                        class="form-control @error('lblIVA') is-invalid @enderror">
+                                    <option disabled
+                                            @if($file->label == ImageUpload::IMAGE_NOT_LABELED_CODE) selected="selected" @endif>
+                                        -- Pilih label --
+                                    </option>
+
                                     <option value="{{ ImageUpload::IMAGE_LABEL_NEGATIVE_CODE }}"
                                             @if($file->label == ImageUpload::IMAGE_LABEL_NEGATIVE_CODE) selected="selected" @endif>
                                         Negatif

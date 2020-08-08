@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\ImageLabel;
 use App\ImageUpload;
 use Illuminate\Http\Request;
 
@@ -20,11 +19,10 @@ class SearchController extends Controller
         ]);
 
         if (!empty(ImageUpload::where('id', $request->search)->first())) {
-            $file = ImageLabel::where('filename', ImageUpload::where('id', $request->search)->first()->filename_post_iva)->first();
+            $filename = ImageUpload::where('id', $request->search)->first()->filename_post_iva;
 
-            return view('file.file_edit', [
-                'file' => $file,
-            ]);
+            return redirect()
+                ->route('file.edit', $filename);
         } else {
             return view('error.file_not_found');
         }
