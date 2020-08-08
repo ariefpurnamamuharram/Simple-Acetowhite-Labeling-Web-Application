@@ -8,7 +8,7 @@
 
         <hr/>
 
-        <div class="table-responsive mt-2">
+        <section class="table-responsive mt-2">
             <table class="table table-hover">
                 <thead>
                 <tr class="text-center text-white" style="background-color: #FF357C!important;">
@@ -52,54 +52,58 @@
                             </div>
                         </td>
                         <td>
-                            <div class="accordion">
-                                <ul>
-                                    @foreach(ImageLabel::where('filename', $file->filename_post_iva)->get() as $image)
-                                        @if($image->label != ImageUpload::IMAGE_NOT_LABELED_CODE)
-                                            <li>
-                                                <a class="text-decoration-none font-weight-bold">
-                                                    {{ User::where('email', $image->email)->first()->name }} @switch($image->label)
-                                                        @case(ImageUpload::IMAGE_LABEL_POSITIVE_CODE)
-                                                        <span class="text-danger">(Positif)</span>
-                                                        @break
-                                                        @case(ImageUpload::IMAGE_LABEL_NEGATIVE_CODE)
-                                                        <span class="text-success">(Negatif)</span>
-                                                        @break
-                                                    @endswitch
-                                                </a> @if(!empty(ImageAreaMark::where(['filename' => $image->filename, 'email' => $image->email])->first()))
-                                                    <a href="{{ route('administrator.area.marks', [User::where('email', $image->email)->first()->email, $image->filename]) }}"
-                                                       target="_blank">[Marka]</a>
-                                                @endif<br>
-                                                <span><span class="font-weight-bold">Temuan: </span>@foreach(array_unique(ImageAreaMark::where(['filename' => $image->filename, 'email' => $image->email])->get()->pluck('label')->all()) as $mark)
-                                                        @switch($mark)
-                                                            @case(0)<span>Lesi acetowhite</span>@break @case(1)
-                                                            <span>Metaplasia ring</span>@break @case(2)
-                                                            <span>Tali IUD</span>@break @case(3)
-                                                            <span>Darah menstruasi</span>@break @case(4)<span>Lendir/mukus</span>@break @case(5)
-                                                            <span>Fluor albus</span>@break @case(6)
-                                                            <span>Servisitis</span>@break @case(7)
-                                                            <span>Polip</span>@break @case(8)
-                                                            <span>Ovula nabothi</span>@break @case(9)
-                                                            <span>Ektoprion</span>@break @case(10)
-                                                            <span>Refleksi cahaya</span>@break @case(99)
-                                                            <span>Lainnya</span>@break
-                                                        @endswitch;
-                                                    @endforeach</span><br>
-                                                <span><span class="font-weight-bold">Komentar: </span>{{ $image->comment }}</span>
-                                            </li><br>
-                                        @endif
-                                    @endforeach
-                                </ul>
-                            </div>
+                            <section>
+                                @if(count(ImageLabel::where('filename', $file->filename_post_iva)->get()) != 0)
+                                    <ul>
+                                        @foreach(ImageLabel::where('filename', $file->filename_post_iva)->get() as $image)
+                                            @if($image->label != ImageUpload::IMAGE_NOT_LABELED_CODE)
+                                                <li>
+                                                    <a class="text-decoration-none font-weight-bold">
+                                                        {{ User::where('email', $image->email)->first()->name }} @switch($image->label)
+                                                            @case(ImageUpload::IMAGE_LABEL_POSITIVE_CODE)
+                                                            <span class="text-danger">(Positif)</span>
+                                                            @break
+                                                            @case(ImageUpload::IMAGE_LABEL_NEGATIVE_CODE)
+                                                            <span class="text-success">(Negatif)</span>
+                                                            @break
+                                                        @endswitch
+                                                    </a> @if(!empty(ImageAreaMark::where(['filename' => $image->filename, 'email' => $image->email])->first()))
+                                                        <a href="{{ route('administrator.area.marks', [User::where('email', $image->email)->first()->email, $image->filename]) }}"
+                                                           target="_blank">[Marka]</a>
+                                                    @endif<br>
+                                                    <span><span class="font-weight-bold">Temuan: </span>@foreach(array_unique(ImageAreaMark::where(['filename' => $image->filename, 'email' => $image->email])->get()->pluck('label')->all()) as $mark)
+                                                            @switch($mark)
+                                                                @case(0)<span>Lesi acetowhite</span>@break @case(1)
+                                                                <span>Metaplasia ring</span>@break @case(2)
+                                                                <span>Tali IUD</span>@break @case(3)
+                                                                <span>Darah menstruasi</span>@break @case(4)<span>Lendir/mukus</span>@break @case(5)
+                                                                <span>Fluor albus</span>@break @case(6)
+                                                                <span>Servisitis</span>@break @case(7)
+                                                                <span>Polip</span>@break @case(8)
+                                                                <span>Ovula nabothi</span>@break @case(9)
+                                                                <span>Ektoprion</span>@break @case(10)
+                                                                <span>Refleksi cahaya</span>@break @case(99)
+                                                                <span>Lainnya</span>@break
+                                                            @endswitch;
+                                                        @endforeach</span><br>
+                                                    <span><span class="font-weight-bold">Komentar: </span>{{ $image->comment }}</span>
+                                                </li><br>
+                                            @endif
+                                        @endforeach
+                                    </ul>
+                                @else
+                                    <span class="font-italic">Belum ada ekspertise</span>
+                                @endif
+                            </section>
                         </td>
                     </tr>
                 @endforeach
                 </tbody>
             </table>
-        </div>
+    </div>
 
-        <div class="mt-2">
-            {{ $files->links() }}
-        </div>
+    <div class="mt-2">
+        {{ $files->links() }}
+    </div>
     </div>
 @endsection
