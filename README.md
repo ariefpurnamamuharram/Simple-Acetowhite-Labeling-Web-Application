@@ -76,6 +76,9 @@ curl \
 ```
 Ganti `XXX` dengan API Token Anda.
 
+## Lisensi dan Hak Cipta
+Hak cipta aplikasi ini dimiliki penuh oleh **Cervicam Research Group**. Anda bebas menggunakan aplikasi ini selama untuk tujuan nonkomersil.
+
 ## Kontributor
 Tim riset CerviCam:
 1. Dr. dr. Hariyono Winarto, Sp.OG(K).
