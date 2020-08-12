@@ -132,9 +132,15 @@
                             <div class="row mt-4">
                                 <div class="col">
                                     <div class="d-flex flex-row justify-content-between">
-                                        <a href="{{ route('dashboard') }}">
-                                            <button type="button" class="btn btn-outline-dark">Kembali</button>
-                                        </a>
+                                        @if(!empty($page))
+                                            <a href="{{ route('dashboard', ["page" => $page]) }}">
+                                                <button type="button" class="btn btn-outline-dark">Kembali</button>
+                                            </a>
+                                        @else
+                                            <a href="{{ route('dashboard') }}">
+                                                <button type="button" class="btn btn-outline-dark">Kembali</button>
+                                            </a>
+                                        @endif
 
                                         <button type="submit" class="btn btn-warning">Simpan</button>
                                     </div>

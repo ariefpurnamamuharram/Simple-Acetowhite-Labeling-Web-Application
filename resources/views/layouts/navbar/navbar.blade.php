@@ -74,9 +74,13 @@
                         </li>
                     @endif
 
-                    <li class="nav-item">
-                        <a class="nav-link text-dark font-weight-bold" href="{{ route('file.upload') }}">Unggah Foto</a>
-                    </li>
+                    @if(UserDetails::where('email', Auth::user()->email)->first()->is_administrator == true)
+                        <li class="nav-item">
+                            <a class="nav-link text-dark font-weight-bold" href="{{ route('file.upload') }}">
+                                Unggah Foto
+                            </a>
+                        </li>
+                    @endif
 
                     <li class="nav-item">
                         <a class="nav-link text-dark font-weight-bold" href="#" role="button" data-toggle="modal"

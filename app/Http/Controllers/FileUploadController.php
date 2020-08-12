@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\ImageArtifact;
 use App\ImageUpload;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,7 +11,7 @@ class FileUploadController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('check.administrator');
     }
 
     public function fileUpload()

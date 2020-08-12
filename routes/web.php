@@ -39,11 +39,10 @@ Route::get('/dashboard/negatives', 'DashboardController@showNegatives')->name('d
 |--------------------------------------------------------------------------
 */
 
+Route::get('/file/page={page}/edit/filename={requestid}', 'DashboardController@edit')->name('file.edit');
+Route::get('/file/mark-area/filename={requestid}', 'ImageAreaMarkController@index')->name('image.mark');
+Route::get('/file/mark-area/delete/markid={requestid}', 'ImageAreaMarkController@delete')->name('image.mark.delete');
 Route::post('/file/update', 'DashboardController@update')->name('file.update');
-Route::get('/file/edit/{requestid}', 'DashboardController@edit')->name('file.edit');
-Route::get('/file/delete/{requestid}', 'DashboardController@delete')->name('file.delete');
-Route::get('/file/mark-area/{requestid}', 'ImageAreaMarkController@index')->name('image.mark');
-Route::get('/file/mark-area/delete/{requestid}', 'ImageAreaMarkController@delete')->name('image.mark.delete');
 Route::post('/file/mark-area/store', 'ImageAreaMarkController@store')->name('image.mark.store');
 
 

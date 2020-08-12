@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\ImageArtifact;
 use App\ImageLabel;
 use App\ImageUpload;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
 class DashboardController extends Controller
@@ -58,7 +55,7 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function edit($requestid)
+    public function edit($page, $requestid)
     {
         if (empty(ImageLabel::where(['filename' => $requestid, 'email' => Auth::user()->email])->first())) {
             ImageLabel::create([
@@ -69,6 +66,7 @@ class DashboardController extends Controller
 
         return view('file.file_edit', [
             'file' => ImageLabel::where(['filename' => $requestid, 'email' => Auth::user()->email])->first(),
+            'page' => $page,
         ]);
     }
 
@@ -120,17 +118,5 @@ class DashboardController extends Controller
         return redirect()
             ->route('dashboard')
             ->with('message', 'Data foto berhasil diperbaharui');
-    }
-
-    public function delete($request): RedirectResponse
-    {
-        File::delete(public_path('files/images/iva/' . $request));
-
-        ImageUpload::where('filename_post_iva', $request)->first()->delete();
-        ImageArtifact::where('filename', $request)->first()->delete();
-
-        return redirect()
-            ->back()
-            ->with('message', 'Data berhasil dihapus');
     }
 }

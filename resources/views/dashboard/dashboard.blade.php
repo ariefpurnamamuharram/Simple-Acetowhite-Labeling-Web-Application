@@ -271,12 +271,8 @@
 
                                                     <div class="dropdown-menu" aria-labelledby="dropdownActionButton">
                                                         <a class="dropdown-item"
-                                                           href="@if(!empty($file->filename_post_iva)) {{ route('file.edit', $file->filename_post_iva) }} @else {{ route('file.edit', $file->filename) }} @endif">
+                                                           href="@if(!empty($file->filename_post_iva)) {{ route('file.edit', ["page" => $files->currentPage(), "requestid" => $file->filename_post_iva]) }} @else {{ route('file.edit', ["page" => $files->currentPage(), "requestid" => $file->filename]) }} @endif">
                                                             Edit Label Foto
-                                                        </a>
-
-                                                        <a class="dropdown-item disabled" href="#">
-                                                            Hapus Foto
                                                         </a>
                                                     </div>
                                                 </div>

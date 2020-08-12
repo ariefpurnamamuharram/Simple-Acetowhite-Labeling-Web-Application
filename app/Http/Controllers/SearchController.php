@@ -22,7 +22,10 @@ class SearchController extends Controller
             $filename = ImageUpload::where('id', $request->search)->first()->filename_post_iva;
 
             return redirect()
-                ->route('file.edit', $filename);
+                ->route('file.edit', [
+                    "page" => 1,
+                    "requestid" => $filename,
+                ]);
         } else {
             return view('error.file_not_found');
         }
