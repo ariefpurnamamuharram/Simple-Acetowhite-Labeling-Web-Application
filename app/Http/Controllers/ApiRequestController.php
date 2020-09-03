@@ -52,7 +52,7 @@ class ApiRequestController extends Controller
                     $relativeNameInZipFile = basename($item);
                     $zip->addFile($item, $relativeNameInZipFile);
 
-                    /* // Populate file metadata for JSON.
+                    // Populate file metadata for JSON.
                     $name = $value->filename_post_iva;
                     $bounding_boxes = [];
                     foreach (ImageAreaMark::where('filename', $value->filename_post_iva)->get() as $key => $value) {
@@ -62,20 +62,20 @@ class ApiRequestController extends Controller
                         'name' => $name,
                         'file' => self::LABEL_IVA_POSITIVE,
                         'bounding_box' => $bounding_boxes,
-                    ]); */
+                    ]);
                 }
 
-                /* // Create file metadata JSON object.
-                file_put_contents(public_path('file_metadata.json'), json_encode($data_json));*/
+                // Create file metadata JSON object.
+                file_put_contents(public_path('file_metadata.json'), json_encode($data_json));
 
-                /* // Add file metadata to zip file.
-                $zip->addFile(public_path('file_metadata.json'), basename(public_path('file_metadata.json')));*/
+                // Add file metadata to zip file.
+                $zip->addFile(public_path('file_metadata.json'), basename(public_path('file_metadata.json')));
 
                 $zip->close();
             }
 
-            /* // Delete file metadata JSON file.
-            File::delete(public_path('file_metadata.json'));*/
+            // Delete file metadata JSON file.
+            File::delete(public_path('file_metadata.json'));
 
             return response()->download(public_path($fileName))->deleteFileAfterSend(true);
         } else {
@@ -116,7 +116,7 @@ class ApiRequestController extends Controller
                     $relativeNameInZipFile = basename($item);
                     $zip->addFile($item, $relativeNameInZipFile);
 
-                    /* // Populate file metadata for JSON.
+                    // Populate file metadata for JSON.
                     $name = $value->filename_post_iva;
                     $bounding_boxes = [];
                     foreach (ImageAreaMark::where('filename', $value->filename_post_iva)->get() as $key => $value) {
@@ -126,20 +126,20 @@ class ApiRequestController extends Controller
                         'name' => $name,
                         'file' => self::LABEL_IVA_NEGATIVE,
                         'bounding_box' => $bounding_boxes,
-                    ]);*/
+                    ]);
                 }
 
-                /* // Create file metadata JSON object.
-                file_put_contents(public_path('file_metadata.json'), json_encode($data_json));*/
+                // Create file metadata JSON object.
+                file_put_contents(public_path('file_metadata.json'), json_encode($data_json));
 
-                /* // Add file metadata to zip file.
-                $zip->addFile(public_path('file_metadata.json'), basename(public_path('file_metadata.json')));*/
+                // Add file metadata to zip file.
+                $zip->addFile(public_path('file_metadata.json'), basename(public_path('file_metadata.json')));
 
                 $zip->close();
             }
 
-            /* // Delete file metadata JSON file.
-            File::delete(public_path('file_metadata.json'));*/
+            // Delete file metadata JSON file.
+            File::delete(public_path('file_metadata.json'));
 
             return response()->download(public_path($fileName))->deleteFileAfterSend(true);
         } else {

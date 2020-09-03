@@ -28,7 +28,7 @@
                 <div class="d-flex flex-column justify-content-center">
                     <span class="text-center">Versi 2020.02</span>
 
-                    <span class="text-center">Dirilis pada bulan Agustus 2020</span>
+                    <span class="text-center">Dirilis pada bulan Agustus 2020<br>Pembaharuan September 2020</span>
 
                     <br>
 
