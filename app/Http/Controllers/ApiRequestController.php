@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\ImageAreaMark;
 use App\ImageLabel;
 use App\ImageUpload;
+use Illuminate\Support\Facades\File;
 use ZipArchive;
 
 class ApiRequestController extends Controller
@@ -53,14 +55,14 @@ class ApiRequestController extends Controller
                     $zip->addFile($item, $relativeNameInZipFile);
 
                     // Populate file metadata for JSON.
-                    $name = $value->filename_post_iva;
+                    $name = $value;
                     $bounding_boxes = [];
-                    foreach (ImageAreaMark::where('filename', $value->filename_post_iva)->get() as $key => $value) {
+                    foreach (ImageAreaMark::where('filename', $value)->get() as $key => $value) {
                         array_push($bounding_boxes, [$value->rect_x0, $value->rect_y0, $value->rect_x1, $value->rect_y1]);
                     }
                     array_push($data_json, [
                         'name' => $name,
-                        'file' => self::LABEL_IVA_POSITIVE,
+                        'label' => self::LABEL_POSITIVE,
                         'bounding_box' => $bounding_boxes,
                     ]);
                 }
@@ -117,14 +119,14 @@ class ApiRequestController extends Controller
                     $zip->addFile($item, $relativeNameInZipFile);
 
                     // Populate file metadata for JSON.
-                    $name = $value->filename_post_iva;
+                    $name = $value;
                     $bounding_boxes = [];
-                    foreach (ImageAreaMark::where('filename', $value->filename_post_iva)->get() as $key => $value) {
+                    foreach (ImageAreaMark::where('filename', $value)->get() as $key => $value) {
                         array_push($bounding_boxes, [$value->rect_x0, $value->rect_y0, $value->rect_x1, $value->rect_y1]);
                     }
                     array_push($data_json, [
                         'name' => $name,
-                        'file' => self::LABEL_IVA_NEGATIVE,
+                        'label' => self::LABEL_NEGATIVE,
                         'bounding_box' => $bounding_boxes,
                     ]);
                 }
