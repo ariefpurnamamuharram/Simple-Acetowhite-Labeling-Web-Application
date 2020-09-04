@@ -38,61 +38,66 @@
                             </div>
                         </form>
 
-                        <section class="mt-4">
+                        @if(UserDetails::where('email', Auth::user()->email)->first()->is_administrator == true)
+                            <section class="mt-4">
 
-                            <h4><strong>API Token</strong></h4>
+                                <h4><strong>API Token</strong></h4>
 
-                            <hr/>
+                                <hr/>
 
-                            <p>
-                                Gunakan API Token berikut untuk mengakses sistem melalui metode API. Anda disarankan
-                                untuk tidak menghasilkan atau menghapusnya jika tidak tahu atau belum akan
-                                menggunakannya.<br><br><strong>Perhatian! API Token ini bersifat rahasia. Anda dilarang
-                                    untuk membagikannya kepada siapapun. Kerahasiaan API Token ini menjadi tanggung
-                                    jawab Anda.</strong>
-                            </p>
+                                <p>
+                                    Gunakan API Token berikut untuk mengakses sistem melalui metode API. Anda disarankan
+                                    untuk tidak menghasilkan atau menghapusnya jika tidak tahu atau belum akan
+                                    menggunakannya.<br><br><strong>Perhatian! API Token ini bersifat rahasia. Anda
+                                        dilarang
+                                        untuk membagikannya kepada siapapun. Kerahasiaan API Token ini menjadi tanggung
+                                        jawab Anda.</strong>
+                                </p>
 
-                            @if(!empty(User::where('email', Auth::user()->email)->first()->api_token))
-                                <div class="form-row bg-success text-light p-2 rounded">
-                                    <div class="col">
+                                @if(!empty(User::where('email', Auth::user()->email)->first()->api_token))
+                                    <div class="form-row bg-success text-light p-2 rounded">
+                                        <div class="col">
                                         <span class="font-italic">
                                         {{ User::where('email', Auth::user()->email)->first()->api_token }}
                                         </span>
+                                        </div>
                                     </div>
-                                </div>
-                            @else
-                                <div class="form-row bg-danger text-light p-2 rounded">
-                                    <span class="font-italic">Belum ada API Token dihasilkan</span>
-                                </div>
-                            @endif
+                                @else
+                                    <div class="form-row bg-danger text-light p-2 rounded">
+                                        <span class="font-italic">Belum ada API Token dihasilkan</span>
+                                    </div>
+                                @endif
 
-                            <div class="form-row" style="margin-top: 24px;">
-                                <div class="col"></div>
-                                <div class="d-flex justify-content-end">
-                                    @if(!empty(User::where('email', Auth::user()->email)->first()->api_token))
-                                        <form id="revoke-api-token-form" action="{{ route('user.revoke.api.token') }}"
+                                <div class="form-row" style="margin-top: 24px;">
+                                    <div class="col"></div>
+                                    <div class="d-flex justify-content-end">
+                                        @if(!empty(User::where('email', Auth::user()->email)->first()->api_token))
+                                            <form id="revoke-api-token-form"
+                                                  action="{{ route('user.revoke.api.token') }}"
+                                                  method="post" enctype="multipart/form-data" class="d-none">
+                                                @csrf
+                                            </form>
+
+                                            <button type="button" class="btn btn-danger"
+                                                    onclick="event.preventDefault(); document.getElementById('revoke-api-token-form').submit();">
+                                                Hapus Token
+                                            </button>
+                                        @endif
+
+                                        <form id="generate-api-token-form"
+                                              action="{{ route('user.generate.api.token') }}"
                                               method="post" enctype="multipart/form-data" class="d-none">
                                             @csrf
                                         </form>
 
-                                        <button type="button" class="btn btn-danger"
-                                                onclick="event.preventDefault(); document.getElementById('revoke-api-token-form').submit();">
-                                            Hapus Token
+                                        <button type="button" class="btn btn-warning" style="margin-left: 12px;"
+                                                onclick="event.preventDefault(); document.getElementById('generate-api-token-form').submit();">
+                                            Buat Token
                                         </button>
-                                    @endif
-
-                                    <form id="generate-api-token-form" action="{{ route('user.generate.api.token') }}"
-                                          method="post" enctype="multipart/form-data" class="d-none">
-                                        @csrf
-                                    </form>
-
-                                    <button type="button" class="btn btn-warning" style="margin-left: 12px;"
-                                            onclick="event.preventDefault(); document.getElementById('generate-api-token-form').submit();">
-                                        Buat Token
-                                    </button>
+                                    </div>
                                 </div>
-                            </div>
-                        </section>
+                            </section>
+                        @endif
                     </div>
                 </div>
             </div>
