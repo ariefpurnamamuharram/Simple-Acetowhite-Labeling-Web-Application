@@ -42,6 +42,11 @@
                                     Ringkasan Seluruh Foto
                                 </a>
 
+                                <a class="dropdown-item"
+                                   href="{{ route('administrator.dashboard.inconclusive.images') }}">
+                                    Seluruh Foto Inkonklusif
+                                </a>
+
                                 <a class="dropdown-item" href="{{ route('download.positives') }}">
                                     Unduh Seluruh Foto IVA Positif
                                 </a>
