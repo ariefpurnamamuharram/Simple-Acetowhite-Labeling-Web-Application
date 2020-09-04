@@ -65,11 +65,11 @@ class AdministratorController extends Controller
                 // Iterate through each of the image labels given.
                 foreach ($imageLabels as $key2 => $value2) {
                     if ($value2->label == ImageUpload::IMAGE_LABEL_POSITIVE_CODE) {
-                        $countPositives += 1;
+                        $countPositives++;
                     }
 
                     if ($value2->label == ImageUpload::IMAGE_LABEL_NEGATIVE_CODE) {
-                        $countNegatives += 1;
+                        $countNegatives++;
                     }
                 }
 
