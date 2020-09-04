@@ -83,8 +83,10 @@ class ApiRequestController extends Controller
                     // Populate file metadata for JSON.
                     $name = $value;
                     $bounding_boxes = [];
-                    foreach (ImageAreaMark::where('filename', $value)->get() as $key => $value) {
-                        array_push($bounding_boxes, [$value->rect_x0, $value->rect_y0, $value->rect_x1, $value->rect_y1]);
+                    foreach (ImageAreaMark::where('filename', $value)->get() as $key2 => $value2) {
+                        if ($value2->label == 0) {
+                            array_push($bounding_boxes, [$value2->rect_x0, $value2->rect_y0, $value2->rect_x1, $value2->rect_y1]);
+                        }
                     }
                     array_push($data_json, [
                         'name' => $name,
@@ -173,8 +175,10 @@ class ApiRequestController extends Controller
                     // Populate file metadata for JSON.
                     $name = $value;
                     $bounding_boxes = [];
-                    foreach (ImageAreaMark::where('filename', $value)->get() as $key => $value) {
-                        array_push($bounding_boxes, [$value->rect_x0, $value->rect_y0, $value->rect_x1, $value->rect_y1]);
+                    foreach (ImageAreaMark::where('filename', $value)->get() as $key2 => $value2) {
+                        if ($value2->label == 0) {
+                            array_push($bounding_boxes, [$value2->rect_x0, $value2->rect_y0, $value2->rect_x1, $value2->rect_y1]);
+                        }
                     }
                     array_push($data_json, [
                         'name' => $name,
