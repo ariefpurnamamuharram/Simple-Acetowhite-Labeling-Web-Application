@@ -9,7 +9,8 @@
         <hr/>
 
         <section class="table-responsive mt-2">
-            <table class="table table-hover">
+            <span>Total foto inkonklusif: {{ count($images) }}</span>
+            <table class="table table-hover mt-2">
                 <thead>
                 <tr class="text-center text-white" style="background-color: #FF357C!important;">
                     <th class="align-middle">ID</th>
