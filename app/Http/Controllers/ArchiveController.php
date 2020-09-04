@@ -46,7 +46,7 @@ class ArchiveController extends Controller
 
                 // Check if count of the image labels is more than one.
                 if (count($imageLabels) > 1) {
-                    // Initiate count positives and negatives labels.
+                    // Initiate count positive and negative labels.
                     $countPositives = 0;
                     $countNegatives = 0;
 

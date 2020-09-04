@@ -35,15 +35,41 @@ class ApiRequestController extends Controller
             array_push($images_positive, $file->filename);
         }
 
-        if (!empty($images_positive)) {
-            // Get all negative images
-            $images_negative = [];
-            foreach (ImageLabel::where('label', ImageUpload::IMAGE_LABEL_NEGATIVE_CODE)->get() as $file) {
-                array_push($images_negative, $file->filename);
+        if (count($images_positive) != 0) {
+            // Initiate inconclusive images array.
+            $inconclusiveImages = [];
+
+            // Iterate through each of the images data.
+            foreach ($images_positive as $key => $value) {
+                // Get all image labels.
+                $imageLabels = ImageLabel::where('filename', $value)->get();
+
+                // Check if count of the image labels is more than one.
+                if (count($imageLabels) > 1) {
+                    // Initiate count positive and negative labels.
+                    $countPositives = 0;
+                    $countNegatives = 0;
+
+                    // Iterate through each of the image labels given.
+                    foreach ($imageLabels as $key2 => $value2) {
+                        if ($value2->label == ImageUpload::IMAGE_LABEL_POSITIVE_CODE) {
+                            $countPositives++;
+                        }
+
+                        if ($value2->label == ImageUpload::IMAGE_LABEL_NEGATIVE_CODE) {
+                            $countNegatives++;
+                        }
+
+                        // If positive and negative image labels is fifty:fifty then assigned as inconclusive image.
+                        if ($countPositives == $countNegatives) {
+                            array_push($inconclusiveImages, $value);
+                        }
+                    }
+                }
             }
 
-            // Intersect array
-            $files = array_diff($images_positive, $images_negative);
+            // Intersect array.
+            $files = array_diff($images_positive, $inconclusiveImages);
 
             if ($zip->open(public_path($fileName), ZipArchive::CREATE || ZipArchive::OVERWRITE) === TRUE) {
                 // Prepare metadata JSON file
@@ -99,15 +125,41 @@ class ApiRequestController extends Controller
             array_push($images_negative, $file->filename);
         }
 
-        if (!empty($images_negative)) {
-            // Get all positive images
-            $images_positive = [];
-            foreach (ImageLabel::where('label', ImageUpload::IMAGE_LABEL_POSITIVE_CODE)->get() as $file) {
-                array_push($images_positive, $file->filename);
+        if (count($images_negative) != 0) {
+            // Initiate inconclusive images array.
+            $inconclusiveImages = [];
+
+            // Iterate through each of the images data.
+            foreach ($images_negative as $key => $value) {
+                // Get all image labels.
+                $imageLabels = ImageLabel::where('filename', $value)->get();
+
+                // Check if count of the image labels is more than one.
+                if (count($imageLabels) > 1) {
+                    // Initiate count positives and negatives labels.
+                    $countPositives = 0;
+                    $countNegatives = 0;
+
+                    // Iterate through each of the image labels is given.
+                    foreach ($imageLabels as $key2 => $value2) {
+                        if ($value2->label == ImageUpload::IMAGE_LABEL_POSITIVE_CODE) {
+                            $countPositives++;
+                        }
+
+                        if ($value2->label == ImageUpload::IMAGE_LABEL_NEGATIVE_CODE) {
+                            $countNegatives++;
+                        }
+
+                        // If positive and negative image labels is fifty:fifty then assigned as inconclusive image.
+                        if ($countPositives == $countNegatives) {
+                            array_push($inconclusiveImages, $value);
+                        }
+                    }
+                }
             }
 
-            // Intersect array
-            $files = array_diff($images_negative, $images_positive);
+            // Intersect array.
+            $files = array_diff($images_negative, $inconclusiveImages);
 
             if ($zip->open(public_path($fileName), ZipArchive::CREATE || ZipArchive::OVERWRITE) === TRUE) {
                 // Prepare metadata JSON file
