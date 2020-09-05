@@ -59,11 +59,11 @@ class ApiRequestController extends Controller
                         if ($value2->label == ImageUpload::IMAGE_LABEL_NEGATIVE_CODE) {
                             $countNegatives++;
                         }
+                    }
 
-                        // If positive and negative image labels is fifty:fifty then assigned as inconclusive image.
-                        if ($countPositives == $countNegatives) {
-                            array_push($inconclusiveImages, $value);
-                        }
+                    // If positive and negative image labels is fifty:fifty then assigned as inconclusive image.
+                    if ($countPositives == $countNegatives) {
+                        array_push($inconclusiveImages, $value);
                     }
                 }
             }
@@ -151,11 +151,11 @@ class ApiRequestController extends Controller
                         if ($value2->label == ImageUpload::IMAGE_LABEL_NEGATIVE_CODE) {
                             $countNegatives++;
                         }
+                    }
 
-                        // If positive and negative image labels is fifty:fifty then assigned as inconclusive image.
-                        if ($countPositives == $countNegatives) {
-                            array_push($inconclusiveImages, $value);
-                        }
+                    // If positive and negative image labels is fifty:fifty then assigned as inconclusive image.
+                    if ($countPositives == $countNegatives) {
+                        array_push($inconclusiveImages, $value);
                     }
                 }
             }
