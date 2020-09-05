@@ -275,7 +275,7 @@
                                                             Edit Label Foto
                                                         </a>
 
-                                                        @if(!empty(ImageLabel::where(['filename' => $file->filename, 'email' => Auth::user()->email])->first()))
+                                                        @if(!empty(ImageLabel::where(['filename' => $file->filename, 'email' => Auth::user()->email])->first()) || !empty(ImageLabel::where(['filename' => $file->filename_post_iva, 'email' => Auth::user()->email])->first()))
                                                             <form action="{{ route('file.delete.label') }}"
                                                                   method="post" enctype="multipart/form-data">
                                                                 @csrf
