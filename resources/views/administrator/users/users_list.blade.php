@@ -43,7 +43,10 @@
                                             </button>
 
                                             <div class="dropdown-menu" aria-labelledby="dropdownActionButton">
-                                                <a href="#" class="dropdown-item disabled">Hapus pengguna</a>
+                                                <button type="button" class="dropdown-item" data-toggle="modal"
+                                                        data-target="#resetPassword" data-email="{{ $user->email }}">
+                                                    Reset password
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -60,4 +63,67 @@
             </div>
         </div>
     </div>
+
+    <!-- Reset user password -->
+    <div class="modal fade" id="resetPassword" tabindex="-1" role="dialog" aria-labelledby="resetPasswordLabel">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="resetPasswordLabel">Reset Password Pengguna</h5>
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <p>Apakah Anda yakin untuk melanjutkan? Silakan masukkan password Anda untuk melanjutkan.</p>
+                    <form id="reset-user-password-form" action="{{ route('administrator.reset.user.password') }}"
+                          method="post"
+                          enctype="multipart/form-data">
+                        @csrf
+
+                        <input type="hidden" id="userEmail" name="userEmail">
+
+                        <div class="form-group row">
+                            <div class="col-md-2">
+                                <label for="password" class="col-form-label font-weight-bold">Password<span
+                                        class="text-danger">*</span></label>
+                            </div>
+
+                            <div class="col-md-10">
+                                <input id="password" name="password" type="password"
+                                       class="form-control @error('password') is-invalid @enderror"
+                                       placeholder="Masukkan password Anda">
+
+                                <span class="invalid-feedback" role="alert">
+                                    {{ $errors->first('password') }}
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                    <button type="button" class="btn btn-warning"
+                            onclick="event.preventDefault(); document.getElementById('reset-user-password-form').submit();">
+                        Lanjutkan
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('script')
+    <script type="text/javascript">
+        $('#resetPassword').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget)
+            var email = button.data('email');
+
+            var modal = $(this)
+            modal.find('.modal-body #userEmail').val(email)
+        })
+    </script>
 @endsection

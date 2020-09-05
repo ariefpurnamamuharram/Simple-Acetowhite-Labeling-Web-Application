@@ -9,7 +9,9 @@ use App\User;
 use App\UserDetails;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class AdministratorController extends Controller
 {
@@ -140,5 +142,30 @@ class AdministratorController extends Controller
         return redirect()
             ->back()
             ->with('message', 'Akun pengguna berhasil dihapus!');
+    }
+
+    public function resetUserPassword(Request $request): RedirectResponse
+    {
+        $this->validate($request, [
+            'password' => 'required',
+            'userEmail' => 'required',
+        ]);
+
+        if (Hash::check($request->password, Auth::user()->password)) {
+            $newPassword = Str::random(8);
+            $user = User::where('email', $request->userEmail)->first();
+
+            $user->update([
+                'password' => Hash::make($newPassword),
+            ]);
+
+            return redirect()
+                ->back()
+                ->with('message', sprintf('Password %s telah diubah menjadi %s. Password hanya dapat dilihat sekali, harap mencatat password baru tersebut.', $user->name, $newPassword));
+        } else {
+            return redirect()
+                ->back()
+                ->with('message', 'Password yang Anda masukkan salah!');
+        }
     }
 }

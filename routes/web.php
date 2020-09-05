@@ -102,3 +102,4 @@ Route::get('/administrator/user/new', 'AdministratorController@newUser')->name('
 Route::get('/administrator/image-area-marks/{email}/{filename}', 'AdministratorController@imageAreaMarks')->name('administrator.area.marks');
 Route::post('/administrator/user/store', 'AdministratorController@storeUser')->name('administrator.store.user');
 Route::post('/administrator/user/delete', 'AdministratorController@deleteUser')->name('administrator.delete.user');
+Route::post('/administrator/user/reset-password', 'AdministratorController@resetUserPassword')->name('administrator.reset.user.password');
