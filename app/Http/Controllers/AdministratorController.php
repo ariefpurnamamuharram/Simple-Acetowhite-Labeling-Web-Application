@@ -168,4 +168,28 @@ class AdministratorController extends Controller
                 ->with('message', 'Password yang Anda masukkan salah!');
         }
     }
+
+    public function changeUserRole(Request $request): RedirectResponse
+    {
+        $this->validate($request, [
+            'userEmail' => 'required',
+        ]);
+
+        $user = User::where('email', $request->userEmail)->first();
+        $userDetail = UserDetails::where('email', $user->email)->first();
+
+        if ($userDetail->is_administrator == true) {
+            $userDetail->update([
+                'is_administrator' => false,
+            ]);
+        } else {
+            $userDetail->update([
+                'is_administrator' => true,
+            ]);
+        }
+
+        return redirect()
+            ->back()
+            ->with('message', sprintf('Hak akses akun %s berhasil diubah.', $user->name));
+    }
 }

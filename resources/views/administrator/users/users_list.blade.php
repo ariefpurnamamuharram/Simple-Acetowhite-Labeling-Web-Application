@@ -43,10 +43,25 @@
                                             </button>
 
                                             <div class="dropdown-menu" aria-labelledby="dropdownActionButton">
-                                                <button type="button" class="dropdown-item" data-toggle="modal"
-                                                        data-target="#resetPassword" data-email="{{ $user->email }}">
+                                                <button type="button" class="dropdown-item"
+                                                        data-toggle="modal"
+                                                        data-target="#resetPassword"
+                                                        data-email="{{ $user->email }}">
                                                     Reset password
                                                 </button>
+
+                                                @if(UserDetails::where('email', $user->email)->first()->email != Auth::user()->email)
+                                                    <button type="button" class="dropdown-item"
+                                                            data-toggle="modal"
+                                                            data-target="#changeUserRole"
+                                                            data-email="{{ $user->email }}">
+                                                        @if(UserDetails::where('email', $user->email)->first()->is_administrator == true)
+                                                            Jadikan sebagai pengguna biasa
+                                                        @else
+                                                            Jadikan sebagai administrator
+                                                        @endif
+                                                    </button>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -114,11 +129,54 @@
             </div>
         </div>
     </div>
+
+    <!-- Change user's role -->
+    <div class="modal fade" id="changeUserRole" tabindex="-1" role="dialog" aria-labelledby="changeUserRoleLabel">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="changeUserRoleTitle">Konfirmasi</h5>
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <p>Apakah Anda yakin untuk mengubah hak akses pengguna tersebut?</p>
+
+                    <form id="change-user-role-form" action="{{ route('administrator.change.user.role') }}"
+                          method="post" enctype="multipart/form-data"
+                          class="d-none">
+                        @csrf
+
+                        <input type="hidden" id="userEmail" name="userEmail">
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                    <button type="button" class="btn btn-warning"
+                            onclick="event.preventDefault(); document.getElementById('change-user-role-form').submit();">
+                        Lanjutkan
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('script')
     <script type="text/javascript">
         $('#resetPassword').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget)
+            var email = button.data('email');
+
+            var modal = $(this)
+            modal.find('.modal-body #userEmail').val(email)
+        })
+
+        $('#changeUserRole').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget)
             var email = button.data('email');
 
