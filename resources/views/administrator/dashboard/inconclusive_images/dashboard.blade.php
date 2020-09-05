@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <h2 class="font-weight-bold" style="color: #FF357C!important;">
-            <span>Dasbor Ringkasan</span>
+            <span>Dasbor Foto Inkonklusif</span>
         </h2>
 
         <hr/>
