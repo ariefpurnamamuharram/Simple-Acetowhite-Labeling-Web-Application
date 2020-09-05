@@ -39,6 +39,9 @@ class ArchiveController extends Controller
             // Initiate inconclusive images array.
             $inconclusiveImages = [];
 
+            // Initiate non positive images array.
+            $nonPositives = [];
+
             // Iterate through each of the images data.
             foreach ($images_positive as $key => $value) {
                 // Get all image labels.
@@ -65,11 +68,19 @@ class ArchiveController extends Controller
                     if ($countPositives == $countNegatives) {
                         array_push($inconclusiveImages, $value);
                     }
+
+                    // If count of negatives is larger than positives then assigned file as negative
+                    // so it should be removed from the positive image dataset.
+                    if ($countNegatives > $countPositives) {
+                        array_push($nonPositives, $value);
+                    }
                 }
             }
 
             // Intersect array.
-            $files = array_diff($images_positive, $inconclusiveImages);
+            $intersectFromInconclusiveImages = array_diff($images_positive, $inconclusiveImages);
+            $intersectFromNonPositives = array_diff($intersectFromInconclusiveImages, $nonPositives);
+            $files = $intersectFromNonPositives;
 
             if ($zip->open(public_path($fileName), ZipArchive::CREATE || ZipArchive::OVERWRITE) === TRUE) {
                 // Prepare metadata JSON file
@@ -129,6 +140,9 @@ class ArchiveController extends Controller
             // Initiate inconclusive images array.
             $inconclusiveImages = [];
 
+            // Initiate non negative images array.
+            $nonNegatives = [];
+
             // Iterate through each of the images data.
             foreach ($images_negative as $key => $value) {
                 // Get all image labels.
@@ -155,11 +169,19 @@ class ArchiveController extends Controller
                     if ($countPositives == $countNegatives) {
                         array_push($inconclusiveImages, $value);
                     }
+
+                    // If count of positives is larger than negatives then assigned file as positive
+                    // so it should be removed from the negative image dataset.
+                    if ($countPositives > $countNegatives) {
+                        array_push($nonNegatives, $value);
+                    }
                 }
             }
 
             // Intersect array.
-            $files = array_diff($images_negative, $inconclusiveImages);
+            $intersectFromInconclusiveImages = array_diff($images_negative, $inconclusiveImages);
+            $intersectFromNonNegatives = array_diff($intersectFromInconclusiveImages, $nonNegatives);
+            $files = $intersectFromNonNegatives;
 
             if ($zip->open(public_path($fileName), ZipArchive::CREATE || ZipArchive::OVERWRITE) === TRUE) {
                 // Prepare metadata JSON file
