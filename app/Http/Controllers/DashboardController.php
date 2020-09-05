@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\ImageAreaMark;
 use App\ImageLabel;
 use App\ImageUpload;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -118,5 +120,31 @@ class DashboardController extends Controller
         return redirect()
             ->back()
             ->with('message', 'Data foto berhasil diperbaharui');
+    }
+
+    public function delete(Request $request): RedirectResponse
+    {
+        $this->validate($request, [
+            'filename' => 'required'
+        ]);
+
+        // Delete image label.
+        ImageLabel::where([
+            'filename' => $request->filename,
+            'email' => Auth::user()->email,
+        ])->first()->delete();
+
+        // Delete image marks.
+        foreach (ImageAreaMark::where([
+            'filename' => $request->filename,
+            'email' => Auth::user()->email,
+        ])->get() as $key => $value) {
+            $value->delete();
+        }
+
+        // Return response.
+        return redirect()
+            ->back()
+            ->with('message', 'Label foto berhasil dihapus!');
     }
 }

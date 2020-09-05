@@ -44,6 +44,7 @@ Route::get('/file/mark-area/filename={requestid}', 'ImageAreaMarkController@inde
 Route::get('/file/mark-area/delete/markid={requestid}', 'ImageAreaMarkController@delete')->name('image.mark.delete');
 Route::post('/file/update', 'DashboardController@update')->name('file.update');
 Route::post('/file/mark-area/store', 'ImageAreaMarkController@store')->name('image.mark.store');
+Route::post('/file/delete-label', 'DashboardController@delete')->name('file.delete.label');
 
 
 /*

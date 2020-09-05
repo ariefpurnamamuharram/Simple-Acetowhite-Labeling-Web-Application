@@ -274,6 +274,24 @@
                                                            href="@if(!empty($file->filename_post_iva)) {{ route('file.edit', ["page" => $files->currentPage(), "requestid" => $file->filename_post_iva]) }} @else {{ route('file.edit', ["page" => $files->currentPage(), "requestid" => $file->filename]) }} @endif">
                                                             Edit Label Foto
                                                         </a>
+
+                                                        @if(!empty(ImageLabel::where(['filename' => $file->filename, 'email' => Auth::user()->email])->first()))
+                                                            <form action="{{ route('file.delete.label') }}"
+                                                                  method="post" enctype="multipart/form-data">
+                                                                @csrf
+
+                                                                <input name="filename" type="hidden"
+                                                                       value="@if(!empty($file->filename_post_iva)) {{ $file->filename_post_iva }} @else {{ $file->filename }} @endif">
+
+                                                                <button type="submit" class="dropdown-item">Hapus Label
+                                                                    Foto
+                                                                </button>
+                                                            </form>
+                                                        @else
+                                                            <button class="dropdown-item disabled" disabled>Hapus Label
+                                                                Foto
+                                                            </button>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
