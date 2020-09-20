@@ -93,4 +93,3 @@ Tim riset CerviCam:
 4. Alessa Fahira, S.Ked.
 5. Arief Purnama Muharram, S.Ked.
 6. Harits Abdurrahman, S.Kom.
-7. Arya Lukmana
