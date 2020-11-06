@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\ImageAreaMark;
 use App\ImageLabel;
-use App\ImageUpload;
 use Illuminate\Support\Facades\File;
 use ZipArchive;
 
@@ -31,7 +30,7 @@ class ArchiveController extends Controller
 
         // Get all positive images
         $images_positive = [];
-        foreach (ImageLabel::where('label', ImageUpload::IMAGE_LABEL_POSITIVE_CODE)->get() as $file) {
+        foreach (ImageLabel::where('label', self::LABEL_POSITIVE_CODE)->get() as $file) {
             array_push($images_positive, $file->filename);
         }
 
@@ -55,11 +54,11 @@ class ArchiveController extends Controller
 
                     // Iterate through each of the image labels given.
                     foreach ($imageLabels as $key2 => $value2) {
-                        if ($value2->label == ImageUpload::IMAGE_LABEL_POSITIVE_CODE) {
+                        if ($value2->label == self::LABEL_POSITIVE_CODE) {
                             $countPositives++;
                         }
 
-                        if ($value2->label == ImageUpload::IMAGE_LABEL_NEGATIVE_CODE) {
+                        if ($value2->label == self::LABEL_NEGATIVE_CODE) {
                             $countNegatives++;
                         }
                     }
@@ -93,6 +92,7 @@ class ArchiveController extends Controller
 
                     // Populate file metadata for JSON.
                     $name = $value;
+                    $email = ImageLabel::where('filename', $name)->first()->email;
                     $bounding_boxes = [];
                     foreach (ImageAreaMark::where('filename', $value)->get() as $key2 => $value2) {
                         if ($value2->label == 0) {
@@ -101,6 +101,7 @@ class ArchiveController extends Controller
                     }
                     array_push($data_json, [
                         'name' => $name,
+                        'email' => $email,
                         'label' => self::LABEL_POSITIVE,
                         'bounding_box' => $bounding_boxes,
                     ]);
@@ -132,7 +133,7 @@ class ArchiveController extends Controller
 
         // Get all negative images
         $images_negative = [];
-        foreach (ImageLabel::where('label', ImageUpload::IMAGE_LABEL_NEGATIVE_CODE)->get() as $file) {
+        foreach (ImageLabel::where('label', self::LABEL_NEGATIVE_CODE)->get() as $file) {
             array_push($images_negative, $file->filename);
         }
 
@@ -156,11 +157,11 @@ class ArchiveController extends Controller
 
                     // Iterate through each of the image labels given.
                     foreach ($imageLabels as $key2 => $value2) {
-                        if ($value2->label == ImageUpload::IMAGE_LABEL_POSITIVE_CODE) {
+                        if ($value2->label == self::LABEL_POSITIVE_CODE) {
                             $countPositives++;
                         }
 
-                        if ($value2->label == ImageUpload::IMAGE_LABEL_NEGATIVE_CODE) {
+                        if ($value2->label == self::LABEL_NEGATIVE_CODE) {
                             $countNegatives++;
                         }
                     }
@@ -194,6 +195,7 @@ class ArchiveController extends Controller
 
                     // Populate file metadata for JSON.
                     $name = $value;
+                    $email = ImageLabel::where('filename', $name)->first()->email;
                     $bounding_boxes = [];
                     foreach (ImageAreaMark::where('filename', $value)->get() as $key2 => $value2) {
                         if ($value2->label == 0) {
@@ -202,6 +204,7 @@ class ArchiveController extends Controller
                     }
                     array_push($data_json, [
                         'name' => $name,
+                        'email' => $email,
                         'label' => self::LABEL_NEGATIVE,
                         'bounding_box' => $bounding_boxes,
                     ]);
