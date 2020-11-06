@@ -155,7 +155,9 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="imageMarkLabel" class="col-form-label"><strong>Label</strong></label>
+                                <label for="imageMarkLabel" class="col-form-label">
+                                    <strong>Label<span class="text-danger">*</span></strong>
+                                </label>
 
                                 <select class="form-control @error('imageMarkLabel') is-invalid @enderror"
                                         id="imageMarkLabel" name="imageMarkLabel">

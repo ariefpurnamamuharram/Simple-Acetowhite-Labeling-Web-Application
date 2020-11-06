@@ -9,18 +9,47 @@ use ZipArchive;
 
 class ArchiveController extends Controller
 {
+    private const LABEL_POSITIVE = 'positive';
+    private const LABEL_POSITIVE_CODE = 1;
+    private const LABEL_NEGATIVE = 'negative';
+    private const LABEL_NEGATIVE_CODE = 0;
+
     public function __construct()
     {
         $this->middleware('check.administrator');
     }
 
-    private const LABEL_POSITIVE = 'positive';
-
-    private const LABEL_POSITIVE_CODE = 1;
-
-    private const LABEL_NEGATIVE = 'negative';
-
-    private const LABEL_NEGATIVE_CODE = 0;
+    private function getAreaMarkLabel($labelCode)
+    {
+        switch ($labelCode) {
+            case 0:
+                return "Lesi acetowhite";
+            case 1:
+                return "Metaplasia ring";
+            case 2:
+                return "Tali IUD";
+            case 3:
+                return "Darah menstruasi";
+            case 4:
+                return "Lendir/mukus";
+            case 5:
+                return "Fluor albus";
+            case 6:
+                return "Servisitis";
+            case 7:
+                return "Polip";
+            case 8:
+                return "Ovula nabothi";
+            case 9:
+                return 'Ektoprion';
+            case 10:
+                return "Refleksi cahaya";
+            case 99:
+                return "Lainnya";
+            default:
+                return null;
+        }
+    }
 
     public function downloadPositives()
     {
@@ -95,9 +124,10 @@ class ArchiveController extends Controller
                     $email = ImageLabel::where('filename', $name)->first()->email;
                     $bounding_boxes = [];
                     foreach (ImageAreaMark::where('filename', $value)->get() as $key2 => $value2) {
-                        if ($value2->label == 0) {
-                            array_push($bounding_boxes, [$value2->rect_x0, $value2->rect_y0, $value2->rect_x1, $value2->rect_y1]);
-                        }
+                        array_push($bounding_boxes, [
+                            'label' => $this->getAreaMarkLabel($value2->label),
+                            'coordinates' => [$value2->rect_x0, $value2->rect_y0, $value2->rect_x1, $value2->rect_y1],
+                        ]);
                     }
                     array_push($data_json, [
                         'name' => $name,
@@ -198,9 +228,10 @@ class ArchiveController extends Controller
                     $email = ImageLabel::where('filename', $name)->first()->email;
                     $bounding_boxes = [];
                     foreach (ImageAreaMark::where('filename', $value)->get() as $key2 => $value2) {
-                        if ($value2->label == 0) {
-                            array_push($bounding_boxes, [$value2->rect_x0, $value2->rect_y0, $value2->rect_x1, $value2->rect_y1]);
-                        }
+                        array_push($bounding_boxes, [
+                            'label' => $this->getAreaMarkLabel($value2->label),
+                            'coordinates' => [$value2->rect_x0, $value2->rect_y0, $value2->rect_x1, $value2->rect_y1],
+                        ]);
                     }
                     array_push($data_json, [
                         'name' => $name,

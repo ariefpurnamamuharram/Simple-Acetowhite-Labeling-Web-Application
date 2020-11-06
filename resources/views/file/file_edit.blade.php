@@ -68,7 +68,9 @@
 
                                 <hr/>
 
-                                <label for="lblIVA">Pilih pelabelan foto IVA Anda</label>
+                                <label for="lblIVA">
+                                    Pilih pelabelan foto IVA Anda<span class="text-danger">*</span>
+                                </label>
 
                                 <select name="lblIVA" id="lblIVA"
                                         class="form-control @error('lblIVA') is-invalid @enderror">
