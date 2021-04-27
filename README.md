@@ -82,8 +82,11 @@ curl \
 ```
 Ganti `XXX` dengan API Token Anda.
 
-## Lisensi dan Hak Cipta
-Hak cipta aplikasi ini dimiliki penuh oleh **Cervicam Research Group**. Anda bebas menggunakan aplikasi ini selama untuk tujuan nonkomersil.
+## Hak Cipta
+Hak cipta aplikasi ini dimiliki penuh oleh **Cervicam Research Group**. Anda bebas menggunakan aplikasi ini selama untuk tujuan nonkomersil. 
+
+## Lain-lain
+Sistem ini telah dipresentasikan pada konferensi ilmiah The International Congress of Asia Oceania Research Organization on Genital Infections and Neoplasia (AOGIN) 2021. Informasi lebih lengkap mengenai penelitian tersebut dapat diakses melalui https://www.researchgate.net/publication/350783419_The_Simple_Acetowhite_Labeling_System_For_Artificial_Intelligence_Dataset_Preparation
 
 ## Kontributor
 Tim riset CerviCam:
@@ -93,3 +96,4 @@ Tim riset CerviCam:
 4. Alessa Fahira, S.Ked.
 5. Arief Purnama Muharram, S.Ked.
 6. Harits Abdurrahman, S.Kom.
+
