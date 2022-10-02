@@ -10,14 +10,40 @@
                     </div>
 
                     <div class="card-body">
-                        <span>Silakan unggah file foto pemeriksaan IVA Anda disini.</span>
+                        <div>
+                            <span>Silakan unggah file foto pemeriksaan IVA Anda disini.</span>
 
-                        <form method="post" action="{{ route('file.store') }}" enctype="multipart/form-data"
-                              class="dropzone mt-2" id="dropzone">
-                            {{ csrf_field() }}
-                        </form>
+                            <form method="post" action="{{ route('file.store') }}" enctype="multipart/form-data"
+                                class="dropzone mt-2" id="dropzone">
 
-                        <span style="font-size: 0.85em;">(Maksimal ukuran setiap file 12 mb.)</span>
+                                {{ csrf_field() }}
+
+                            </form>
+
+                            <span style="font-size: 0.85em;">(Maksimal ukuran setiap file 12 mb.)</span>
+                        </div>
+
+                        <hr/>
+
+                        <div>
+                            Atau dengan menggunakan form berikut <i>(Single file only)</i>.
+
+                            <form method="post" action="{{ route('file.store') }}" enctype="multipart/form-data"
+                                id="form-upload-files">
+                                @csrf
+
+                                <div class="form-group mt-4">
+                                    <input name="file" type="file">
+                                </div>
+
+                                <div class="d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-warning">
+                                        Submit
+                                    </button>
+                                </div>
+
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -32,7 +58,7 @@
     <script type="text/javascript">
         Dropzone.options.dropzone = {
             maxFilesize: 12,
-            renameFile: function (file) {
+            renameFile: function(file) {
                 var dt = new Date();
                 var time = dt.getTime();
                 return time + "_" + file.name;
@@ -40,10 +66,10 @@
             acceptedFiles: ".jpeg,.jpg,.png",
             addRemoveLinks: false,
             timeout: 5000000,
-            success: function (file, response) {
+            success: function(file, response) {
                 console.log(response);
             },
-            error: function (file, response) {
+            error: function(file, response) {
                 return false;
             }
         }
