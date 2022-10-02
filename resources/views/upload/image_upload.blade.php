@@ -23,7 +23,7 @@
                             <span style="font-size: 0.85em;">(Maksimal ukuran setiap file 12 mb)</span>
                         </div>
 
-                        <hr/>
+                        <hr />
 
                         <div>
                             Atau dengan menggunakan form berikut <i>(Single file only)</i>.
@@ -41,7 +41,9 @@
                                         Submit
                                     </button>
                                 </div>
-
+                                @php
+                                    phpinfo();
+                                @endphp
                             </form>
                         </div>
                     </div>
