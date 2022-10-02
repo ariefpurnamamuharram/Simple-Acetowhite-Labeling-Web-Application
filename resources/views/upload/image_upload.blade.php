@@ -20,7 +20,7 @@
 
                             </form>
 
-                            <span style="font-size: 0.85em;">(Maksimal ukuran setiap file 12 mb.)</span>
+                            <span style="font-size: 0.85em;">(Maksimal ukuran setiap file 12 mb)</span>
                         </div>
 
                         <hr/>
