@@ -41,9 +41,6 @@
                                         Submit
                                     </button>
                                 </div>
-                                @php
-                                    phpinfo();
-                                @endphp
                             </form>
                         </div>
                     </div>
