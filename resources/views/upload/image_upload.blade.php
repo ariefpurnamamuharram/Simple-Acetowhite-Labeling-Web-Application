@@ -16,32 +16,11 @@
                             <form method="post" action="{{ route('file.store') }}" enctype="multipart/form-data"
                                 class="dropzone mt-2" id="dropzone">
 
-                                {{ csrf_field() }}
+                                @csrf
 
                             </form>
 
                             <span style="font-size: 0.85em;">(Maksimal ukuran setiap file 12 mb)</span>
-                        </div>
-
-                        <hr />
-
-                        <div>
-                            Atau dengan menggunakan form berikut <i>(Single file only)</i>.
-
-                            <form method="post" action="{{ route('file.store') }}" enctype="multipart/form-data"
-                                id="form-upload-files">
-                                @csrf
-
-                                <div class="form-group mt-4">
-                                    <input name="file" type="file">
-                                </div>
-
-                                <div class="d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-warning">
-                                        Submit
-                                    </button>
-                                </div>
-                            </form>
                         </div>
                     </div>
                 </div>
