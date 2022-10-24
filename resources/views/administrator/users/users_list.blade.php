@@ -17,6 +17,7 @@
                                 <th class="align-middle">Kontribusi</th>
                                 <th class="align-middle">Administrator</th>
                                 <th class="align-middle">Aksi</th>
+                                <th class="align-middle">Keterangan</th>
                             </tr>
                         </thead>
 
@@ -70,6 +71,28 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </td>
+                                    <!-- Keterangan -->
+                                    <td class="align-left">
+                                        Images ID labeled:
+                                        @foreach ($images_preiva as $key => $image)
+                                            @if ($image->email == $user->email)
+                                                @if ($key == $images_preiva->count() - 1)
+                                                    {{ $image->id }}
+                                                @else
+                                                    {{ $image->id }},
+                                                @endif
+                                            @endif
+                                        @endforeach
+                                        @foreach ($images_postiva as $key => $image)
+                                            @if ($image->email == $user->email)
+                                                @if ($key == $images_postiva->count() - 1)
+                                                    {{ $image->id }}
+                                                @else
+                                                    {{ $image->id }},
+                                                @endif
+                                            @endif
+                                        @endforeach
                                     </td>
                                 </tr>
                             @endforeach

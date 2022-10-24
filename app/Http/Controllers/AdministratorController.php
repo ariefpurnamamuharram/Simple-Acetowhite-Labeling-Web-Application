@@ -10,6 +10,7 @@ use App\UserDetails;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -32,9 +33,19 @@ class AdministratorController extends Controller
     public function users()
     {
         $users = User::orderBy('name', "ASC")->paginate(8);
+        $images_preiva = DB::table('image_labels')
+            ->join('image_uploads', 'image_labels.filename', '=', 'image_uploads.filename_pre_iva')
+            ->select('image_uploads.id', 'image_labels.email')
+            ->get();
+        $images_postiva = DB::table('image_labels')
+            ->join('image_uploads', 'image_labels.filename', '=', 'image_uploads.filename_post_iva')
+            ->select('image_uploads.id', 'image_labels.email')
+            ->get();
 
         return view('administrator.users.users_list', [
             'users' => $users,
+            'images_preiva' => $images_preiva,
+            'images_postiva' => $images_postiva,
         ]);
     }
 
