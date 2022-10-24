@@ -77,20 +77,12 @@
                                         Images ID labeled:
                                         @foreach ($images_preiva as $key => $image)
                                             @if ($image->email == $user->email)
-                                                @if ($key == $images_preiva->count() - 1)
-                                                    {{ $image->id }}
-                                                @else
-                                                    {{ $image->id }},
-                                                @endif
+                                                [{{ $image->id }}]
                                             @endif
                                         @endforeach
                                         @foreach ($images_postiva as $key => $image)
                                             @if ($image->email == $user->email)
-                                                @if ($key == $images_postiva->count() - 1)
-                                                    {{ $image->id }}
-                                                @else
-                                                    {{ $image->id }},
-                                                @endif
+                                                [{{ $image->id }}]
                                             @endif
                                         @endforeach
                                         @if ($images_preiva->count() == 0 && $images_postiva->count() == 0)
