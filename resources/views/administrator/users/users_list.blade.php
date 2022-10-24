@@ -85,9 +85,6 @@
                                                 [{{ $image->id }}]
                                             @endif
                                         @endforeach
-                                        @if ($images_preiva->count() == 0 && $images_postiva->count() == 0)
-                                            -
-                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
