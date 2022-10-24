@@ -30,7 +30,7 @@
                                     <td class="align-middle"><span class="text-nowrap">{{ $user->email }}</span></td>
                                     <!-- Kontribusi -->
                                     <td class="align-middle">
-                                        {{ count(ImageLabel::where('email', $user->email)->get()) }}
+                                        {{ count(ImageLabel::where('email', $user->email)->whereRaw('NOT label = 99')->get()) }}
                                     </td>
                                     <!-- Administrator -->
                                     <td class="align-middle">
