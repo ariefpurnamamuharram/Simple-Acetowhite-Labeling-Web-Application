@@ -36,10 +36,12 @@ class AdministratorController extends Controller
         $images_preiva = DB::table('image_labels')
             ->join('image_uploads', 'image_labels.filename', '=', 'image_uploads.filename_pre_iva')
             ->select('image_uploads.id', 'image_labels.email')
+            ->whereRaw('NOT image_labels.label = 99')
             ->get();
         $images_postiva = DB::table('image_labels')
             ->join('image_uploads', 'image_labels.filename', '=', 'image_uploads.filename_post_iva')
             ->select('image_uploads.id', 'image_labels.email')
+            ->whereRaw('NOT image_labels.label = 99')
             ->get();
 
         return view('administrator.users.users_list', [

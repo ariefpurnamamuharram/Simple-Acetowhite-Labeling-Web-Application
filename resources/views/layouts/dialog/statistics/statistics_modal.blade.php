@@ -28,7 +28,7 @@
                         </div>
 
                         <div class="col-sm-7">
-                            <span>{{ count(array_unique(ImageLabel::get()->pluck('filename')->all())) }} foto</span>
+                            <span>{{ count(array_unique(ImageLabel::whereRaw('NOT label = 99')->get()->pluck('filename')->all())) }} foto</span>
                         </div>
                     </div>
                 @endif
