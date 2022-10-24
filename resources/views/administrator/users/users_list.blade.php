@@ -17,7 +17,7 @@
                                 <th class="align-middle">Kontribusi</th>
                                 <th class="align-middle">Administrator</th>
                                 <th class="align-middle">Aksi</th>
-                                <th class="align-middle">Keterangan</th>
+                                <th class="text-left align-middle">Keterangan</th>
                             </tr>
                         </thead>
 
@@ -73,7 +73,7 @@
                                         </div>
                                     </td>
                                     <!-- Keterangan -->
-                                    <td class="align-left">
+                                    <td class="text-left align-middle">
                                         Images ID labeled:
                                         @foreach ($images_preiva as $key => $image)
                                             @if ($image->email == $user->email)
